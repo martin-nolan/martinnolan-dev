@@ -105,18 +105,18 @@ const ProjectsSection = () => {
               >
                 <div className={`grid lg:grid-cols-2 gap-8 ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
                   {/* Project Image */}
-                  <div className={`relative overflow-hidden rounded-lg ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                    <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                  <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                    <div className="w-full h-full aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center relative">
                       <img 
                         src="/placeholder.svg" 
                         alt={project.title}
                         className="w-full h-full object-cover object-center"
                       />
-                    </div>
-                    <div className="absolute top-4 left-4">
-                      <Badge variant="secondary" className="bg-primary text-white">
-                        {project.category}
-                      </Badge>
+                      <div className="absolute top-4 left-4 z-10 flex">
+                        <Badge variant="secondary" className="bg-primary text-white">
+                          {project.category}
+                        </Badge>
+                      </div>
                     </div>
                   </div>
 

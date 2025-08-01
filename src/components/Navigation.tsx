@@ -3,9 +3,8 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ResumeModal from "./ResumeModal";
 
-const Navigation = () => {
+const Navigation = ({ setIsResumeOpen }: { setIsResumeOpen: (open: boolean) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   const navItems = [
     { href: "about", label: "About" },
@@ -103,7 +102,7 @@ const Navigation = () => {
         </div>
       )}
       
-      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+      {/* ResumeModal is now rendered in Index.tsx for proper overlay */}
     </nav>
   );
 };

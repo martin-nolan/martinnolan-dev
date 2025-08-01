@@ -48,18 +48,16 @@ const AboutSection = () => {
           {/* Bio Content */}
           <div className="space-y-6">
             <div className="prose prose-lg text-foreground">
-              <p className="text-lg leading-relaxed">
+              <p className="text-lg leading-relaxed mb-6">
                 I'm Martin Nolan, an Associate Gen AI Software Engineer at Sky UK. I build human-centred 
                 AI tools—covering ideation, stakeholder engagement, full-stack development and Google Cloud 
                 deployment—then refine through rapid demos and feedback loops.
               </p>
-              
-              <p className="text-lg leading-relaxed">
+              <p className="text-lg leading-relaxed mb-6">
                 My recent focus is on internal AI-driven platforms that make work more efficient and 
                 accessible. I have an MSc in Mobile Web Development (Distinction) from University of 
                 the West of Scotland and a BSc in Computer Science (First-Class) from University of Glasgow.
               </p>
-              
               <p className="text-lg leading-relaxed">
                 I'm passionate about the intersection of cutting-edge technology and human-centered 
                 design, always asking: "How can we make this genuinely useful for people?"

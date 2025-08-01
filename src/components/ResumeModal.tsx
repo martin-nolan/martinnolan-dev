@@ -27,9 +27,11 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       />
-      
       {/* Modal */}
-      <div className="relative w-full max-w-4xl h-[90vh] mx-4 glass-card rounded-2xl overflow-hidden animate-scale-in">
+      <div
+        className="relative w-full max-w-4xl h-[90vh] mx-4 glass-card rounded-2xl overflow-hidden animate-scale-in"
+        onClick={e => e.stopPropagation()} // Prevent closing when clicking inside modal
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-surface-border">
           <h2 className="text-2xl font-bold gradient-text">Resume</h2>
