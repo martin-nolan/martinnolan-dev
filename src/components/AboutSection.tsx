@@ -3,31 +3,31 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const AboutSection = () => {
   const skills = [
-    "TypeScript", "Python", "React", "Next.js", "Node.js", "FastAPI",
-    "TensorFlow", "PyTorch", "OpenAI", "Azure", "Docker", "Kubernetes",
-    "GraphQL", "PostgreSQL", "Redis", "Elasticsearch"
+    "TypeScript", "Python", "React", "Next.js", "TailwindCSS", "Google Cloud",
+    "OpenAI", "LLMs", "Full-Stack Development", "Stakeholder Management",
+    "Agile Product Ownership", "Cloud Deployment", "Observability", "Django"
   ];
 
   const highlights = [
     {
       icon: <Brain className="h-8 w-8 text-primary" />,
-      title: "AI Engineering",
-      description: "Building production-ready AI systems that scale, from LLM integrations to custom ML models."
+      title: "Gen AI Development",
+      description: "Building internal AI-driven platforms with rapid prototyping and user feedback loops."
     },
     {
       icon: <Code className="h-8 w-8 text-accent" />,
       title: "Full-Stack Development", 
-      description: "End-to-end product development with modern web technologies and cloud-native architectures."
+      description: "End-to-end development with Next.js, TypeScript, and TailwindCSS deployed on Google Cloud."
     },
     {
       icon: <Users className="h-8 w-8 text-primary" />,
-      title: "Human-Centered Design",
-      description: "Creating intuitive experiences that make complex AI capabilities accessible to everyone."
+      title: "Stakeholder Engagement",
+      description: "Leading ideation sessions and managing product ownership with agile methodologies."
     },
     {
       icon: <Rocket className="h-8 w-8 text-accent" />,
-      title: "Innovation at Scale",
-      description: "Delivering impactful solutions at Sky, serving millions of customers across the UK and Europe."
+      title: "Cloud Deployment",
+      description: "Deploying and observing AI solutions on Google Cloud Platform with reliability focus."
     }
   ];
 
@@ -39,8 +39,8 @@ const AboutSection = () => {
             About <span className="gradient-text">Martin</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A passionate AI engineer who believes technology should amplify human potential, 
-            not replace it. Currently architecting the future of entertainment and connectivity at Sky.
+            Associate Gen AI Software Engineer at Sky UK, building human-centred AI tools that make work 
+            more efficient and accessible through rapid demos and feedback loops.
           </p>
         </div>
 
@@ -49,15 +49,15 @@ const AboutSection = () => {
           <div className="space-y-6">
             <div className="prose prose-lg text-foreground">
               <p className="text-lg leading-relaxed">
-                With over 5 years of experience in AI and software engineering, I specialize in 
-                building production-grade systems that make artificial intelligence accessible 
-                and valuable for real users.
+                I'm Martin Nolan, an Associate Gen AI Software Engineer at Sky UK. I build human-centred 
+                AI tools—covering ideation, stakeholder engagement, full-stack development and Google Cloud 
+                deployment—then refine through rapid demos and feedback loops.
               </p>
               
               <p className="text-lg leading-relaxed">
-                At Sky, I lead the development of AI-powered features that enhance customer 
-                experiences across our platforms, from personalized content recommendations 
-                to intelligent customer support systems.
+                My recent focus is on internal AI-driven platforms that make work more efficient and 
+                accessible. I have an MSc in Mobile Web Development (Distinction) from University of 
+                the West of Scotland and a BSc in Computer Science (First-Class) from University of Glasgow.
               </p>
               
               <p className="text-lg leading-relaxed">

@@ -6,67 +6,80 @@ import { Badge } from "@/components/ui/badge";
 const ProjectsSection = () => {
   const featuredProjects = [
     {
-      title: "AI Content Personalization Engine",
-      role: "Lead AI Engineer",
+      title: "Cricket Command Centre",
+      role: "Associate Gen AI Software Engineer",
       year: "2024",
       company: "Sky",
-      description: "Revolutionary recommendation system serving 20M+ users across Sky's platforms. Implemented transformer-based models with real-time inference, achieving 35% improvement in user engagement.",
-      stack: ["Python", "TensorFlow", "Apache Kafka", "Kubernetes", "GraphQL"],
+      description: "AI-powered live commentary generation from real-time cricket feeds, providing engaging automated coverage for viewers.",
+      stack: ["Python", "OpenAI", "Real-time APIs", "Google Cloud"],
       highlights: [
-        "35% increase in user engagement",
-        "Sub-100ms recommendation latency", 
-        "Serving 20M+ daily active users"
+        "Real-time AI commentary generation",
+        "Seamless integration with live feeds",
+        "Enhanced viewer engagement"
       ],
       image: "/api/placeholder/600/400",
       category: "AI/ML"
     },
     {
-      title: "Intelligent Customer Support Platform",
-      role: "Senior Full-Stack Engineer",
-      year: "2023",
+      title: "Knowledge Search Platform",
+      role: "Associate Gen AI Software Engineer",
+      year: "2024",
       company: "Sky",
-      description: "Next-generation support platform combining LLM-powered chatbots with human agent workflows. Reduced resolution time by 60% while maintaining high customer satisfaction scores.",
-      stack: ["React", "Node.js", "OpenAI", "PostgreSQL", "Redis", "Docker"],
+      description: "Semantic search platform for contact-centre policies, enabling support agents to quickly find relevant information.",
+      stack: ["TypeScript", "Next.js", "Vector Search", "Google Cloud"],
       highlights: [
-        "60% reduction in average resolution time",
-        "90%+ customer satisfaction maintained",
-        "Handling 100K+ monthly interactions"
+        "Semantic search capabilities",
+        "Improved agent efficiency",
+        "Centralized policy access"
       ],
       image: "/api/placeholder/600/400",
-      category: "Full-Stack"
+      category: "Search"
     },
     {
-      title: "Real-time Analytics Dashboard",
-      role: "Technical Lead",
-      year: "2023",
+      title: "Customer Response Assistant",
+      role: "Associate Gen AI Software Engineer",
+      year: "2024",
       company: "Sky",
-      description: "Comprehensive analytics platform providing real-time insights across Sky's ecosystem. Built with modern web technologies and optimized for performance at scale.",
-      stack: ["React", "TypeScript", "D3.js", "WebSocket", "Apache Flink"],
+      description: "Generative email-drafting tool for support workflows, helping agents craft personalized responses efficiently.",
+      stack: ["React", "TypeScript", "OpenAI", "Google Cloud"],
       highlights: [
-        "Processing 1B+ events daily",
-        "Real-time data visualization",
-        "Used by 500+ internal stakeholders"
+        "Automated email drafting",
+        "Personalized customer responses",
+        "Streamlined support workflows"
       ],
       image: "/api/placeholder/600/400",
-      category: "Data"
+      category: "AI Tools"
     }
   ];
 
   const personalProjects = [
     {
-      title: "AI Code Review Assistant",
-      description: "VSCode extension that provides intelligent code reviews using GPT-4, helping developers write better code.",
-      stack: ["TypeScript", "OpenAI", "VSCode API"],
-      github: "https://github.com/martinnolan",
-      demo: "https://marketplace.visualstudio.com",
-      category: "Open Source"
+      title: "inTENt-Fitness",
+      description: "Alexa skill delivering quick 10-minute workouts or guided meditations for busy lifestyles.",
+      stack: ["Python", "Alexa Skills Kit", "AWS Lambda"],
+      github: "https://github.com/martin-nolan",
+      category: "Voice UI"
     },
     {
-      title: "Smart Home Automation",
-      description: "IoT platform with ML-powered automation that learns from user behavior patterns.",
-      stack: ["Python", "Raspberry Pi", "MQTT", "TensorFlow"],
-      github: "https://github.com/martinnolan",
-      category: "IoT"
+      title: "Blockchain Marketplace",
+      description: "Web3 marketplace demo on Polygon Testnet using Moralis & MetaMask integration.",
+      stack: ["React", "Web3", "Moralis", "MetaMask"],
+      github: "https://github.com/martin-nolan",
+      category: "Web3"
+    },
+    {
+      title: "SGame",
+      description: "Distributed, horizontally-scalable proof-of-concept game server architecture.",
+      stack: ["Python", "Distributed Systems", "Microservices"],
+      github: "https://github.com/martin-nolan",
+      category: "Gaming"
+    },
+    {
+      title: "Glasgo AR",
+      description: "AR app concept for exploring the University of Glasgow campus with interactive features.",
+      stack: ["Unity", "ARKit", "C#"],
+      github: "https://github.com/martin-nolan",
+      category: "AR"
     }
   ];
 
@@ -175,11 +188,6 @@ const ProjectsSection = () => {
                       <Button size="sm" variant="ghost" className="p-2">
                         <Github className="h-4 w-4" />
                       </Button>
-                      {project.demo && (
-                        <Button size="sm" variant="ghost" className="p-2">
-                          <ExternalLink className="h-4 w-4" />
-                        </Button>
-                      )}
                     </div>
                   </div>
                 </CardHeader>

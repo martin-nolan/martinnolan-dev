@@ -14,17 +14,17 @@ const HeroSection = () => {
       <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="animate-fade-in-up">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            Building{" "}
+            Engineering{" "}
             <span className="gradient-text bg-gradient-to-r from-primary to-accent bg-[length:200%_200%] animate-gradient-shift">
-              AI-Powered
+              Generative AI
             </span>
             <br />
-            Experiences at Sky
+            for Real-World Impact
           </h1>
           
           <p className="text-xl sm:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Senior AI Engineer crafting human-centered solutions with cutting-edge technology. 
-            Transforming complex problems into elegant, accessible products.
+            Associate Gen AI Software Engineer at Sky UK, building human-centred AI tools 
+            from ideation to deployment on Google Cloud.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -48,13 +48,13 @@ const HeroSection = () => {
           {/* Social Links */}
           <div className="flex justify-center space-x-6">
             <a 
-              href="#" 
+              href="https://github.com/martin-nolan" 
               className="p-3 glass-card hover:bg-surface-hover transition-all duration-200 rounded-full group"
             >
               <Github className="h-6 w-6 text-muted-foreground group-hover:text-primary" />
             </a>
             <a 
-              href="#" 
+              href="https://www.linkedin.com/in/martinnolan0110" 
               className="p-3 glass-card hover:bg-surface-hover transition-all duration-200 rounded-full group"
             >
               <Linkedin className="h-6 w-6 text-muted-foreground group-hover:text-primary" />

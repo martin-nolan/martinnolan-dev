@@ -19,7 +19,7 @@ const ContactSection = () => {
       title: "LinkedIn",
       description: "Professional network",
       value: "Connect on LinkedIn",
-      href: "#",
+      href: "https://www.linkedin.com/in/martinnolan0110",
       primary: false
     },
     {
@@ -27,7 +27,7 @@ const ContactSection = () => {
       title: "GitHub",
       description: "Code & projects",
       value: "View repositories",
-      href: "#",
+      href: "https://github.com/martin-nolan",
       primary: false
     },
     {
