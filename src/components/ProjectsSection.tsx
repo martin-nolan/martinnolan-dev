@@ -84,7 +84,7 @@ const ProjectsSection = () => {
   ];
 
   return (
-    <section id="work" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Featured Work at Sky */}
         <div className="mb-20">
@@ -107,7 +107,11 @@ const ProjectsSection = () => {
                   {/* Project Image */}
                   <div className={`relative overflow-hidden rounded-lg ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                     <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                      <div className="text-6xl opacity-50">🚀</div>
+                      <img 
+                        src="/placeholder.svg" 
+                        alt={project.title}
+                        className="w-full h-full object-cover object-center"
+                      />
                     </div>
                     <div className="absolute top-4 left-4">
                       <Badge variant="secondary" className="bg-primary text-white">
@@ -160,7 +164,7 @@ const ProjectsSection = () => {
         </div>
 
         {/* Personal Projects */}
-        <div id="projects">
+        <div>
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold mb-4">
               Personal <span className="gradient-text">Projects</span>

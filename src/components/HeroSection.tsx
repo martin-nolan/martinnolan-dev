@@ -31,6 +31,7 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               className="bg-primary hover:bg-primary/90 text-white glow-primary group"
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             >
               View My Work
               <ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-1 transition-transform" />
@@ -40,6 +41,7 @@ const HeroSection = () => {
               variant="outline" 
               size="lg"
               className="border-accent text-accent hover:bg-accent hover:text-white"
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Let's Connect
             </Button>
@@ -49,18 +51,24 @@ const HeroSection = () => {
           <div className="flex justify-center space-x-6">
             <a 
               href="https://github.com/martin-nolan" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-3 glass-card hover:bg-surface-hover transition-all duration-200 rounded-full group"
             >
               <Github className="h-6 w-6 text-muted-foreground group-hover:text-primary" />
             </a>
             <a 
               href="https://www.linkedin.com/in/martinnolan0110" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-3 glass-card hover:bg-surface-hover transition-all duration-200 rounded-full group"
             >
               <Linkedin className="h-6 w-6 text-muted-foreground group-hover:text-primary" />
             </a>
             <a 
               href="mailto:martinnolan_1@live.co.uk" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-3 glass-card hover:bg-surface-hover transition-all duration-200 rounded-full group"
             >
               <Mail className="h-6 w-6 text-muted-foreground group-hover:text-primary" />

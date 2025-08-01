@@ -30,14 +30,6 @@ const ContactSection = () => {
       href: "https://github.com/martin-nolan",
       primary: false
     },
-    {
-      icon: <Calendar className="h-6 w-6" />,
-      title: "Schedule Call",
-      description: "15-30 min chat",
-      value: "Book a time",
-      href: "#",
-      primary: false
-    }
   ];
 
   return (
@@ -68,6 +60,8 @@ const ContactSection = () => {
                 <a 
                   key={method.title}
                   href={method.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="block group"
                 >
                   <Card className={`glass-card border-surface-border hover:bg-surface-hover transition-all duration-200 ${method.primary ? 'ring-1 ring-primary/30' : ''}`}>
@@ -94,22 +88,6 @@ const ContactSection = () => {
               ))}
             </div>
 
-            {/* Quick CTA */}
-            <Card className="glass-card border-surface-border bg-gradient-to-r from-primary/5 to-accent/5">
-              <CardContent className="p-6 text-center">
-                <MessageCircle className="h-8 w-8 mx-auto mb-3 text-primary" />
-                <h4 className="font-semibold mb-2">Available for Opportunities</h4>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Open to discussing AI engineering roles, consulting projects, and collaborative ventures.
-                </p>
-                <Button 
-                  className="bg-primary hover:bg-primary/90 text-white"
-                  onClick={() => window.location.href = 'mailto:martinnolan_1@live.co.uk?subject=Opportunity Discussion'}
-                >
-                  Start Conversation
-                </Button>
-              </CardContent>
-            </Card>
           </div>
 
           {/* Contact Form */}
