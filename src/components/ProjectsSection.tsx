@@ -2,6 +2,9 @@ import { ExternalLink, Github, Calendar, Tag } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ImageCarousel } from "@/components/ui/image-carousel";
+import { GlassCard } from "@/components/ui/glass-card";
+import { GradientText } from "@/components/ui/gradient-text";
 
 const ProjectsSection = () => {
   const featuredProjects = [
@@ -17,7 +20,7 @@ const ProjectsSection = () => {
         "Seamless integration with live feeds",
         "Enhanced viewer engagement"
       ],
-      image: "/api/placeholder/600/400",
+      images: ["/public/screenshots/cricket-command-centre.webp"],
       category: "AI/ML"
     },
     {
