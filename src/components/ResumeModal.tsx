@@ -13,8 +13,8 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
   const handleDownload = () => {
     // Create a link element and trigger download
     const link = document.createElement('a');
-    link.href = '/resume.pdf'; // This will need to be uploaded later
-    link.download = 'Martin_Nolan_Resume.pdf';
+    link.href = '/src/assets/Martin Nolan CV – Aug 2025.pdf';
+    link.download = 'Martin_Nolan_CV_Aug_2025.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -59,12 +59,11 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
         {/* PDF Viewer */}
         <div className="h-[calc(100%-88px)] p-6">
           <div className="w-full h-full bg-surface/20 rounded-lg flex items-center justify-center border border-surface-border">
-            <div className="text-center">
-              <p className="text-muted-foreground mb-4">PDF will be displayed here once uploaded</p>
-              <p className="text-sm text-muted-foreground/70">
-                Upload your resume PDF to /public/resume.pdf
-              </p>
-            </div>
+            <iframe
+              src="/src/assets/Martin Nolan CV – Aug 2025.pdf"
+              className="w-full h-full rounded-lg"
+              title="Martin Nolan Resume"
+            />
           </div>
         </div>
       </div>
