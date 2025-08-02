@@ -13,7 +13,7 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
   const handleDownload = () => {
     // Create a link element and trigger download
     const link = document.createElement('a');
-    link.href = '/src/assets/Martin Nolan CV – Aug 2025.pdf';
+    link.href = './martin-nolan-cv.pdf'; // Use relative path
     link.download = 'Martin_Nolan_CV_Aug_2025.pdf';
     document.body.appendChild(link);
     link.click();
@@ -60,7 +60,7 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
         <div className="h-[calc(100%-88px)] p-6">
           <div className="w-full h-full bg-surface/20 rounded-lg flex items-center justify-center border border-surface-border">
             <iframe
-              src="/src/assets/Martin Nolan CV – Aug 2025.pdf"
+              src="./martin-nolan-cv.pdf"
               className="w-full h-full rounded-lg"
               title="Martin Nolan Resume"
             />

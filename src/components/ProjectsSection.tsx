@@ -20,7 +20,10 @@ const ProjectsSection = () => {
         "Seamless integration with live feeds",
         "Enhanced viewer engagement"
       ],
-      images: ["/public/screenshots/cricket-command-centre.webp"],
+      images: [
+        { src: "/placeholder.svg", description: "Main dashboard UI for live cricket commentary." },
+        { src: "/placeholder2.svg", description: "AI-generated insights panel for match events." }
+      ],
       category: "AI/ML"
     },
     {
@@ -35,7 +38,10 @@ const ProjectsSection = () => {
         "Improved agent efficiency",
         "Centralized policy access"
       ],
-      image: "/api/placeholder/600/400",
+      images: [
+        { src: "/placeholder.svg", description: "Search interface for policy documents." },
+        { src: "/placeholder2.svg", description: "Results page showing semantic matches." }
+      ],
       category: "Search"
     },
     {
@@ -50,7 +56,10 @@ const ProjectsSection = () => {
         "Personalized customer responses",
         "Streamlined support workflows"
       ],
-      image: "/api/placeholder/600/400",
+      images: [
+        { src: "/placeholder.svg", description: "Draft email UI with AI suggestions." },
+        { src: "/placeholder2.svg", description: "Personalization options for customer responses." }
+      ],
       category: "AI Tools"
     }
   ];
@@ -102,17 +111,15 @@ const ProjectsSection = () => {
 
           <div className="space-y-12">
             {featuredProjects.map((project, index) => (
-              <Card 
-                key={project.title}
-                className="glass-card border-surface-border overflow-hidden group hover:bg-surface-hover transition-all duration-500"
-              >
-                <div className={`grid lg:grid-cols-2 gap-8 ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+              <GlassCard key={project.title} className="border-surface-border overflow-hidden group hover:bg-surface-hover transition-all duration-500">
+                <div className="grid lg:grid-cols-2 gap-8">
                   {/* Project Image */}
-                  <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <div className={index % 2 === 1 ? "lg:order-2" : ""}> 
                     <div className="w-full h-full aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center relative">
-                      <img 
-                        src="/placeholder.svg" 
+                      <ImageCarousel
+                        images={project.images}
                         alt={project.title}
+                        projectTitle={project.title}
                         className="w-full h-full object-cover object-center"
                       />
                       <div className="absolute top-4 left-4 z-10 flex">
@@ -124,7 +131,7 @@ const ProjectsSection = () => {
                   </div>
 
                   {/* Project Details */}
-                  <div className={`p-8 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                  <div className={index % 2 === 1 ? "lg:order-1 p-8" : "p-8"}>
                     <div className="flex items-center gap-2 mb-3">
                       <Calendar className="h-4 w-4 text-muted-foreground" />
                       <span className="text-sm text-muted-foreground">{project.year}</span>
@@ -161,7 +168,7 @@ const ProjectsSection = () => {
                     </div>
                   </div>
                 </div>
-              </Card>
+              </GlassCard>
             ))}
           </div>
         </div>
@@ -179,10 +186,7 @@ const ProjectsSection = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
             {personalProjects.map((project, index) => (
-              <Card 
-                key={project.title}
-                className="glass-card border-surface-border hover:bg-surface-hover transition-all duration-300 group"
-              >
+              <GlassCard key={project.title} className="border-surface-border hover:bg-surface-hover transition-all duration-300 group">
                 <CardHeader>
                   <div className="flex justify-between items-start">
                     <div>
@@ -212,7 +216,7 @@ const ProjectsSection = () => {
                     ))}
                   </div>
                 </CardContent>
-              </Card>
+              </GlassCard>
             ))}
           </div>
         </div>
