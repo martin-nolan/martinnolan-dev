@@ -38,6 +38,8 @@ const Footer = () => {
                 </a>
                 <a
                   href="mailto:martinnolan_1@live.co.uk"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 glass-card hover:bg-surface-hover transition-all duration-200 rounded-lg group"
                 >
                   <Mail className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
@@ -66,12 +68,6 @@ const Footer = () => {
                   className="text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   Projects
-                </a>
-                <a
-                  href="#blog"
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  Blog
                 </a>
                 <a
                   href="#contact"
@@ -120,7 +116,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom copyright, centred */}
-        <div className="border-t border-surface-border pt-8 flex justify-center">
+        <div className="border-t border-surface-border pt-8 pb-8 flex justify-center">
           <p className="text-muted-foreground text-sm">
             © {currentYear} Martin Nolan. All rights reserved.
           </p>

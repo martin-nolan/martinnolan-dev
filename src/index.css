@@ -3,6 +3,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Motion preferences - respect user's accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Animation defaults - only when motion is preferred */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scale-in 0.2s ease-out;
+  }
+}
+
 /* Futuristic Portfolio Design System - Dark mode first with electric accents */
 
 @layer base {
