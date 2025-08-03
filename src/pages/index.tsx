@@ -7,7 +7,7 @@ import WorkSection from "@/widgets/page-sections/WorkSection";
 import ProjectsSection from "@/widgets/page-sections/ProjectsSection";
 import ContactSection from "@/widgets/page-sections/ContactSection";
 import Footer from "@/widgets/footer";
-import { ResumeModal } from "@/features/resume-modal";
+import ResumeModal from "@/features/resume-modal";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 

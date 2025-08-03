@@ -3,9 +3,10 @@ import * as React from "react"
 import type {
   ToastActionElement,
   ToastProps,
-} from "@/components/ui/toast"
+} from "@/shared/ui/toast"
 
-import { TOAST_LIMIT, TOAST_REMOVE_DELAY } from "@/lib/constants"
+const TOAST_LIMIT = 5 // Adjust as needed
+const TOAST_REMOVE_DELAY = 1000 // Adjust as needed (ms)
 
 type ToasterToast = ToastProps & {
   id: string

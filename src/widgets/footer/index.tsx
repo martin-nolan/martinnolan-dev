@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { GlassCard, GradientText } from "@/shared/ui";
-import { ResumeModal } from "@/features/resume-modal";
+import ResumeModal from "@/features/resume-modal";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();

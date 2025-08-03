@@ -1,6 +1,5 @@
 // utils/buildSystemPrompt.ts
-import type { MartinInfo } from "@/types/index";
-import { martinInfo } from "@/lib/martinInfo";
+import type { MartinInfo } from "@/shared/types/index";
 
 export function buildSystemPrompt(info: MartinInfo): string {
   return `

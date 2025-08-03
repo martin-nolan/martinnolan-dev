@@ -1,14 +1,19 @@
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMobile } from "@/shared/hooks/use-mobile"
 import * as React from "react"
-import { Sheet, SheetContent } from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent } from "@/shared/ui/sheet";
+import { Button } from "@/shared/ui/button";
 import { PanelLeft } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
+import { Input } from "@/shared/ui/input";
+import { Separator } from "@/shared/ui/separator";
 import { cn } from "@/shared/lib"
 import { Slot } from "@radix-ui/react-slot"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/shared/ui/tooltip";
+import { Skeleton } from "@/shared/ui/skeleton";
 import { VariantProps } from "class-variance-authority"
 import { useSidebar, SidebarContext } from "./sidebar-utils"
 import {
