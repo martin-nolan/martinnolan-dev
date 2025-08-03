@@ -34,7 +34,7 @@ const ImageModal = ({
   projectTitle,
 }: ImageModalProps) => {
   const handleOverlayKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === "Enter" || e.key === " " || e.key === "Escape") {
       onClose();
     }
   };
