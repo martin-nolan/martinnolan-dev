@@ -1,49 +1,45 @@
-import * as React from "react"
-import * as LabelPrimitive from "@radix-ui/react-label"
-import { Slot } from "@radix-ui/react-slot"
-import { Controller, FormProvider } from "react-hook-form"
-import { cn } from "@/shared/lib"
-import { Label } from "@/shared/ui/label"
-import {
-  useFormField,
-  FormFieldContext,
-  FormItemContext,
-  FormFieldContextValue,
-  FormItemContextValue,
-} from "./form-utils"
+import * as React from "react";
+import * as LabelPrimitive from "@radix-ui/react-label";
+import { Slot } from "@radix-ui/react-slot";
+import { Controller, FormProvider } from "react-hook-form";
+import { cn } from "@/shared/lib";
+import { Label } from "@/shared/ui/label";
+import { useFormField, FormFieldContext, FormItemContext } from "./form-utils";
 
-const Form = FormProvider
+const Form = FormProvider;
 
-import { FieldValues, FieldPath, ControllerProps } from "react-hook-form"
+import { FieldValues, FieldPath, ControllerProps } from "react-hook-form";
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({ ...props }: ControllerProps<TFieldValues, TName>) => {
+>({
+  ...props
+}: ControllerProps<TFieldValues, TName>) => {
   return (
     <FormFieldContext.Provider value={{ name: props.name }}>
       <Controller {...props} />
     </FormFieldContext.Provider>
-  )
-}
+  );
+};
 
 const FormItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const id = React.useId()
+  const id = React.useId();
   return (
     <FormItemContext.Provider value={{ id }}>
       <div ref={ref} className={cn("space-y-2", className)} {...props} />
     </FormItemContext.Provider>
-  )
-})
-FormItem.displayName = "FormItem"
+  );
+});
+FormItem.displayName = "FormItem";
 
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
 >(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField()
+  const { error, formItemId } = useFormField();
   return (
     <Label
       ref={ref}
@@ -51,15 +47,16 @@ const FormLabel = React.forwardRef<
       htmlFor={formItemId}
       {...props}
     />
-  )
-})
-FormLabel.displayName = "FormLabel"
+  );
+});
+FormLabel.displayName = "FormLabel";
 
 const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
 >(({ ...props }, ref) => {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+  const { error, formItemId, formDescriptionId, formMessageId } =
+    useFormField();
   return (
     <Slot
       ref={ref}
@@ -72,15 +69,15 @@ const FormControl = React.forwardRef<
       aria-invalid={!!error}
       {...props}
     />
-  )
-})
-FormControl.displayName = "FormControl"
+  );
+});
+FormControl.displayName = "FormControl";
 
 const FormDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => {
-  const { formDescriptionId } = useFormField()
+  const { formDescriptionId } = useFormField();
   return (
     <p
       ref={ref}
@@ -88,18 +85,18 @@ const FormDescription = React.forwardRef<
       className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
-  )
-})
-FormDescription.displayName = "FormDescription"
+  );
+});
+FormDescription.displayName = "FormDescription";
 
 const FormMessage = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, children, ...props }, ref) => {
-  const { error, formMessageId } = useFormField()
-  const body = error ? String(error?.message) : children
+  const { error, formMessageId } = useFormField();
+  const body = error ? String(error?.message) : children;
   if (!body) {
-    return null
+    return null;
   }
   return (
     <p
@@ -110,9 +107,9 @@ const FormMessage = React.forwardRef<
     >
       {body}
     </p>
-  )
-})
-FormMessage.displayName = "FormMessage"
+  );
+});
+FormMessage.displayName = "FormMessage";
 
 export {
   Form,
@@ -122,4 +119,4 @@ export {
   FormDescription,
   FormMessage,
   FormField,
-}
+};

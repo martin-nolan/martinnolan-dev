@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
-import { GlassCard, GradientText } from "@/shared/ui";
+import { GradientText } from "@/shared/ui";
 import ResumeModal from "@/features/resume-modal";
 
 const Footer = () => {
@@ -10,9 +10,9 @@ const Footer = () => {
   return (
     <>
       <footer className="border-t border-surface-border bg-surface/5 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           {/* 3-column grid, items centred in each cell */}
-          <div className="grid md:grid-cols-3 gap-8 justify-items-center">
+          <div className="grid justify-items-center gap-8 md:grid-cols-3">
             {/* Brand */}
             <div className="space-y-4 text-center md:text-left">
               <h3 className="text-xl font-bold">
@@ -22,30 +22,30 @@ const Footer = () => {
                 AI Engineer building the future of human-computer interaction at
                 Sky.
               </p>
-              <div className="flex justify-center md:justify-start space-x-4">
+              <div className="flex justify-center space-x-4 md:justify-start">
                 <a
                   href="https://github.com/martin-nolan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 bg-surface border border-surface-border hover:bg-surface-hover transition-all duration-200 rounded-lg group"
+                  className="group rounded-lg border border-surface-border bg-surface p-2 transition-all duration-200 hover:bg-surface-hover"
                 >
-                  <Github className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
+                  <Github className="size-5 text-muted-foreground group-hover:text-primary" />
                 </a>
                 <a
                   href="https://www.linkedin.com/in/martinnolan0110"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 bg-surface border border-surface-border hover:bg-surface-hover transition-all duration-200 rounded-lg group"
+                  className="group rounded-lg border border-surface-border bg-surface p-2 transition-all duration-200 hover:bg-surface-hover"
                 >
-                  <Linkedin className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
+                  <Linkedin className="size-5 text-muted-foreground group-hover:text-primary" />
                 </a>
                 <a
                   href="mailto:martinnolan_1@live.co.uk"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 bg-surface border border-surface-border hover:bg-surface-hover transition-all duration-200 rounded-lg group"
+                  className="group rounded-lg border border-surface-border bg-surface p-2 transition-all duration-200 hover:bg-surface-hover"
                 >
-                  <Mail className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
+                  <Mail className="size-5 text-muted-foreground group-hover:text-primary" />
                 </a>
               </div>
             </div>
@@ -56,25 +56,25 @@ const Footer = () => {
               <nav className="flex flex-col space-y-2">
                 <a
                   href="#about"
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
                 >
                   About
                 </a>
                 <a
                   href="#work"
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
                 >
                   Work
                 </a>
                 <a
                   href="#projects"
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
                 >
                   Projects
                 </a>
                 <a
                   href="#contact"
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
                 >
                   Contact
                 </a>
@@ -87,7 +87,7 @@ const Footer = () => {
               <nav className="flex flex-col space-y-2">
                 <button
                   onClick={() => setShowResumeModal(true)}
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200 text-left"
+                  className="text-left text-muted-foreground transition-colors duration-200 hover:text-primary"
                 >
                   Resume (PDF)
                 </button>
@@ -95,7 +95,7 @@ const Footer = () => {
                   href="https://www.linkedin.com/in/martinnolan0110"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
                 >
                   LinkedIn Profile
                 </a>
@@ -103,7 +103,7 @@ const Footer = () => {
                   href="https://github.com/martin-nolan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
                 >
                   GitHub Repositories
                 </a>
@@ -111,7 +111,7 @@ const Footer = () => {
                   href="mailto:martinnolan_1@live.co.uk?subject=Collaboration Inquiry"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
                 >
                   Collaborate
                 </a>
@@ -121,8 +121,8 @@ const Footer = () => {
         </div>
 
         {/* Bottom copyright, centred */}
-        <div className="border-t border-surface-border pt-8 pb-8 flex justify-center">
-          <p className="text-muted-foreground text-sm">
+        <div className="flex justify-center border-t border-surface-border py-8">
+          <p className="text-sm text-muted-foreground">
             © {currentYear} Martin Nolan. All rights reserved.
           </p>
         </div>

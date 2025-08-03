@@ -20,12 +20,12 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
 
   return (
     <header>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-surface/5 backdrop-blur-sm border-b border-surface-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+      <nav className="fixed inset-x-0 top-0 z-50 border-b border-surface-border bg-surface/5 backdrop-blur-sm">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
             {/* Logo */}
-            <div className="flex-shrink-0">
-              <Link href="/" className="text-xl font-bold gradient-text">
+            <div className="shrink-0">
+              <Link href="/" className="gradient-text text-xl font-bold">
                 Martin Nolan
               </Link>
             </div>
@@ -37,17 +37,17 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
                   <button
                     key={item.href}
                     onClick={() => handleScroll(item.href)}
-                    className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors duration-200 relative group"
+                    className="group relative px-3 py-2 text-sm font-medium text-foreground transition-colors duration-200 hover:text-primary"
                   >
                     {item.label}
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left"></span>
+                    <span className="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-primary transition-transform duration-200 group-hover:scale-x-100"></span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Desktop CTA */}
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden items-center gap-4 md:flex">
               <ThemeToggle />
               <Button 
                 variant="outline" 
@@ -59,7 +59,7 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden flex items-center gap-2">
+            <div className="flex items-center gap-2 md:hidden">
               <ThemeToggle />
               <Button
                 variant="ghost"
@@ -67,7 +67,7 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-foreground"
               >
-                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
               </Button>
             </div>
           </div>
@@ -76,7 +76,7 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-surface/5 backdrop-blur-sm border-t border-surface-border">
+            <div className="space-y-1 border-t border-surface-border bg-surface/5 px-2 pb-3 pt-2 backdrop-blur-sm">
               {navItems.map((item) => (
                 <button
                   key={item.href}
@@ -84,12 +84,12 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
                     handleScroll(item.href);
                     setIsOpen(false);
                   }}
-                  className="block w-full text-left px-3 py-2 text-base font-medium text-foreground hover:text-primary transition-colors duration-200"
+                  className="block w-full px-3 py-2 text-left text-base font-medium text-foreground transition-colors duration-200 hover:text-primary"
                 >
                   {item.label}
                 </button>
               ))}
-              <div className="pt-4 pb-2">
+              <div className="pb-2 pt-4">
                 <Button 
                   variant="outline" 
                   className="w-full border-primary text-primary hover:bg-primary hover:text-white"

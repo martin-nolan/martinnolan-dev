@@ -53,7 +53,7 @@ const ContactSection = () => {
 
   const contactMethods: ContactMethod[] = [
     {
-      icon: <Mail className="h-6 w-6" />,
+      icon: <Mail className="size-6" />,
       title: "Email",
       description: "Direct communication",
       value: "martinnolan_1@live.co.uk",
@@ -61,7 +61,7 @@ const ContactSection = () => {
       primary: true
     },
     {
-      icon: <Linkedin className="h-6 w-6" />,
+      icon: <Linkedin className="size-6" />,
       title: "LinkedIn",
       description: "Professional network",
       value: "Connect on LinkedIn",
@@ -69,7 +69,7 @@ const ContactSection = () => {
       primary: false
     },
     {
-      icon: <Github className="h-6 w-6" />,
+      icon: <Github className="size-6" />,
       title: "GitHub",
       description: "Code & projects",
       value: "View repositories",
@@ -79,23 +79,23 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+    <section id="contact" className="px-4 py-20 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-16 text-center">
+          <h2 className="mb-6 text-4xl font-bold sm:text-5xl">
             Let's <GradientText>Connect</GradientText>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
             Whether you're looking to collaborate, discuss opportunities, or just chat about AI and technology, 
             I'd love to hear from you.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid gap-12 lg:grid-cols-2">
           {/* Contact Methods */}
           <div className="space-y-6">
             <div className="mb-8">
-              <h3 className="text-2xl font-semibold mb-4">Get in Touch</h3>
+              <h3 className="mb-4 text-2xl font-semibold">Get in Touch</h3>
               <p className="text-muted-foreground">
                 Choose your preferred way to reach out. I typically respond within 24 hours.
               </p>
@@ -108,22 +108,22 @@ const ContactSection = () => {
                   href={method.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block group"
+                  className="group block"
                 >
-                  <GlassCard className={`border-surface-border hover:bg-surface-hover transition-all duration-200 ${method.primary ? 'ring-1 ring-primary/30' : ''}`}>
+                  <GlassCard className={`border-surface-border transition-all duration-200 hover:bg-surface-hover ${method.primary ? 'ring-1 ring-primary/30' : ''}`}>
                     <CardContent className="p-6">
                       <div className="flex items-center space-x-4">
-                        <div className={`p-3 rounded-lg ${method.primary ? 'bg-primary/10 text-primary' : 'bg-surface text-muted-foreground'} group-hover:scale-110 transition-transform duration-200`}>
+                        <div className={`rounded-lg p-3 ${method.primary ? 'bg-primary/10 text-primary' : 'bg-surface text-muted-foreground'} transition-transform duration-200 group-hover:scale-110`}>
                           {method.icon}
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                          <h4 className="font-semibold text-foreground transition-colors group-hover:text-primary">
                             {method.title}
                           </h4>
-                          <p className="text-sm text-muted-foreground mb-1">
+                          <p className="mb-1 text-sm text-muted-foreground">
                             {method.description}
                           </p>
-                          <p className={`text-sm ${method.primary ? 'text-primary font-medium' : 'text-foreground'}`}>
+                          <p className={`text-sm ${method.primary ? 'font-medium text-primary' : 'text-foreground'}`}>
                             {method.value}
                           </p>
                         </div>
@@ -139,7 +139,7 @@ const ContactSection = () => {
           {/* Contact Form */}
           <div className="space-y-6">
             <div className="mb-8">
-              <h3 className="text-2xl font-semibold mb-4">Send a Message</h3>
+              <h3 className="mb-4 text-2xl font-semibold">Send a Message</h3>
               <p className="text-muted-foreground">
                 Prefer to reach out directly? Use the form below and I'll get back to you soon.
               </p>
@@ -150,19 +150,19 @@ const ContactSection = () => {
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium mb-2">
+                      <label htmlFor="name" className="mb-2 block text-sm font-medium">
                         Name
                       </label>
                       <Input 
                         id="name"
                         name="name"
                         placeholder="Your name"
-                        className="bg-surface border-surface-border focus:border-primary"
+                        className="border-surface-border bg-surface focus:border-primary"
                         required
                       />
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium mb-2">
+                      <label htmlFor="email" className="mb-2 block text-sm font-medium">
                         Email
                       </label>
                       <Input 
@@ -170,27 +170,27 @@ const ContactSection = () => {
                         name="email"
                         type="email"
                         placeholder="your@email.com"
-                        className="bg-surface border-surface-border focus:border-primary"
+                        className="border-surface-border bg-surface focus:border-primary"
                         required
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                    <label htmlFor="subject" className="mb-2 block text-sm font-medium">
                       Subject
                     </label>
                     <Input 
                       id="subject"
                       name="subject"
                       placeholder="What would you like to discuss?"
-                      className="bg-surface border-surface-border focus:border-primary"
+                      className="border-surface-border bg-surface focus:border-primary"
                       required
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                    <label htmlFor="message" className="mb-2 block text-sm font-medium">
                       Message
                     </label>
                     <Textarea 
@@ -198,14 +198,14 @@ const ContactSection = () => {
                       name="message"
                       placeholder="Tell me more about your project, opportunity, or what you'd like to chat about..."
                       rows={5}
-                      className="bg-surface border-surface-border focus:border-primary resize-none"
+                      className="resize-none border-surface-border bg-surface focus:border-primary"
                       required
                     />
                   </div>
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-primary hover:bg-primary/90 text-white"
+                    className="w-full bg-primary text-white hover:bg-primary/90"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Sending..." : "Send Message"}

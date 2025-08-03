@@ -10,7 +10,6 @@ import type {
   MartinInfo,
   Message,
   ErrorResponse,
-  ChatChoice,
   ChatOK,
 } from "@/shared/types";
 
@@ -125,28 +124,28 @@ export const AIChatWidget: React.FC = () => {
       <div className="fixed bottom-6 right-6 z-50">
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className="h-14 w-14 rounded-full bg-primary hover:bg-primary/90 shadow-lg glow-primary"
+          className="glow-primary size-14 rounded-full bg-primary shadow-lg hover:bg-primary/90"
           aria-label="Open AI Chat"
         >
           {isOpen ? (
-            <X className="h-6 w-6" />
+            <X className="size-6" />
           ) : (
-            <MessageCircle className="h-6 w-6" />
+            <MessageCircle className="size-6" />
           )}
         </Button>
       </div>
 
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-[26rem] h-[32rem] animate-scale-in">
-          <GlassCard className="h-full flex flex-col border-surface-border">
-            <div className="p-4 border-b border-surface-border">
+        <div className="fixed bottom-24 right-6 z-50 h-[32rem] w-[26rem] animate-scale-in">
+          <GlassCard className="flex h-full flex-col border-surface-border">
+            <div className="border-b border-surface-border p-4">
               <h3 className="font-semibold">Chat with Martin's AI</h3>
               <p className="text-xs text-muted-foreground">
                 Ask about experience, projects &amp; more
               </p>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            <div className="flex-1 space-y-3 overflow-y-auto p-4">
               {messages.map((m) => (
                 <div
                   key={m.id}
@@ -155,10 +154,10 @@ export const AIChatWidget: React.FC = () => {
                   }`}
                 >
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                    className={`max-w-[80%] rounded-lg p-3 text-sm ${
                       m.isUser
                         ? "bg-primary text-white"
-                        : "bg-surface border border-surface-border"
+                        : "border border-surface-border bg-surface"
                     }`}
                   >
                     {m.content}
@@ -168,15 +167,15 @@ export const AIChatWidget: React.FC = () => {
 
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-surface border border-surface-border p-3 rounded-lg text-sm">
+                  <div className="rounded-lg border border-surface-border bg-surface p-3 text-sm">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse" />
+                      <div className="size-2 animate-pulse rounded-full bg-muted-foreground" />
                       <div
-                        className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse"
+                        className="size-2 animate-pulse rounded-full bg-muted-foreground"
                         style={{ animationDelay: "0.2s" }}
                       />
                       <div
-                        className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse"
+                        className="size-2 animate-pulse rounded-full bg-muted-foreground"
                         style={{ animationDelay: "0.4s" }}
                       />
                     </div>
@@ -186,14 +185,14 @@ export const AIChatWidget: React.FC = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            <div className="p-4 border-t border-surface-border">
+            <div className="border-t border-surface-border p-4">
               <div className="flex space-x-2">
                 <Input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
                   placeholder="Ask about Martin…"
-                  className="flex-1 bg-surface border-surface-border"
+                  className="flex-1 border-surface-border bg-surface"
                   disabled={isLoading}
                 />
                 <Button
@@ -202,7 +201,7 @@ export const AIChatWidget: React.FC = () => {
                   size="sm"
                   className="px-3"
                 >
-                  <Send className="h-4 w-4" />
+                  <Send className="size-4" />
                 </Button>
               </div>
             </div>

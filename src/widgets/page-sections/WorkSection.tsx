@@ -46,50 +46,50 @@ const experiences: Experience[] = [
   ];
 
   return (
-    <section id="work" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">
+    <section id="work" className="relative py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 text-4xl font-bold">
             Professional <GradientText>Experience</GradientText>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
             My journey through Sky UK, from front-end development to AI engineering
           </p>
         </div>
 
         <div className="space-y-8">
           {experiences.map((exp, index) => (
-            <GlassCard key={index} className="p-8 rounded-2xl group hover:bg-surface-hover transition-all duration-300">
-              <div className="flex flex-col lg:flex-row lg:items-start gap-6">
+            <GlassCard key={index} className="group rounded-2xl p-8 transition-all duration-300 hover:bg-surface-hover">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
                 {/* Icon & Timeline */}
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <exp.icon className="h-8 w-8 text-primary" />
+                <div className="shrink-0">
+                  <div className="flex size-16 items-center justify-center rounded-full bg-primary/10 transition-colors group-hover:bg-primary/20">
+                    <exp.icon className="size-8 text-primary" />
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="flex-1">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                  <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                      <h3 className="text-2xl font-bold text-foreground mb-1">{exp.role}</h3>
-                      <p className="text-lg text-primary font-semibold">{exp.company}</p>
+                      <h3 className="mb-1 text-2xl font-bold text-foreground">{exp.role}</h3>
+                      <p className="text-lg font-semibold text-primary">{exp.company}</p>
                     </div>
                     <div className="mt-2 sm:mt-0">
-                      <span className="inline-block px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium">
+                      <span className="inline-block rounded-full bg-accent/10 px-4 py-2 text-sm font-medium text-accent">
                         {exp.period}
                       </span>
                     </div>
                   </div>
 
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                  <p className="mb-6 leading-relaxed text-muted-foreground">
                     {exp.description}
                   </p>
 
-                  <div className="grid sm:grid-cols-2 gap-3">
+                  <div className="grid gap-3 sm:grid-cols-2">
                     {exp.achievements.map((achievement, achievementIndex) => (
                       <div key={achievementIndex} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="mt-2 size-2 shrink-0 rounded-full bg-accent"></div>
                         <span className="text-sm text-muted-foreground">{achievement}</span>
                       </div>
                     ))}

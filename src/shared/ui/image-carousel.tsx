@@ -25,7 +25,19 @@ interface ImageModalProps {
   projectTitle?: string;
 }
 
-const ImageModal = ({ images, currentIndex, isOpen, onClose, alt, projectTitle }: ImageModalProps) => {
+const ImageModal = ({
+  images,
+  currentIndex,
+  isOpen,
+  onClose,
+  alt,
+  projectTitle,
+}: ImageModalProps) => {
+  const handleOverlayKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter" || e.key === " ") {
+      onClose();
+    }
+  };
   const [activeIndex, setActiveIndex] = useState(currentIndex);
 
   if (!isOpen) return null;
@@ -41,17 +53,27 @@ const ImageModal = ({ images, currentIndex, isOpen, onClose, alt, projectTitle }
   const currentImage = images[activeIndex];
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div 
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
+        role="button"
+        tabIndex={0}
+        onKeyDown={handleOverlayKeyDown}
+        aria-label="Close image modal"
       />
-      <div className="relative w-full max-w-3xl h-[80vh] mx-4 flex items-center justify-center">
-        <GlassCard className="w-full h-full flex flex-col">
-          <div className="flex items-center justify-between p-6 border-b border-surface-border">
+      <div className="relative mx-4 flex h-[80vh] w-full max-w-3xl items-center justify-center">
+        <GlassCard className="flex size-full flex-col">
+          <div className="flex items-center justify-between border-b border-surface-border p-6">
             <div>
               <h2 className="text-2xl font-bold">{projectTitle}</h2>
-              <div className="text-sm text-muted-foreground mt-1">{activeIndex + 1} / {images.length}</div>
+              <div className="mt-1 text-sm text-muted-foreground">
+                {activeIndex + 1} / {images.length}
+              </div>
             </div>
             <Button
               variant="ghost"
@@ -59,41 +81,41 @@ const ImageModal = ({ images, currentIndex, isOpen, onClose, alt, projectTitle }
               onClick={onClose}
               className="text-muted-foreground hover:text-foreground"
             >
-              <X className="h-6 w-6" />
+              <X className="size-6" />
             </Button>
           </div>
-          <div className="flex-1 flex flex-col items-center justify-center p-6 relative">
+          <div className="relative flex flex-1 flex-col items-center justify-center p-6">
             {images.length > 1 && (
               <>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
+                  className="absolute left-4 top-1/2 z-10 -translate-y-1/2"
                 >
-                  <ChevronLeft className="h-6 w-6" />
+                  <ChevronLeft className="size-6" />
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10"
+                  className="absolute right-4 top-1/2 z-10 -translate-y-1/2"
                 >
-                  <ChevronRight className="h-6 w-6" />
+                  <ChevronRight className="size-6" />
                 </Button>
               </>
             )}
-            <div className="relative w-full flex items-center justify-center">
+            <div className="relative flex w-full items-center justify-center">
               <Image
                 src={currentImage.src}
                 alt={`${alt} - Image ${activeIndex + 1}`}
                 width={500}
                 height={300}
-                className="w-auto h-auto max-w-[90%] max-h-[60vh] object-contain rounded-lg"
-                style={{margin: '0 auto', display: 'block'}}
+                className="size-auto max-h-[60vh] max-w-[90%] rounded-lg object-contain"
+                style={{ margin: "0 auto", display: "block" }}
               />
               {currentImage.description && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 text-base text-muted-foreground text-center max-w-xl bg-black/60 rounded-lg border border-surface-border backdrop-blur-md shadow-lg">
+                <div className="absolute bottom-4 left-1/2 max-w-xl -translate-x-1/2 rounded-lg border border-surface-border bg-black/60 px-6 py-3 text-center text-base text-muted-foreground shadow-lg backdrop-blur-md">
                   {currentImage.description}
                 </div>
               )}
@@ -106,13 +128,28 @@ const ImageModal = ({ images, currentIndex, isOpen, onClose, alt, projectTitle }
   );
 };
 
-export const ImageCarousel = ({ images, alt, projectTitle, className }: ImageCarouselProps) => {
+export const ImageCarousel = ({
+  images,
+  alt,
+  projectTitle,
+  className,
+}: ImageCarouselProps) => {
+  const handleImageKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    if (e.key === "Enter" || e.key === " ") {
+      handleImageClick(index);
+    }
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   if (!images.length) {
     return (
-      <div className={`bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center ${className}`}>
+      <div
+        className={`flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20 ${className}`}
+      >
         <span className="text-muted-foreground">No images available</span>
       </div>
     );
@@ -127,25 +164,29 @@ export const ImageCarousel = ({ images, alt, projectTitle, className }: ImageCar
     <>
       <div className={`relative overflow-hidden ${className}`}>
         <div
-          className="w-full h-full cursor-pointer group"
+          className="group size-full cursor-pointer"
           onClick={() => handleImageClick(0)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => handleImageKeyDown(e, 0)}
+          aria-label={alt}
         >
           <Image
             src={images[0].src}
             alt={alt}
             width={500}
             height={300}
-            className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+            className="size-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
           {images.length > 1 && (
-            <div className="absolute top-4 right-4 bg-black/50 text-white px-2 py-1 rounded text-sm">
+            <div className="absolute right-4 top-4 rounded bg-black/50 px-2 py-1 text-sm text-white">
               +{images.length - 1} more
             </div>
           )}
         </div>
       </div>
-      
+
       <ImageModal
         images={images}
         currentIndex={selectedIndex}

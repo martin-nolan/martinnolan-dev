@@ -39,13 +39,13 @@ export const ThemeToggle = () => {
       variant="ghost"
       size="sm"
       onClick={toggleTheme}
-      className="p-2 hover:bg-surface-hover transition-colors"
+      className="p-2 transition-colors hover:bg-surface-hover"
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
       {isDark ? (
-        <Sun className="h-4 w-4" />
+        <Sun className="size-4" />
       ) : (
-        <Moon className="h-4 w-4" />
+        <Moon className="size-4" />
       )}
     </Button>
   );
