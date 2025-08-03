@@ -42,7 +42,8 @@ const HeroSection = () => {
 
           <p className="mx-auto mb-8 max-w-2xl text-xl text-muted-foreground sm:text-2xl">
             Associate Gen AI Software Engineer at Sky UK, building human-centred
-            drop-shadow-[0,2px,16px,rgba(0,0,0,0.5)]
+            AI tools that make work more efficient and accessible through rapid
+            demos and feedback loops.
           </p>
 
           <div className="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
