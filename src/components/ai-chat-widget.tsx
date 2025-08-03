@@ -1,4 +1,3 @@
-// components/ai-chat-widget.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -7,8 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { GlassCard } from "@/components/ui/glass-card";
-import createClient from "@azure-rest/ai-inference";
-import { AzureKeyCredential } from "@azure/core-auth";
 import { buildSystemPrompt } from "./utils/buildSystemPrompt";
 import { martinInfo } from "@/lib/martinInfo";
 import type { MartinInfo } from "@/types";
@@ -16,9 +13,7 @@ import type { MartinInfo } from "@/types";
 import type { Message, ErrorResponse, ChatChoice, ChatOK } from "@/types";
 
 /* ---------- constants ---------- */
-const ENDPOINT = "https://models.github.ai/inference";
-const MODEL_ID = "openai/gpt-4.1";
-const apiKey = import.meta.env.VITE_GITHUB_TOKEN ?? ""; // keep secret server-side if you can
+// SECURITY: API key handled server-side via /api/chat proxy.
 
 /* ---------- component ---------- */
 export const AIChatWidget: React.FC = () => {
@@ -57,6 +52,15 @@ export const AIChatWidget: React.FC = () => {
   const isChatOK = (body: unknown): body is ChatOK =>
     !!body && typeof body === "object" && "choices" in body;
 
+  /** safely parse a Response as JSON without throwing */
+  const safeJson = async (r: Response) => {
+    try {
+      return await r.json();
+    } catch {
+      return null;
+    }
+  };
+
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
     if (!withinRate()) {
@@ -79,12 +83,7 @@ export const AIChatWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      if (!apiKey) throw new Error("Missing GITHUB_TOKEN in environment");
-
-      const client = createClient(ENDPOINT, new AzureKeyCredential(apiKey));
-
       const systemPrompt = buildSystemPrompt(martinInfo as MartinInfo);
-
       const chatMessages = [
         { role: "system", content: systemPrompt },
         ...messages.map((m) => ({
@@ -94,17 +93,20 @@ export const AIChatWidget: React.FC = () => {
         { role: "user", content: input },
       ];
 
-      const res = await client.path("/chat/completions").post({
-        body: { model: MODEL_ID, messages: chatMessages, max_tokens: 256 },
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: chatMessages, max_tokens: 256 }),
       });
 
-      if (res.status !== "200" || !isChatOK(res.body)) {
-        const err =
-          (res.body as ErrorResponse).error?.message ?? "Unknown error";
+      const data = await safeJson(res);
+
+      if (!res.ok || !isChatOK(data)) {
+        const err = (data as ErrorResponse)?.error?.message ?? "Unknown error";
         throw new Error(err);
       }
 
-      const reply = res.body.choices[0].message.content;
+      const reply = (data as ChatOK).choices[0].message.content;
       const aiMsg: Message = {
         id: crypto.randomUUID(),
         content: reply,
