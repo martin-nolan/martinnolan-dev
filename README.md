@@ -1,6 +1,4 @@
-
 # Martin Nolan Portfolio & AI Assistant
-
 
 ## Overview
 
@@ -12,28 +10,43 @@ This is the source code for Martin Nolan's personal portfolio and AI chat assist
 - **AI Chat Widget**: Ask questions about Martin's background, experience, and projects.
 - **Resume Modal**: View and download Martin's CV as a PDF.
 - **Contact Form**: Send messages directly from the site.
-- **Centralized Types**: All TypeScript types and interfaces are defined in `src/types/index.ts` for maintainability.
 
 ## Tech Stack
 
-- Vite
+- Next.js
+- React 18
 - TypeScript
-- React
-- shadcn-ui
+- shadcn/ui
 - Tailwind CSS
-
+- TanStack Query
+- Zod
 
 ## Project Structure
 
-- `src/components/` — All UI and app components
-- `src/pages/` — Page-level React components
-- `src/lib/` — Utility modules and Martin's info
-- `src/types/index.ts` — Centralized TypeScript types/interfaces
-- `public/` — Static assets (favicon, PDFs, SVGs)
+This project follows a feature-sliced architecture.
 
-## TypeScript Types
+- `src/app/` — Global styles and providers.
+- `src/pages/` — Next.js pages and API routes.
+- `src/shared/` — Reusable, low-level modules like UI components, hooks, and utilities.
+- `src/entities/` — Business entities, like data models and domain-specific logic.
+- `src/features/` — User-facing features, such as the AI chat widget or resume modal.
+- `src/widgets/` — Compositional blocks for pages, like the navigation bar or footer.
 
-All interfaces and types for props, data models, and shared structures are defined in `src/types/index.ts`. Please add new types here for consistency.
+## Getting Started
+
+First, install the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## License
 
