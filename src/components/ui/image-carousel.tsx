@@ -94,7 +94,7 @@ const ImageModal = ({ images, currentIndex, isOpen, onClose, alt, projectTitle }
               style={{margin: '0 auto', display: 'block'}}
             />
             {currentImage.description && (
-              <div className="mt-4 text-base text-muted-foreground text-center max-w-xl">
+              <div className="mt-4 px-6 py-3 text-base text-muted-foreground text-center max-w-xl bg-surface/20 rounded-lg border border-surface-border">
                 {currentImage.description}
               </div>
             )}
