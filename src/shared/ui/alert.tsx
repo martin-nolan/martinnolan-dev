@@ -29,7 +29,6 @@ const Alert = React.forwardRef<
     className={cn(alertVariants({ variant }), className)}
     {...props}
   >
-    <h2 className="sr-only">Alert</h2>
     {children}
   </div>
 ));
