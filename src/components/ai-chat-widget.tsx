@@ -13,23 +13,7 @@ import { buildSystemPrompt } from "./utils/buildSystemPrompt";
 import { martinInfo } from "@/lib/martinInfo";
 import type { MartinInfo } from "@/types";
 
-/* ---------- types ---------- */
-interface Message {
-  id: string;
-  content: string;
-  isUser: boolean;
-  timestamp: Date;
-}
-
-interface ErrorResponse {
-  error?: { message?: string };
-}
-interface ChatChoice {
-  message: { content: string };
-}
-interface ChatOK {
-  choices: ChatChoice[];
-}
+import type { Message, ErrorResponse, ChatChoice, ChatOK } from "@/types";
 
 /* ---------- constants ---------- */
 const ENDPOINT = "https://models.github.ai/inference";

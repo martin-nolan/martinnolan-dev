@@ -5,7 +5,9 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GradientText } from "@/components/ui/gradient-text";
 
-const Navigation = ({ setIsResumeOpen }: { setIsResumeOpen: (open: boolean) => void }) => {
+import type { NavigationProps } from "@/types";
+
+const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [

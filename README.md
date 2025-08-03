@@ -1,58 +1,20 @@
-# Welcome to your Lovable project
 
-## Project info
+# Martin Nolan Portfolio & AI Assistant
 
-**URL**: https://lovable.dev/projects/c1ab8566-edb7-4a2f-aa3e-53c48bdf467c
 
-## How can I edit this code?
+## Overview
 
-There are several ways of editing your application.
+This is the source code for Martin Nolan's personal portfolio and AI chat assistant. It showcases professional experience, featured and personal projects, technical skills, and includes an interactive AI chat widget powered by OpenAI.
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c1ab8566-edb7-4a2f-aa3e-53c48bdf467c) and start prompting.
+- **Portfolio**: Modern, responsive design with sections for About, Work Experience, Projects, and Contact.
+- **AI Chat Widget**: Ask questions about Martin's background, experience, and projects.
+- **Resume Modal**: View and download Martin's CV as a PDF.
+- **Contact Form**: Send messages directly from the site.
+- **Centralized Types**: All TypeScript types and interfaces are defined in `src/types/index.ts` for maintainability.
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
+## Tech Stack
 
 - Vite
 - TypeScript
@@ -60,14 +22,19 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/c1ab8566-edb7-4a2f-aa3e-53c48bdf467c) and click on Share -> Publish.
+## Project Structure
 
-## Can I connect a custom domain to my Lovable project?
+- `src/components/` — All UI and app components
+- `src/pages/` — Page-level React components
+- `src/lib/` — Utility modules and Martin's info
+- `src/types/index.ts` — Centralized TypeScript types/interfaces
+- `public/` — Static assets (favicon, PDFs, SVGs)
 
-Yes, you can!
+## TypeScript Types
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+All interfaces and types for props, data models, and shared structures are defined in `src/types/index.ts`. Please add new types here for consistency.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## License
+
+MIT

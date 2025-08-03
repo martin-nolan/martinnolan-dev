@@ -3,10 +3,7 @@ import { X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
 
-interface ResumeModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+import type { ResumeModalProps } from "@/types";
 
 const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
   if (!isOpen) return null;

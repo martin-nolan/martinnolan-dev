@@ -2,8 +2,10 @@ import { Building2, Users, Code } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GradientText } from "@/components/ui/gradient-text";
 
+import type { Experience } from "../types";
 const WorkSection = () => {
-  const experiences = [
+
+const experiences: Experience[] = [
     {
       role: "Associate Gen AI Software Engineer",
       company: "Sky UK",

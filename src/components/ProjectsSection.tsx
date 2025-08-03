@@ -6,8 +6,10 @@ import { ImageCarousel } from "@/components/ui/image-carousel";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GradientText } from "@/components/ui/gradient-text";
 
+import type { FeaturedProject, PersonalProject } from "@/types";
+
 const ProjectsSection = () => {
-  const featuredProjects = [
+  const featuredProjects: FeaturedProject[] = [
     {
       title: "Cricket Command Centre",
       role: "Associate Gen AI Software Engineer",
@@ -64,7 +66,7 @@ const ProjectsSection = () => {
     }
   ];
 
-  const personalProjects = [
+  const personalProjects: PersonalProject[] = [
     {
       title: "inTENt-Fitness",
       description: "Alexa skill delivering quick 10-minute workouts or guided meditations for busy lifestyles.",

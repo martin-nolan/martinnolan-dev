@@ -3,47 +3,52 @@ import { Card, CardContent } from "@/components/ui/card";
 import { GlassCard } from "@/components/ui/glass-card";
 import { GradientText } from "@/components/ui/gradient-text";
 import { SmartImage } from "@/components/ui/smart-image";
+import type { AboutSectionProps, UserInfo, Highlight } from "@/types";
 
-const AboutSection = () => {
-  const skills = [
-    "TypeScript", "Python", "React", "Next.js", "TailwindCSS", "Google Cloud",
-    "OpenAI", "LLMs", "Full-Stack Development", "Stakeholder Management",
-    "Agile Product Ownership", "Cloud Deployment", "Observability", "Django"
-  ];
+// Use centralized Highlight type if needed in future
 
-  const highlights = [
-    {
-      icon: <Brain className="h-8 w-8 text-primary" />,
-      title: "Gen AI Development",
-      description: "Building internal AI-driven platforms with rapid prototyping and user feedback loops."
-    },
-    {
-      icon: <Code className="h-8 w-8 text-accent" />,
-      title: "Full-Stack Development", 
-      description: "End-to-end development with Next.js, TypeScript, and TailwindCSS deployed on Google Cloud."
-    },
-    {
-      icon: <Users className="h-8 w-8 text-primary" />,
-      title: "Stakeholder Engagement",
-      description: "Leading ideation sessions and managing product ownership with agile methodologies."
-    },
-    {
-      icon: <Rocket className="h-8 w-8 text-accent" />,
-      title: "Cloud Deployment",
-      description: "Deploying and observing AI solutions on Google Cloud Platform with reliability focus."
-    }
-  ];
+const defaultSkills = [
+  "TypeScript", "Python", "React", "Next.js", "TailwindCSS", "Google Cloud",
+  "OpenAI", "LLMs", "Full-Stack Development", "Stakeholder Management",
+  "Agile Product Ownership", "Cloud Deployment", "Observability", "Django"
+];
+
+const defaultHighlights: Highlight[] = [
+  {
+    icon: <Brain className="h-8 w-8 text-primary" />,
+    title: "Gen AI Development",
+    description: "Building internal AI-driven platforms with rapid prototyping and user feedback loops."
+  },
+  {
+    icon: <Code className="h-8 w-8 text-accent" />,
+    title: "Full-Stack Development",
+    description: "End-to-end development with Next.js, TypeScript, and TailwindCSS deployed on Google Cloud."
+  },
+  {
+    icon: <Users className="h-8 w-8 text-primary" />,
+    title: "Stakeholder Engagement",
+    description: "Leading ideation sessions and managing product ownership with agile methodologies."
+  },
+  {
+    icon: <Rocket className="h-8 w-8 text-accent" />,
+    title: "Cloud Deployment",
+    description: "Deploying and observing AI solutions on Google Cloud Platform with reliability focus."
+  }
+];
+
+const AboutSection: React.FC<AboutSectionProps> = ({ user }) => {
+  const skills = user.skills ?? defaultSkills;
+  const highlights = defaultHighlights;
 
   return (
     <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-            About <span className="gradient-text">Martin</span>
+            About <span className="gradient-text">{user.name ?? "Martin"}</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Associate Gen AI Software Engineer at Sky UK, building human-centred AI tools that make work 
-            more efficient and accessible through rapid demos and feedback loops.
+            {user.bio ?? "Associate Gen AI Software Engineer at Sky UK, building human-centred AI tools that make work more efficient and accessible through rapid demos and feedback loops."}
           </p>
         </div>
 
@@ -52,19 +57,9 @@ const AboutSection = () => {
           <div className="space-y-6">
             <div className="prose prose-lg text-foreground">
               <p className="text-lg leading-relaxed mb-6">
-                I'm Martin Nolan, an Associate Gen AI Software Engineer at Sky UK. I build human-centred 
-                AI tools—covering ideation, stakeholder engagement, full-stack development and Google Cloud 
-                deployment—then refine through rapid demos and feedback loops.
+                {user.bio ?? "I'm Martin Nolan, an Associate Gen AI Software Engineer at Sky UK. I build human-centred AI tools—covering ideation, stakeholder engagement, full-stack development and Google Cloud deployment—then refine through rapid demos and feedback loops."}
               </p>
-              <p className="text-lg leading-relaxed mb-6">
-                My recent focus is on internal AI-driven platforms that make work more efficient and 
-                accessible. I have an MSc in Mobile Web Development (Distinction) from University of 
-                the West of Scotland and a BSc in Computer Science (First-Class) from University of Glasgow.
-              </p>
-              <p className="text-lg leading-relaxed">
-                I'm passionate about the intersection of cutting-edge technology and human-centered 
-                design, always asking: "How can we make this genuinely useful for people?"
-              </p>
+              {/* Additional bio/education info can be added here from user */}
             </div>
           </div>
 

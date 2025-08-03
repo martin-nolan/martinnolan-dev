@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
+import { martinInfo } from "../lib/martinInfo";
 import WorkSection from "@/components/WorkSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ContactSection from "@/components/ContactSection";
@@ -16,7 +17,13 @@ const Index = () => {
       <Navigation setIsResumeOpen={setIsResumeOpen} />
       <main>
         <HeroSection />
-        <AboutSection />
+        <AboutSection user={{
+          name: "Martin Nolan",
+          bio: martinInfo.bio,
+          email: martinInfo.contact.email,
+          website: martinInfo.contact.website,
+          skills: martinInfo.skills
+        }} />
         <WorkSection />
         <ProjectsSection />
         <ContactSection />

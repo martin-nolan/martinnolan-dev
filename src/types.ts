@@ -1,3 +1,4 @@
+// Consolidated types from src/types/index.ts
 // AboutSection Highlight Type
 export interface Highlight {
   icon: React.ReactNode;

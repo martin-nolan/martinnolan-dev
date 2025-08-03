@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { ContactMethod } from "@/types";
 import { Mail, Linkedin, Github, MessageCircle, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -47,7 +48,8 @@ const ContactSection = () => {
     }
   };
 
-  const contactMethods = [
+
+  const contactMethods: ContactMethod[] = [
     {
       icon: <Mail className="h-6 w-6" />,
       title: "Email",

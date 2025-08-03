@@ -1,5 +1,5 @@
 // src/lib/martinInfo.ts
-import type { MartinInfo } from "@/types";
+import type { MartinInfo, Project } from "@/types/index";
 
 export const martinInfo: MartinInfo = {
   bio: "Martin Nolan is a software engineer and designer with experience in web development, AI, and cloud technologies. Passionate about building impactful products and sharing knowledge.",
@@ -29,12 +29,12 @@ export const martinInfo: MartinInfo = {
       name: "Fit360",
       description: "A health and fitness platform with AI insights and progress tracking.",
       url: "https://fit360.app"
-    },
+    } as Project,
     {
       name: "martinnolan-dev",
       description: "Personal portfolio and AI chat assistant.",
       url: "https://martinnolan.dev"
-    }
+    } as Project
   ],
   education: [
     {
