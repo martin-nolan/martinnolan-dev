@@ -80,7 +80,7 @@ const HeroSection = () => {
               href="https://github.com/martin-nolan"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 glass-card hover:bg-surface-hover transition-all duration-200 rounded-full group"
+              className="p-3 bg-surface border border-surface-border hover:bg-surface-hover transition-all duration-200 rounded-full group"
             >
               <Github className="h-6 w-6 text-muted-foreground group-hover:text-primary" />
             </a>
@@ -88,7 +88,7 @@ const HeroSection = () => {
               href="https://www.linkedin.com/in/martinnolan0110"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 glass-card hover:bg-surface-hover transition-all duration-200 rounded-full group"
+              className="p-3 bg-surface border border-surface-border hover:bg-surface-hover transition-all duration-200 rounded-full group"
             >
               <Linkedin className="h-6 w-6 text-muted-foreground group-hover:text-primary" />
             </a>
@@ -96,7 +96,7 @@ const HeroSection = () => {
               href="mailto:martinnolan_1@live.co.uk"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 glass-card hover:bg-surface-hover transition-all duration-200 rounded-full group"
+              className="p-3 bg-surface border border-surface-border hover:bg-surface-hover transition-all duration-200 rounded-full group"
             >
               <Mail className="h-6 w-6 text-muted-foreground group-hover:text-primary" />
             </a>

@@ -1,5 +1,8 @@
 import { Code, Brain, Rocket, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { GlassCard } from "@/components/ui/glass-card";
+import { GradientText } from "@/components/ui/gradient-text";
+import { SmartImage } from "@/components/ui/smart-image";
 
 const AboutSection = () => {
   const skills = [
@@ -66,7 +69,7 @@ const AboutSection = () => {
           </div>
 
           {/* Skills Cloud */}
-          <div className="glass-card p-8 rounded-2xl">
+          <GlassCard className="p-8 rounded-2xl">
             <h3 className="text-2xl font-semibold mb-6 text-center">Technical Expertise</h3>
             <div className="flex flex-wrap gap-3 justify-center">
               {skills.map((skill, index) => (
@@ -79,15 +82,15 @@ const AboutSection = () => {
                 </span>
               ))}
             </div>
-          </div>
+          </GlassCard>
         </div>
 
         {/* Highlights Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {highlights.map((highlight, index) => (
-            <Card 
+            <GlassCard
               key={highlight.title}
-              className="glass-card border-surface-border hover:bg-surface-hover transition-all duration-300 group"
+              className="border-surface-border hover:bg-surface-hover transition-all duration-300 group"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardContent className="p-6 text-center">
@@ -99,7 +102,7 @@ const AboutSection = () => {
                   {highlight.description}
                 </p>
               </CardContent>
-            </Card>
+            </GlassCard>
           ))}
         </div>
       </div>

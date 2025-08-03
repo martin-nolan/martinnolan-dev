@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
+import { GlassCard } from "@/components/ui/glass-card";
+import { GradientText } from "@/components/ui/gradient-text";
 import ResumeModal from "./ResumeModal";
 
 const Footer = () => {
@@ -8,13 +10,15 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="border-t border-surface-border glass-card">
+      <footer className="border-t border-surface-border bg-surface/5 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* 3-column grid, items centred in each cell */}
           <div className="grid md:grid-cols-3 gap-8 justify-items-center">
             {/* Brand */}
             <div className="space-y-4 text-center md:text-left">
-              <h3 className="text-xl font-bold gradient-text">Martin Nolan</h3>
+              <h3 className="text-xl font-bold">
+                <GradientText>Martin Nolan</GradientText>
+              </h3>
               <p className="text-muted-foreground">
                 AI Engineer building the future of human-computer interaction at
                 Sky.
@@ -24,7 +28,7 @@ const Footer = () => {
                   href="https://github.com/martin-nolan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 glass-card hover:bg-surface-hover transition-all duration-200 rounded-lg group"
+                  className="p-2 bg-surface border border-surface-border hover:bg-surface-hover transition-all duration-200 rounded-lg group"
                 >
                   <Github className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
                 </a>
@@ -32,7 +36,7 @@ const Footer = () => {
                   href="https://www.linkedin.com/in/martinnolan0110"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 glass-card hover:bg-surface-hover transition-all duration-200 rounded-lg group"
+                  className="p-2 bg-surface border border-surface-border hover:bg-surface-hover transition-all duration-200 rounded-lg group"
                 >
                   <Linkedin className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
                 </a>
@@ -40,7 +44,7 @@ const Footer = () => {
                   href="mailto:martinnolan_1@live.co.uk"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 glass-card hover:bg-surface-hover transition-all duration-200 rounded-lg group"
+                  className="p-2 bg-surface border border-surface-border hover:bg-surface-hover transition-all duration-200 rounded-lg group"
                 >
                   <Mail className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
                 </a>

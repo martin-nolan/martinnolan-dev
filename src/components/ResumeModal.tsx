@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { GlassCard } from "@/components/ui/glass-card";
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -28,8 +29,8 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
         onClick={onClose}
       />
       {/* Modal */}
-      <div
-        className="relative w-full max-w-4xl h-[90vh] mx-4 glass-card rounded-2xl overflow-hidden animate-scale-in"
+      <GlassCard
+        className="relative w-full max-w-4xl h-[90vh] mx-4 rounded-2xl overflow-hidden animate-scale-in"
         onClick={e => e.stopPropagation()} // Prevent closing when clicking inside modal
       >
         {/* Header */}
@@ -66,7 +67,7 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
             />
           </div>
         </div>
-      </div>
+      </GlassCard>
     </div>
   );
 };

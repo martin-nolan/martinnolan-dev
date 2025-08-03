@@ -1,10 +1,52 @@
+import { useState } from "react";
 import { Mail, Linkedin, Github, MessageCircle, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { GlassCard } from "@/components/ui/glass-card";
+import { GradientText } from "@/components/ui/gradient-text";
+import { useToast } from "@/hooks/use-toast";
 
 const ContactSection = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+      const response = await fetch("https://formspree.io/f/your-form-id", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message sent successfully!",
+          description: "Thank you for reaching out. I'll get back to you soon.",
+        });
+        e.currentTarget.reset();
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      toast({
+        title: "Failed to send message",
+        description: "Please try again or reach out directly via email.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const contactMethods = [
     {
       icon: <Mail className="h-6 w-6" />,
@@ -37,7 +79,7 @@ const ContactSection = () => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-            Let's <span className="gradient-text">Connect</span>
+            Let's <GradientText>Connect</GradientText>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Whether you're looking to collaborate, discuss opportunities, or just chat about AI and technology, 
@@ -64,7 +106,7 @@ const ContactSection = () => {
                   rel="noopener noreferrer"
                   className="block group"
                 >
-                  <Card className={`glass-card border-surface-border hover:bg-surface-hover transition-all duration-200 ${method.primary ? 'ring-1 ring-primary/30' : ''}`}>
+                  <GlassCard className={`border-surface-border hover:bg-surface-hover transition-all duration-200 ${method.primary ? 'ring-1 ring-primary/30' : ''}`}>
                     <CardContent className="p-6">
                       <div className="flex items-center space-x-4">
                         <div className={`p-3 rounded-lg ${method.primary ? 'bg-primary/10 text-primary' : 'bg-surface text-muted-foreground'} group-hover:scale-110 transition-transform duration-200`}>
@@ -83,7 +125,7 @@ const ContactSection = () => {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
+                  </GlassCard>
                 </a>
               ))}
             </div>
@@ -99,9 +141,9 @@ const ContactSection = () => {
               </p>
             </div>
 
-            <Card className="glass-card border-surface-border">
+            <GlassCard className="border-surface-border">
               <CardContent className="p-6">
-                <form className="space-y-6" action="https://formspree.io/f/your-form-id" method="POST">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -160,12 +202,13 @@ const ContactSection = () => {
                   <Button 
                     type="submit" 
                     className="w-full bg-primary hover:bg-primary/90 text-white"
+                    disabled={isSubmitting}
                   >
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>
-            </Card>
+            </GlassCard>
           </div>
         </div>
       </div>

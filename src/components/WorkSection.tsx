@@ -1,4 +1,6 @@
 import { Building2, Users, Code } from "lucide-react";
+import { GlassCard } from "@/components/ui/glass-card";
+import { GradientText } from "@/components/ui/gradient-text";
 
 const WorkSection = () => {
   const experiences = [
@@ -57,7 +59,7 @@ const WorkSection = () => {
 
         <div className="space-y-8">
           {experiences.map((exp, index) => (
-            <div key={index} className="glass-card p-8 rounded-2xl group hover:bg-surface-hover transition-all duration-300">
+            <GlassCard key={index} className="p-8 rounded-2xl group hover:bg-surface-hover transition-all duration-300">
               <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                 {/* Icon & Timeline */}
                 <div className="flex-shrink-0">
@@ -94,7 +96,7 @@ const WorkSection = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </GlassCard>
           ))}
         </div>
       </div>

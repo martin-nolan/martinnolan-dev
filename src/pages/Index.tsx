@@ -6,6 +6,7 @@ import ProjectsSection from "@/components/ProjectsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import ResumeModal from "@/components/ResumeModal";
+import { AIChatWidget } from "@/components/ai-chat-widget";
 import { useState } from "react";
 
 const Index = () => {
@@ -22,6 +23,7 @@ const Index = () => {
       </main>
       <Footer />
       <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+      <AIChatWidget />
     </div>
   );
 };

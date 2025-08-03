@@ -85,6 +85,43 @@
     --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
     --shadow-glass: 0 8px 32px hsl(0 0% 0% / 0.3);
   }
+
+  /* Light mode theme */
+  .light {
+    /* Core Theme Colors */
+    --background: 0 0% 100%;             /* White background */
+    --foreground: 222 84% 4.9%;         /* Very dark text */
+    
+    /* Electric Blue Primary (adjusted for light mode) */
+    --primary: 201 100% 40%;            /* Darker blue for contrast */
+    --primary-foreground: 0 0% 100%;    /* White text on blue */
+    --primary-glow: 201 100% 55%;       /* Medium blue for glow */
+    
+    /* Neon Pink Accent (adjusted for light mode) */
+    --accent: 316 100% 45%;             /* Darker pink for contrast */
+    --accent-foreground: 0 0% 100%;     /* White text on pink */
+    --accent-glow: 316 100% 60%;        /* Medium pink for glow */
+    
+    /* Glass-morphism Surfaces */
+    --surface: 0 0% 0% / 0.05;          /* Black with low opacity */
+    --surface-hover: 0 0% 0% / 0.08;    /* Slightly darker on hover */
+    --surface-border: 0 0% 0% / 0.1;    /* Border color */
+    
+    /* Secondary Colors */
+    --secondary: 210 40% 94%;           /* Light gray */
+    --secondary-foreground: 222 47% 11%; /* Dark text */
+    
+    /* Semantic Colors */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 201 100% 40%;
+  }
 }
 
 @layer base {
@@ -117,11 +154,6 @@
 }
 
 @layer components {
-  /* Glass-morphism card effect */
-  .glass-card {
-    @apply backdrop-blur-sm border border-white/10 bg-white/5;
-  }
-  
   /* Animated gradient text */
   .gradient-text {
     @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
@@ -141,5 +173,10 @@
     background: radial-gradient(ellipse at center, hsl(var(--primary) / 0.1) 0%, transparent 50%),
                 radial-gradient(ellipse at 80% 20%, hsl(var(--accent) / 0.1) 0%, transparent 50%),
                 hsl(var(--background));
+  }
+
+  /* Smooth theme transitions */
+  * {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
 }

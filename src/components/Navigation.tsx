@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { GlassCard } from "@/components/ui/glass-card";
+import { GradientText } from "@/components/ui/gradient-text";
 
 const Navigation = ({ setIsResumeOpen }: { setIsResumeOpen: (open: boolean) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +21,7 @@ const Navigation = ({ setIsResumeOpen }: { setIsResumeOpen: (open: boolean) => v
 
   return (
     <header>
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-surface-border">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-surface/5 backdrop-blur-sm border-b border-surface-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -75,7 +77,7 @@ const Navigation = ({ setIsResumeOpen }: { setIsResumeOpen: (open: boolean) => v
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 glass-card border-t border-surface-border">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-surface/5 backdrop-blur-sm border-t border-surface-border">
               {navItems.map((item) => (
                 <button
                   key={item.href}
