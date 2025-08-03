@@ -87,17 +87,19 @@ const ImageModal = ({ images, currentIndex, isOpen, onClose, alt, projectTitle }
                 </Button>
               </>
             )}
-            <img
-              src={currentImage.src}
-              alt={`${alt} - Image ${activeIndex + 1}`}
-              className="w-auto h-auto max-w-[90%] max-h-[60vh] object-contain rounded-lg"
-              style={{margin: '0 auto', display: 'block'}}
-            />
-            {currentImage.description && (
-              <div className="mt-4 px-6 py-3 text-base text-muted-foreground text-center max-w-xl bg-surface/20 rounded-lg border border-surface-border">
-                {currentImage.description}
-              </div>
-            )}
+            <div className="relative w-full flex items-center justify-center">
+              <img
+                src={currentImage.src}
+                alt={`${alt} - Image ${activeIndex + 1}`}
+                className="w-auto h-auto max-w-[90%] max-h-[60vh] object-contain rounded-lg"
+                style={{margin: '0 auto', display: 'block'}}
+              />
+              {currentImage.description && (
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 text-base text-muted-foreground text-center max-w-xl bg-black/60 rounded-lg border border-surface-border backdrop-blur-md shadow-lg">
+                  {currentImage.description}
+                </div>
+              )}
+            </div>
           </div>
         </GlassCard>
       </div>
