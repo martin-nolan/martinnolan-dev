@@ -1,0 +1,112 @@
+import { useState } from "react";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { Button, ThemeToggle } from "@/shared/ui";
+import type { NavigationProps } from "@/shared/types";
+
+const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const navItems = [
+    { href: "about", label: "About" },
+    { href: "work", label: "Work" },
+    { href: "projects", label: "Projects" },
+    { href: "contact", label: "Contact" }
+  ];
+
+  const handleScroll = (elementId: string) => {
+    document.getElementById(elementId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <header>
+      <nav className="fixed inset-x-0 top-0 z-50 border-b border-surface-border bg-surface/5 backdrop-blur-sm">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            {/* Logo */}
+            <div className="shrink-0">
+              <Link href="/" className="gradient-text text-xl font-bold">
+                Martin Nolan
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4">
+                {navItems.map((item) => (
+                  <button
+                    key={item.href}
+                    onClick={() => handleScroll(item.href)}
+                    className="group relative px-3 py-2 text-sm font-medium text-foreground transition-colors duration-200 hover:text-primary"
+                  >
+                    {item.label}
+                    <span className="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-primary transition-transform duration-200 group-hover:scale-x-100"></span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop CTA */}
+            <div className="hidden items-center gap-4 md:flex">
+              <ThemeToggle />
+              <Button 
+                variant="outline" 
+                className="border-primary text-primary hover:bg-primary hover:text-white"
+                onClick={() => setIsResumeOpen(true)}
+              >
+                Resume
+              </Button>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="flex items-center gap-2 md:hidden">
+              <ThemeToggle />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-foreground"
+              >
+                {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isOpen && (
+          <div className="md:hidden">
+            <div className="space-y-1 border-t border-surface-border bg-surface/5 px-2 pb-3 pt-2 backdrop-blur-sm">
+              {navItems.map((item) => (
+                <button
+                  key={item.href}
+                  onClick={() => {
+                    handleScroll(item.href);
+                    setIsOpen(false);
+                  }}
+                  className="block w-full px-3 py-2 text-left text-base font-medium text-foreground transition-colors duration-200 hover:text-primary"
+                >
+                  {item.label}
+                </button>
+              ))}
+              <div className="pb-2 pt-4">
+                <Button 
+                  variant="outline" 
+                  className="w-full border-primary text-primary hover:bg-primary hover:text-white"
+                  onClick={() => {
+                    setIsResumeOpen(true);
+                    setIsOpen(false);
+                  }}
+                >
+                  Resume
+                </Button>
+              </div>
+            </div>
+          </div>
+         )}
+       </nav>
+     </header>
+  );
+};
+
+export default Navigation;
