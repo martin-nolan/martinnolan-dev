@@ -1,4 +1,3 @@
-// utils/buildSystemPrompt.ts
 import type { MartinInfo } from "@/shared/types/index";
 
 export function buildSystemPrompt(info: MartinInfo): string {

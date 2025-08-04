@@ -1,33 +1,33 @@
-// AboutSection Highlight Type
 export interface Highlight {
   icon: React.ReactNode;
   title: string;
   description: string;
 }
-// ResumeModal Props
+
 export interface ResumeModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-// AI Chat Widget Types
 export interface Message {
   id: string;
   content: string;
   isUser: boolean;
   timestamp: Date;
 }
+
 export interface ErrorResponse {
   error?: { message?: string };
 }
+
 export interface ChatChoice {
   message: { content: string };
 }
+
 export interface ChatOK {
   choices: ChatChoice[];
 }
 
-// ProjectsSection Types
 export interface FeaturedProject {
   title: string;
   role: string;
@@ -39,6 +39,7 @@ export interface FeaturedProject {
   images: Array<{ src: string; description: string }>;
   category: string;
 }
+
 export interface PersonalProject {
   title: string;
   description: string;
@@ -47,7 +48,6 @@ export interface PersonalProject {
   category: string;
 }
 
-// WorkSection Types
 export interface Experience {
   role: string;
   company: string;
@@ -57,7 +57,6 @@ export interface Experience {
   achievements: string[];
 }
 
-// ContactSection Types
 export interface ContactMethod {
   icon: React.ReactNode;
   title: string;
@@ -67,12 +66,10 @@ export interface ContactMethod {
   primary: boolean;
 }
 
-// Navigation Props
 export interface NavigationProps {
   setIsResumeOpen: (open: boolean) => void;
 }
 
-// User Info
 export interface UserInfo {
   name: string;
   email?: string;
@@ -83,7 +80,6 @@ export interface UserInfo {
   skills?: string[];
 }
 
-// Project Info
 export interface Project {
   id?: string;
   name: string;
@@ -93,8 +89,7 @@ export interface Project {
   imageUrl?: string;
 }
 
-// Toast Message
-export type ToastType = 'success' | 'error' | 'info' | 'warning';
+export type ToastType = "success" | "error" | "info" | "warning";
 
 export interface ToastMessage {
   id: string;
@@ -103,17 +98,14 @@ export interface ToastMessage {
   duration?: number;
 }
 
-// Page Props
 export interface PageProps {
   children?: React.ReactNode;
 }
 
-// Example: AboutSection Props
 export interface AboutSectionProps {
   user: UserInfo;
 }
 
-// MartinInfo (existing, extended for compatibility)
 export interface MartinInfo {
   bio: string;
   contact: {

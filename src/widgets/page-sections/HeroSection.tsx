@@ -4,7 +4,6 @@ import { Button } from "@/shared/ui";
 const HeroSection = () => {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Animated Background */}
       <div className="hero-gradient absolute inset-0">
         <div className="absolute left-1/4 top-1/4 size-96 animate-float rounded-full bg-primary/10 blur-3xl"></div>
         <div
@@ -13,7 +12,6 @@ const HeroSection = () => {
         ></div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
         <div className="animate-fade-in-up">
           <h1
@@ -74,7 +72,6 @@ const HeroSection = () => {
             </Button>
           </div>
 
-          {/* Social Links */}
           <div className="flex justify-center space-x-6">
             <a
               href="https://github.com/martin-nolan"
@@ -104,7 +101,6 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <ArrowDown
           className="size-8 cursor-pointer text-primary"

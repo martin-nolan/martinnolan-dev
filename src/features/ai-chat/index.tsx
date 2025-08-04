@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { Button, Input, GlassCard } from "@/shared/ui";
-import { useToast } from "@/shared/hooks";
+import { useToast } from "@/shared/ui/use-toast";
 import { buildSystemPrompt } from "./lib/buildSystemPrompt";
 import { martinInfo } from "@/entities/martin/martinInfo";
 import type {
@@ -37,7 +37,7 @@ export const AIChatWidget: React.FC = () => {
 
   const withinRate = () => {
     const now = Date.now();
-    const windowMs = 60_000; // 1 minute
+    const windowMs = 60_000;
     const newHits = hitTimes.filter((t) => now - t < windowMs);
     if (newHits.length >= 5) return false;
     setHitTimes([...newHits, now]);

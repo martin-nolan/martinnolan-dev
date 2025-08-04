@@ -23,27 +23,22 @@ export default async function handler(
 
   try {
     const { messages, max_tokens = 256 } = req.body;
-
     const client = createClient(ENDPOINT, new AzureKeyCredential(apiKey));
     const azureRes = await client.path("/chat/completions").post({
       body: { model: MODEL_ID, messages, max_tokens },
     });
-
     const statusCode = Number(azureRes.status);
 
-    // Error path
     if (isUnexpected(azureRes) || statusCode >= 400) {
       type AzureErrorBody = { error?: { message?: string } };
       const errorBody = azureRes.body as AzureErrorBody;
-      const errorMessage =
-        errorBody.error?.message ?? "Upstream error";
+      const errorMessage = errorBody.error?.message ?? "Upstream error";
       return res.status(statusCode).json({ error: { message: errorMessage } });
     }
 
-    // Success: body is already parsed JSON
     return res.status(statusCode).json(azureRes.body);
   } catch (err) {
-    console.error("Azure inference error:", err); 
+    console.error("Azure inference error:", err);
     return res.status(500).json({
       error: {
         message: (err as Error)?.message ?? "Unknown error",

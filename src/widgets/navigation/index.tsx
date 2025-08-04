@@ -11,11 +11,11 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
     { href: "about", label: "About" },
     { href: "work", label: "Work" },
     { href: "projects", label: "Projects" },
-    { href: "contact", label: "Contact" }
+    { href: "contact", label: "Contact" },
   ];
 
   const handleScroll = (elementId: string) => {
-    document.getElementById(elementId)?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(elementId)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -23,14 +23,12 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-surface-border bg-surface/5 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
             <div className="shrink-0">
               <Link href="/" className="gradient-text text-xl font-bold">
                 Martin Nolan
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 {navItems.map((item) => (
@@ -46,19 +44,16 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
               </div>
             </div>
 
-            {/* Desktop CTA */}
             <div className="hidden items-center gap-4 md:flex">
               <ThemeToggle />
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="border-primary text-primary hover:bg-primary hover:text-white"
                 onClick={() => setIsResumeOpen(true)}
               >
                 Resume
               </Button>
             </div>
-
-            {/* Mobile menu button */}
             <div className="flex items-center gap-2 md:hidden">
               <ThemeToggle />
               <Button
@@ -67,13 +62,16 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-foreground"
               >
-                {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+                {isOpen ? (
+                  <X className="size-6" />
+                ) : (
+                  <Menu className="size-6" />
+                )}
               </Button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden">
             <div className="space-y-1 border-t border-surface-border bg-surface/5 px-2 pb-3 pt-2 backdrop-blur-sm">
@@ -90,8 +88,8 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
                 </button>
               ))}
               <div className="pb-2 pt-4">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full border-primary text-primary hover:bg-primary hover:text-white"
                   onClick={() => {
                     setIsResumeOpen(true);
@@ -103,9 +101,9 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
               </div>
             </div>
           </div>
-         )}
-       </nav>
-     </header>
+        )}
+      </nav>
+    </header>
   );
 };
 

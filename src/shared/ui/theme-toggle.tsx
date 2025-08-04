@@ -6,14 +6,12 @@ export const ThemeToggle = () => {
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    // Check localStorage for theme preference
     const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
     const shouldBeDark = savedTheme === "dark" || (!savedTheme && prefersDark);
     setIsDark(shouldBeDark);
-    
-    // Apply theme to document
     document.documentElement.classList.toggle("dark", shouldBeDark);
     document.documentElement.classList.toggle("light", !shouldBeDark);
   }, []);
@@ -22,13 +20,9 @@ export const ThemeToggle = () => {
     const newTheme = !isDark;
     setIsDark(newTheme);
     localStorage.setItem("theme", newTheme ? "dark" : "light");
-    
-    // Apply theme with animation
     document.documentElement.style.transition = "all 0.3s ease-in-out";
     document.documentElement.classList.toggle("dark", newTheme);
     document.documentElement.classList.toggle("light", !newTheme);
-    
-    // Remove transition after animation
     setTimeout(() => {
       document.documentElement.style.transition = "";
     }, 300);
@@ -42,11 +36,7 @@ export const ThemeToggle = () => {
       className="p-2 transition-colors hover:bg-surface-hover"
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
-      {isDark ? (
-        <Sun className="size-4" />
-      ) : (
-        <Moon className="size-4" />
-      )}
+      {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
     </Button>
   );
 };
