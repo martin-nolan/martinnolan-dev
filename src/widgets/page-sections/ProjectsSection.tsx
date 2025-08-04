@@ -127,7 +127,6 @@ const ProjectsSection = () => {
   return (
     <section id="projects" className="px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        {/* Featured Work at Sky */}
         <div className="mb-20">
           <div className="mb-16 text-center">
             <h2 className="mb-6 text-4xl font-bold sm:text-5xl">
@@ -146,7 +145,6 @@ const ProjectsSection = () => {
                 className="group overflow-hidden border-surface-border transition-all duration-500 hover:bg-surface-hover"
               >
                 <div className="grid gap-8 lg:grid-cols-2">
-                  {/* Project Image */}
                   <div className={index % 2 === 1 ? "lg:order-2" : ""}>
                     <div className="relative flex aspect-video size-full items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
                       <ImageCarousel
@@ -166,7 +164,6 @@ const ProjectsSection = () => {
                     </div>
                   </div>
 
-                  {/* Project Details */}
                   <div className={index % 2 === 1 ? "p-8 lg:order-1" : "p-8"}>
                     <div className="mb-3 flex items-center gap-2">
                       <Calendar className="size-4 text-muted-foreground" />
@@ -187,7 +184,6 @@ const ProjectsSection = () => {
                       {project.description}
                     </p>
 
-                    {/* Highlights */}
                     <div className="mb-6">
                       <h4 className="mb-3 text-sm font-semibold text-primary">
                         Key Achievements
@@ -205,7 +201,6 @@ const ProjectsSection = () => {
                       </ul>
                     </div>
 
-                    {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2">
                       {project.stack.map((tech) => (
                         <Badge
@@ -224,7 +219,6 @@ const ProjectsSection = () => {
           </div>
         </div>
 
-        {/* Personal Projects */}
         <div>
           <div className="mb-12 text-center">
             <h3 className="mb-4 text-3xl font-bold">

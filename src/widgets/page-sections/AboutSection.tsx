@@ -64,7 +64,6 @@ const AboutSection: React.FC<AboutSectionProps> = ({ user }) => {
         </div>
 
         <div className="mb-16 grid items-center gap-12 lg:grid-cols-2">
-          {/* Bio Content */}
           <div className="space-y-6">
             <div className="prose prose-lg text-foreground">
               <p className="mb-6 text-lg leading-relaxed">
@@ -74,7 +73,6 @@ const AboutSection: React.FC<AboutSectionProps> = ({ user }) => {
             </div>
           </div>
 
-          {/* Skills Cloud */}
           <GlassCard className="rounded-2xl p-8">
             <h3 className="mb-6 text-center text-2xl font-semibold">
               Technical Expertise
@@ -93,7 +91,6 @@ const AboutSection: React.FC<AboutSectionProps> = ({ user }) => {
           </GlassCard>
         </div>
 
-        {/* Highlights Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {highlights.map((highlight, index) => (
             <GlassCard

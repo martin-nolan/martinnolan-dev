@@ -11,9 +11,7 @@ const Footer = () => {
     <>
       <footer className="border-t border-surface-border bg-surface/5 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          {/* 3-column grid, items centred in each cell */}
           <div className="grid justify-items-center gap-8 md:grid-cols-3">
-            {/* Brand */}
             <div className="space-y-4 text-center md:text-left">
               <h3 className="text-xl font-bold">
                 <GradientText>Martin Nolan</GradientText>
@@ -50,7 +48,6 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Quick Links */}
             <div className="space-y-4 text-center md:text-left">
               <h4 className="font-semibold">Quick Links</h4>
               <nav className="flex flex-col space-y-2">
@@ -81,7 +78,6 @@ const Footer = () => {
               </nav>
             </div>
 
-            {/* Professional */}
             <div className="space-y-4 text-center md:text-left">
               <h4 className="font-semibold">Professional</h4>
               <nav className="flex flex-col space-y-2">
@@ -120,7 +116,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom copyright, centred */}
         <div className="flex justify-center border-t border-surface-border py-8">
           <p className="text-sm text-muted-foreground">
             © {currentYear} Martin Nolan. All rights reserved.

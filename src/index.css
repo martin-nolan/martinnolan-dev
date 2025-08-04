@@ -1,9 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Motion preferences - respect user's accessibility settings */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -15,109 +14,83 @@
   }
 }
 
-/* Animation defaults - only when motion is preferred */
 @media (prefers-reduced-motion: no-preference) {
   .animate-fade-in {
     animation: fade-in 0.3s ease-out;
   }
-  
+
   .animate-scale-in {
     animation: scale-in 0.2s ease-out;
   }
 }
 
-/* Futuristic Portfolio Design System - Dark mode first with electric accents */
-
 @layer base {
   :root {
-    /* Core Theme Colors */
-    --background: 220 19% 7%;           /* #0D0F12 - Deep dark bg */
-    --foreground: 0 0% 88%;             /* #E1E1E1 - Light text */
-    
-    /* Electric Blue Primary */
-    --primary: 201 100% 50%;            /* #00ACFF - Electric blue */
-    --primary-foreground: 0 0% 100%;    /* White text on blue */
-    --primary-glow: 201 100% 65%;       /* Lighter blue for glow effects */
-    
-    /* Neon Pink Accent */
-    --accent: 316 100% 62%;             /* #FF3EC7 - Neon pink */
-    --accent-foreground: 0 0% 100%;     /* White text on pink */
-    --accent-glow: 316 100% 75%;        /* Lighter pink for glow */
-    
-    /* Glass-morphism Surfaces */
-    --surface: 0 0% 100% / 0.05;        /* rgba(255,255,255,0.05) */
-    --surface-hover: 0 0% 100% / 0.08;  /* Lighter on hover */
-    --surface-border: 0 0% 100% / 0.1;  /* Border color */
-    
-    /* Secondary Colors */
-    --secondary: 220 19% 12%;           /* Slightly lighter than bg */
-    --secondary-foreground: 0 0% 75%;   /* Muted text */
-    
-    /* Semantic Colors */
+    --background: 220 19% 7%;
+    --foreground: 0 0% 88%;
+    --primary: 201 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 201 100% 65%;
+    --accent: 316 100% 62%;
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 316 100% 75%;
+    --surface: 0 0% 100% / 0.05;
+    --surface-hover: 0 0% 100% / 0.08;
+    --surface-border: 0 0% 100% / 0.1;
+    --secondary: 220 19% 12%;
+    --secondary-foreground: 0 0% 75%;
     --muted: 220 19% 15%;
     --muted-foreground: 0 0% 60%;
-    
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    
     --border: 0 0% 100% / 0.1;
     --input: 0 0% 100% / 0.05;
     --ring: 201 100% 50%;
-    
-    /* Design Tokens */
     --radius: 1rem;
     --space-1: 0.25rem;
     --space-2: 0.5rem;
     --space-3: 1rem;
     --space-4: 1.5rem;
     --space-5: 2rem;
-    
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    --gradient-surface: linear-gradient(135deg, hsl(var(--surface)), transparent);
-    --gradient-glow: radial-gradient(circle, hsl(var(--primary-glow) / 0.3), transparent);
-    
-    /* Animations */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(var(--primary)),
+      hsl(var(--accent))
+    );
+    --gradient-surface: linear-gradient(
+      135deg,
+      hsl(var(--surface)),
+      transparent
+    );
+    --gradient-glow: radial-gradient(
+      circle,
+      hsl(var(--primary-glow) / 0.3),
+      transparent
+    );
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-fast: all 0.15s ease-in-out;
-    
-    /* Shadows */
     --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
     --shadow-glass: 0 8px 32px hsl(0 0% 0% / 0.3);
   }
 
-  /* Light mode theme */
   .light {
-    /* Core Theme Colors */
-    --background: 0 0% 100%;             /* White background */
-    --foreground: 222 84% 4.9%;         /* Very dark text */
-    
-    /* Electric Blue Primary (adjusted for light mode) */
-    --primary: 201 100% 40%;            /* Darker blue for contrast */
-    --primary-foreground: 0 0% 100%;    /* White text on blue */
-    --primary-glow: 201 100% 55%;       /* Medium blue for glow */
-    
-    /* Neon Pink Accent (adjusted for light mode) */
-    --accent: 316 100% 45%;             /* Darker pink for contrast */
-    --accent-foreground: 0 0% 100%;     /* White text on pink */
-    --accent-glow: 316 100% 60%;        /* Medium pink for glow */
-    
-    /* Glass-morphism Surfaces */
-    --surface: 0 0% 0% / 0.05;          /* Black with low opacity */
-    --surface-hover: 0 0% 0% / 0.08;    /* Slightly darker on hover */
-    --surface-border: 0 0% 0% / 0.1;    /* Border color */
-    
-    /* Secondary Colors */
-    --secondary: 210 40% 94%;           /* Light gray */
-    --secondary-foreground: 222 47% 11%; /* Dark text */
-    
-    /* Semantic Colors */
+    --background: 0 0% 100%;
+    --foreground: 222 84% 4.9%;
+    --primary: 201 100% 40%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 201 100% 55%;
+    --accent: 316 100% 45%;
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 316 100% 60%;
+    --surface: 0 0% 0% / 0.05;
+    --surface-hover: 0 0% 0% / 0.08;
+    --surface-border: 0 0% 0% / 0.1;
+    --secondary: 210 40% 94%;
+    --secondary-foreground: 222 47% 11%;
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
-    
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 201 100% 40%;
@@ -128,55 +101,51 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground font-sans;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
-  
-  /* Scrollbar Styling */
   ::-webkit-scrollbar {
     width: 6px;
   }
-  
   ::-webkit-scrollbar-track {
     background: hsl(var(--background));
   }
-  
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--primary) / 0.3);
     border-radius: 3px;
   }
-  
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--primary) / 0.5);
   }
 }
 
 @layer components {
-  /* Animated gradient text */
   .gradient-text {
     @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
   }
-  
-  /* Glow effects */
   .glow-primary {
     box-shadow: 0 0 20px hsl(var(--primary) / 0.5);
   }
-  
+
   .glow-accent {
     box-shadow: 0 0 20px hsl(var(--accent) / 0.5);
   }
-  
-  /* Hero gradient background */
   .hero-gradient {
-    background: radial-gradient(ellipse at center, hsl(var(--primary) / 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, hsl(var(--accent) / 0.1) 0%, transparent 50%),
-                hsl(var(--background));
+    background: radial-gradient(
+        ellipse at center,
+        hsl(var(--primary) / 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at 80% 20%,
+        hsl(var(--accent) / 0.1) 0%,
+        transparent 50%
+      ),
+      hsl(var(--background));
   }
-
-  /* Smooth theme transitions */
   * {
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease,
+      color 0.3s ease;
   }
 }

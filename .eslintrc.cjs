@@ -1,4 +1,3 @@
-// .eslintrc.cjs
 module.exports = {
   root: true,
 
@@ -18,29 +17,25 @@ module.exports = {
     "react-hooks",
     "jsx-a11y",
     "tailwindcss",
-    "@next/next", // ← notice the @next scope
+    "@next/next",
   ],
 
   extends: [
-    "eslint:recommended", // core JS
+    "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:tailwindcss/recommended",
 
-    "plugin:@next/next/recommended", // Next.js ruleset
-    "plugin:@next/next/core-web-vitals", // Next.js Core Web Vitals rules
+    "plugin:@next/next/recommended",
+    "plugin:@next/next/core-web-vitals",
   ],
 
   rules: {
-    // your overrides…
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-unused-expressions": "off",
-
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-
-    // Disable warnings for custom Tailwind CSS class names
     "tailwindcss/no-custom-classname": "off",
   },
 };

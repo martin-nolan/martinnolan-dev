@@ -30,5 +30,4 @@ export * from "./button-utils";
 export * from "./form-utils";
 export * from "./navigation-menu-utils";
 export * from "./sidebar-utils";
-export * from "./sonner-utils";
 export * from "./toggle-utils";

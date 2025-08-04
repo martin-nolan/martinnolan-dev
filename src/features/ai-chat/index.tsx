@@ -37,7 +37,7 @@ export const AIChatWidget: React.FC = () => {
 
   const withinRate = () => {
     const now = Date.now();
-    const windowMs = 60_000; // 1 minute
+    const windowMs = 60_000;
     const newHits = hitTimes.filter((t) => now - t < windowMs);
     if (newHits.length >= 5) return false;
     setHitTimes([...newHits, now]);
