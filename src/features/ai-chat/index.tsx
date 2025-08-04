@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { Button, Input, GlassCard } from "@/shared/ui";
-import { useToast } from "@/shared/hooks";
+import { useToast } from "@/shared/ui/use-toast";
 import { buildSystemPrompt } from "./lib/buildSystemPrompt";
 import { martinInfo } from "@/entities/martin/martinInfo";
 import type {

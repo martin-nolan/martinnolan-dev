@@ -9,7 +9,7 @@ import {
   GlassCard,
   GradientText,
 } from "@/shared/ui";
-import { useToast } from "@/shared/hooks";
+import { useToast } from "@/shared/ui/use-toast";
 
 const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
