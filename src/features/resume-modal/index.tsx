@@ -1,8 +1,22 @@
+import { useEffect } from "react";
 import { X, Download } from "lucide-react";
 import { Button, GlassCard } from "@/shared/ui";
+import { useTheme } from "@/shared/ui/theme-context";
 import type { ResumeModalProps } from "@/shared/types";
 
 const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
+  const { isDark } = useTheme();
+
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (!isOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleDownload = () => {
@@ -19,24 +33,27 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
       onClose();
     }
   };
+
+  // 404-style gradient background and GlassCard background
+  const containerClass =
+    "fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br " +
+    (isDark
+      ? "from-background via-background/80 to-primary/10"
+      : "from-white via-gray-100 to-primary/10");
+  const cardClass =
+    "relative mx-4 h-[90vh] w-full max-w-4xl animate-scale-in overflow-hidden rounded-2xl bg-white/80 dark:bg-background/80";
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className={containerClass}
       role="dialog"
       aria-modal="true"
+      onClick={onClose}
+      tabIndex={0}
+      onKeyDown={handleOverlayKeyDown}
+      aria-label="Close resume modal"
     >
-      <div
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-        onClick={onClose}
-        role="button"
-        tabIndex={0}
-        onKeyDown={handleOverlayKeyDown}
-        aria-label="Close resume modal"
-      />
-      <GlassCard
-        className="relative mx-4 h-[90vh] w-full max-w-4xl animate-scale-in overflow-hidden rounded-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <GlassCard className={cardClass} onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between border-b border-surface-border p-6">
           <h2 className="gradient-text text-2xl font-bold">Resume</h2>
           <div className="flex items-center gap-4">

@@ -27,12 +27,24 @@ const ProjectsSection = () => {
       ],
       images: [
         {
-          src: "/placeholder.svg",
+          src: "/cricket/matches.png",
           description: "Main dashboard UI for live cricket commentary.",
         },
         {
-          src: "/placeholder2.svg",
-          description: "AI-generated insights panel for match events.",
+          src: "/cricket/commentary.png",
+          description: "AI-generated commentary for live cricket matches.",
+        },
+        {
+          src: "/cricket/bbb-table.png",
+          description: "Main dashboard UI for live cricket commentary.",
+        },
+        {
+          src: "/cricket/teams-table.png",
+          description: "Main dashboard UI for live cricket commentary.",
+        },
+        {
+          src: "/cricket/notes.png",
+          description: "Main dashboard UI for live cricket commentary.",
         },
       ],
       category: "AI/ML",
@@ -52,12 +64,16 @@ const ProjectsSection = () => {
       ],
       images: [
         {
-          src: "/placeholder.svg",
-          description: "Search interface for policy documents.",
+          src: "/kosmo/ask-kosmo.png",
+          description: "Draft email UI with AI suggestions.",
         },
         {
-          src: "/placeholder2.svg",
-          description: "Results page showing semantic matches.",
+          src: "/kosmo/landing.png",
+          description: "Landing page UI for customer support.",
+        },
+        {
+          src: "/kosmo/q-and-a.png",
+          description: "Draft email UI with AI suggestions.",
         },
       ],
       category: "Search",
@@ -77,15 +93,55 @@ const ProjectsSection = () => {
       ],
       images: [
         {
-          src: "/placeholder.svg",
+          src: "/mail/email.png",
           description: "Draft email UI with AI suggestions.",
         },
         {
-          src: "/placeholder2.svg",
-          description: "Personalization options for customer responses.",
+          src: "/mail/refinement.png",
+          description: "Landing page UI for customer support.",
         },
       ],
       category: "AI Tools",
+    },
+    {
+      title: "Tough Mutter",
+      role: "Associate Gen AI Software Engineer",
+      year: "2024",
+      company: "Sky",
+      description: "UPDATE.",
+      stack: ["UPDATE", "OpenAI", "UPDATE", "UPDATE"],
+      highlights: ["UPDATE", "UPDATE", "UPDATE"],
+      images: [
+        {
+          src: "/mutter/landing-page.png",
+          description: "UPDATE.",
+        },
+        {
+          src: "/mutter/conversation.png",
+          description: "UPDATE.",
+        },
+      ],
+      category: "UPDATE",
+    },
+    {
+      title: "Sky News Search",
+      role: "Associate Gen AI Software Engineer",
+      year: "2024",
+      company: "Sky",
+      description: "UPDATE.",
+      stack: ["UPDATE", "OpenAI", "UPDATE", "UPDATE"],
+      highlights: ["UPDATE", "UPDATE", "UPDATE"],
+      images: [
+        {
+          src: "/news/article.png",
+          description: "UPDATE.",
+        },
+        {
+          src: "/news/agent.png",
+          description: "UPDATE.",
+        },
+      ],
+      category: "UPDATE",
     },
   ];
 

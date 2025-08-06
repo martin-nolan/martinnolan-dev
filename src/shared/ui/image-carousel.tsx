@@ -91,7 +91,7 @@ const ImageModal = ({
                   variant="ghost"
                   size="sm"
                   onClick={prevImage}
-                  className="absolute left-4 top-1/2 z-10 -translate-y-1/2"
+                  className="absolute left-1 top-1/2 z-10 -translate-y-1/2"
                 >
                   <ChevronLeft className="size-6" />
                 </Button>
@@ -99,7 +99,7 @@ const ImageModal = ({
                   variant="ghost"
                   size="sm"
                   onClick={nextImage}
-                  className="absolute right-4 top-1/2 z-10 -translate-y-1/2"
+                  className="absolute right-1 top-1/2 z-10 -translate-y-1/2"
                 >
                   <ChevronRight className="size-6" />
                 </Button>
@@ -114,12 +114,12 @@ const ImageModal = ({
                 className="size-auto max-h-[60vh] max-w-[90%] rounded-lg object-contain"
                 style={{ margin: "0 auto", display: "block" }}
               />
-              {currentImage.description && (
-                <div className="absolute bottom-4 left-1/2 max-w-xl -translate-x-1/2 rounded-lg border border-surface-border bg-black/60 px-6 py-3 text-center text-base text-muted-foreground shadow-lg backdrop-blur-md">
-                  {currentImage.description}
-                </div>
-              )}
             </div>
+            {currentImage.description && (
+              <div className="mt-6 w-full max-w-xl rounded-lg border border-surface-border bg-black/60 px-6 py-3 text-center text-base text-muted-foreground shadow-lg backdrop-blur-md">
+                {currentImage.description}
+              </div>
+            )}
           </div>
         </GlassCard>
       </div>
