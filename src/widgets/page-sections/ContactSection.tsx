@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
 import type { ContactMethod } from "@/shared/types";
 import { Mail, Linkedin, Github } from "lucide-react";
 import {
@@ -12,33 +13,29 @@ import {
 import { useToast } from "@/shared/ui/use-toast";
 
 const ContactSection = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formRef.current) return;
+
     setIsSubmitting(true);
 
-    const formData = new FormData(e.currentTarget);
-
     try {
-      const response = await fetch("https://formspree.io/f/your-form-id", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Accept: "application/json",
-        },
-      });
+      await emailjs.sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        formRef.current,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      );
 
-      if (response.ok) {
-        toast({
-          title: "Message sent successfully!",
-          description: "Thank you for reaching out. I'll get back to you soon.",
-        });
-        e.currentTarget.reset();
-      } else {
-        throw new Error("Failed to send message");
-      }
+      toast({
+        title: "Message sent successfully!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+      formRef.current.reset();
     } catch (error) {
       toast({
         title: "Failed to send message",
@@ -161,7 +158,11 @@ const ContactSection = () => {
 
             <GlassCard className="border-surface-border">
               <CardContent className="p-6">
-                <form className="space-y-6" onSubmit={handleSubmit}>
+                <form
+                  ref={formRef}
+                  className="space-y-6"
+                  onSubmit={handleSubmit}
+                >
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label
@@ -195,7 +196,6 @@ const ContactSection = () => {
                       />
                     </div>
                   </div>
-
                   <div>
                     <label
                       htmlFor="subject"
