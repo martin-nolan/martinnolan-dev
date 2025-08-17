@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import path from "path";
 
 export default async function handler(
   req: NextApiRequest,
@@ -38,8 +39,10 @@ export default async function handler(
       });
     }
 
-    // Prevent path traversal
-    if (parsedUrl.pathname.includes("..")) {
+    // Prevent path traversal using robust normalization
+    const decodedPath = decodeURIComponent(parsedUrl.pathname);
+    const normalizedPath = path.posix.normalize(decodedPath);
+    if (normalizedPath.startsWith("..") || normalizedPath.includes("/..")) {
       return res.status(403).json({
         message: "Path traversal detected",
       });

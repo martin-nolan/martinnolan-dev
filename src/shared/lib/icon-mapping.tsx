@@ -16,7 +16,9 @@ export const getIconComponent = (
 ): React.ReactNode => {
   // Handle null, undefined, or empty strings
   if (!iconName) {
-    console.warn(`Icon name is null/undefined, falling back to Mail icon`);
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`Icon name is null/undefined, falling back to Mail icon`);
+    }
     return <Mail className="size-5" />;
   }
 
@@ -25,9 +27,11 @@ export const getIconComponent = (
   const IconComponent = ICON_MAP[normalizedName as keyof typeof ICON_MAP];
 
   if (!IconComponent) {
-    console.warn(
-      `Icon "${iconName}" not found in icon map, falling back to Mail icon`
-    );
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        `Icon "${iconName}" not found in icon map, falling back to Mail icon`
+      );
+    }
     return <Mail className="size-5" />;
   }
 

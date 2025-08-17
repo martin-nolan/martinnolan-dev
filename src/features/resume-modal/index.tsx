@@ -25,8 +25,15 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
   let pdfUrl = "./martin-nolan-cv.pdf"; // Default fallback
 
   if (cvPdfUrl) {
-    // For localhost development, use direct Strapi URL
-    if (cvPdfUrl.includes("localhost:1337")) {
+    // For development, use direct Strapi URL to avoid proxy issues
+    const strapiApiUrl =
+      process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337/api";
+    const strapiBaseUrl = strapiApiUrl.replace("/api", "");
+
+    if (
+      cvPdfUrl.includes(strapiBaseUrl) &&
+      process.env.NODE_ENV === "development"
+    ) {
       pdfUrl = cvPdfUrl;
     } else {
       pdfUrl = `/api/pdf-proxy?url=${encodeURIComponent(cvPdfUrl)}`;
