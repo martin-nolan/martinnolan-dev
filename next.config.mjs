@@ -19,7 +19,8 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "/:path*",
+        // Apply security headers to all routes except API routes
+        source: "/((?!api/).*)",
         headers: [
           {
             key: "Content-Security-Policy",
@@ -31,7 +32,7 @@ const nextConfig = {
               img-src 'self' data: https: blob:;
               media-src 'self' https:;
               script-src 'self'${isDev ? " 'unsafe-eval'" : ""};
-              frame-src 'self';
+              frame-src 'self' http://localhost:1337;
             `
               .replace(/\s{2,}/g, " ")
               .trim(),
@@ -47,6 +48,21 @@ const nextConfig = {
           {
             key: "Referrer-Policy",
             value: "origin-when-cross-origin",
+          },
+        ],
+      },
+      {
+        // Special headers for PDF proxy API to allow iframe embedding
+        source: "/api/pdf-proxy",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/pdf",
+          },
+          // No X-Frame-Options header to allow iframe embedding
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000",
           },
         ],
       },

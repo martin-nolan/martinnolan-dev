@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { X, Download } from "lucide-react";
 import { Button, GlassCard } from "@/shared/ui";
 import { useTheme } from "@/shared/ui/theme-context";
 import type { ResumeModalProps } from "@/shared/types";
 
-const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
+const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
   const { isDark } = useTheme();
+  const [pdfError, setPdfError] = useState(false);
 
   // Prevent background scroll when modal is open
   useEffect(() => {
@@ -20,14 +21,36 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
 
   if (!isOpen) return null;
 
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = "./martin-nolan-cv.pdf";
-    link.download = "Martin_Nolan_CV_Aug_2025.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // Use CMS PDF URL or fallback to static file
+  let pdfUrl = "./martin-nolan-cv.pdf"; // Default fallback
+
+  if (cvPdfUrl) {
+    // For development, use direct Strapi URL to avoid proxy issues
+    const strapiApiUrl =
+      process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337/api";
+    const strapiBaseUrl = strapiApiUrl.replace("/api", "");
+
+    if (
+      (() => {
+        try {
+          const cvUrl = new URL(cvPdfUrl);
+          const strapiUrl = new URL(strapiBaseUrl);
+          return (
+            cvUrl.hostname === strapiUrl.hostname &&
+            cvUrl.protocol === strapiUrl.protocol &&
+            cvUrl.port === strapiUrl.port
+          );
+        } catch {
+          return false;
+        }
+      })() &&
+      process.env.NODE_ENV === "development"
+    ) {
+      pdfUrl = cvPdfUrl;
+    } else {
+      pdfUrl = `/api/pdf-proxy?url=${encodeURIComponent(cvPdfUrl)}`;
+    }
+  }
 
   const handleOverlayKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -58,15 +81,15 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
         <div className="flex items-center justify-between border-b border-surface-border p-6">
           <h2 className="gradient-text text-2xl font-bold">Resume</h2>
           <div className="flex items-center gap-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleDownload}
-              className="border-primary text-primary hover:bg-primary hover:text-white"
+            <a
+              href={cvPdfUrl || "./martin-nolan-cv.pdf"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center rounded-md border border-primary px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-white"
             >
               <Download className="mr-2 size-4" />
               Download PDF
-            </Button>
+            </a>
             <Button
               variant="ghost"
               size="sm"
@@ -80,11 +103,64 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
 
         <div className="h-[calc(100%-88px)] p-6">
           <div className="flex size-full items-center justify-center rounded-lg border border-surface-border bg-surface/20">
-            <iframe
-              src="./martin-nolan-cv.pdf"
-              className="size-full rounded-lg"
-              title="Martin Nolan Resume"
-            />
+            {pdfUrl ? (
+              <iframe
+                src={pdfUrl}
+                className="size-full rounded-lg"
+                title="Martin Nolan Resume"
+                onError={(e) => {
+                  // If CMS PDF fails and we haven't tried fallback yet, try static file
+                  if (
+                    cvPdfUrl &&
+                    e.currentTarget?.src.includes("/api/pdf-proxy") &&
+                    !e.currentTarget?.src.includes("martin-nolan-cv.pdf")
+                  ) {
+                    e.currentTarget.src = "./martin-nolan-cv.pdf";
+                  } else {
+                    setPdfError(true);
+                  }
+                }}
+                onLoad={() => {
+                  setPdfError(false);
+                }}
+              />
+            ) : (
+              <div className="flex flex-col items-center justify-center text-muted-foreground">
+                <p className="mb-4 text-lg">PDF not available</p>
+                <Button
+                  variant="outline"
+                  onClick={() => window.open("./martin-nolan-cv.pdf", "_blank")}
+                >
+                  <Download className="mr-2 size-4" />
+                  Download Resume
+                </Button>
+              </div>
+            )}
+
+            {pdfError && (
+              <div className="absolute inset-4 flex flex-col items-center justify-center rounded-lg bg-surface/90 text-muted-foreground">
+                <p className="mb-4 text-lg">Failed to load PDF</p>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPdfError(false)}
+                  >
+                    Try Again
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() =>
+                      window.open(cvPdfUrl || "./martin-nolan-cv.pdf", "_blank")
+                    }
+                  >
+                    <Download className="mr-2 size-4" />
+                    Download
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </GlassCard>

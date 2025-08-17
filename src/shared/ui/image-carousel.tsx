@@ -176,7 +176,7 @@ export const ImageCarousel = ({
             alt={alt}
             width={500}
             height={300}
-            className="size-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+            className="size-full object-contain object-center transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
           {images.length > 1 && (

@@ -170,10 +170,11 @@ const Index = ({
         />
         <ContactSection contactMethods={contactMethods} profile={profile} />
       </main>
-      <Footer />
+      <Footer profile={profile} />
       <ResumeModal
         isOpen={isResumeOpen}
         onClose={() => setIsResumeOpen(false)}
+        cvPdfUrl={profile?.cvPdf}
       />
       <AIChatWidget />
     </div>
