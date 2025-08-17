@@ -81,7 +81,7 @@ export default async function handler(
     res.setHeader("Content-Type", contentType);
     res.setHeader("Content-Disposition", "inline");
     res.setHeader("Cache-Control", "public, max-age=31536000");
-    // X-Frame-Options header intentionally not set here; see next.config.mjs for header management.
+    res.setHeader("X-Frame-Options", "SAMEORIGIN"); // Prevent clickjacking, allow same-origin iframe embedding
 
     // Send the PDF buffer
     res.status(200).end(Buffer.from(buffer));
