@@ -13,6 +13,10 @@ interface StrapiExperience {
   };
 }
 
+interface StrapiImageFormats {
+  data?: StrapiMedia[];
+}
+
 interface StrapiProject {
   id: number;
   attributes: {
@@ -25,7 +29,7 @@ interface StrapiProject {
     github?: string;
     stack?: Array<{ technology: string }>;
     highlights?: Array<{ highlight: string }>;
-    images?: any; // More flexible typing for images
+    images?: StrapiImageFormats | StrapiMedia[] | null;
     order: number;
   };
 }
@@ -344,7 +348,7 @@ class ContentService {
         const attrs = method.attributes || method;
         return {
           ...attrs,
-          // Keep icon as string for JSON serialization, convert to component in React
+          // Keep icon as string to enable dynamic mapping via the icon-mapping utility; conversion to component happens in React
           icon: attrs.icon || "mail", // Default to 'mail' if null/undefined
         };
       });

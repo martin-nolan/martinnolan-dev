@@ -90,10 +90,11 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
                 className="size-full rounded-lg"
                 title="Martin Nolan Resume"
                 onError={(e) => {
-                  // If CMS PDF fails, try fallback static file
+                  // If CMS PDF fails and we haven't tried fallback yet, try static file
                   if (
                     cvPdfUrl &&
-                    e.currentTarget?.src.includes("/api/pdf-proxy")
+                    e.currentTarget?.src.includes("/api/pdf-proxy") &&
+                    !e.currentTarget?.src.includes("martin-nolan-cv.pdf")
                   ) {
                     e.currentTarget.src = "./martin-nolan-cv.pdf";
                   } else {

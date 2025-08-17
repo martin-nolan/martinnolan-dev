@@ -20,9 +20,28 @@ export default async function handler(
       process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337/api";
     const strapiBaseUrl = strapiApiUrl.replace("/api", "");
 
-    if (!url.startsWith(strapiBaseUrl)) {
+    let parsedUrl;
+    try {
+      parsedUrl = new URL(url);
+    } catch (e) {
+      return res.status(400).json({ message: "Invalid PDF URL" });
+    }
+    const baseParsedUrl = new URL(strapiBaseUrl);
+
+    // Check protocol and hostname match
+    if (
+      parsedUrl.protocol !== baseParsedUrl.protocol ||
+      parsedUrl.hostname !== baseParsedUrl.hostname
+    ) {
       return res.status(403).json({
         message: "Unauthorized PDF source",
+      });
+    }
+
+    // Prevent path traversal
+    if (parsedUrl.pathname.includes("..")) {
+      return res.status(403).json({
+        message: "Path traversal detected",
       });
     }
 
@@ -59,8 +78,8 @@ export default async function handler(
     res.setHeader("Content-Type", contentType);
     res.setHeader("Content-Disposition", "inline");
     res.setHeader("Cache-Control", "public, max-age=31536000");
-    // Remove X-Frame-Options to allow framing
-    res.removeHeader("X-Frame-Options");
+    // Set X-Frame-Options to SAMEORIGIN to prevent clickjacking
+    res.setHeader("X-Frame-Options", "SAMEORIGIN");
 
     // Send the PDF buffer
     res.status(200).end(Buffer.from(buffer));
