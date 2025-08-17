@@ -8,6 +8,7 @@ export interface Highlight {
 export interface ResumeModalProps {
   isOpen: boolean;
   onClose: () => void;
+  cvPdfUrl?: string | null;
 }
 
 export interface Message {
@@ -59,7 +60,7 @@ export interface Experience {
 }
 
 export interface ContactMethod {
-  icon: React.ReactNode;
+  icon: string; // Icon name as string, not React component
   title: string;
   description: string;
   value: string;
@@ -123,7 +124,7 @@ export interface CMSProfile {
   jobTitle?: string;
   company?: string;
   skills: string[];
-  cvPdf?: string;
+  cvPdf?: string | null;
 }
 
 export interface CMSExperience {
@@ -150,6 +151,18 @@ export interface CMSPersonalProject {
   description: string;
   stack: string[];
   category: string;
+}
+
+export interface CMSMediaFile {
+  id: number;
+  name: string;
+  url: string | null;
+  alternativeText?: string;
+  caption?: string;
+  mime: string;
+  size: number;
+  width?: number;
+  height?: number;
 }
 
 export interface CMSContentForAI {

@@ -11,6 +11,7 @@ import {
   GradientText,
 } from "@/shared/ui";
 import { useToast } from "@/shared/ui/use-toast";
+import { getIconComponent } from "@/shared/lib/icon-mapping";
 
 interface ContactSectionProps {
   contactMethods?: ContactMethod[] | null;
@@ -106,7 +107,7 @@ const ContactSection = ({
                               : "bg-surface text-muted-foreground"
                           } transition-transform duration-200 group-hover:scale-110`}
                         >
-                          {method.icon}
+                          {getIconComponent(method.icon)}
                         </div>
                         <div className="flex-1">
                           <h4 className="font-semibold text-foreground transition-colors group-hover:text-primary">

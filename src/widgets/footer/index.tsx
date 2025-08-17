@@ -3,7 +3,14 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import { GradientText } from "@/shared/ui";
 import ResumeModal from "@/features/resume-modal";
 
-const Footer = () => {
+interface FooterProps {
+  profile?: {
+    cvPdf?: string | null;
+    [key: string]: any;
+  } | null;
+}
+
+const Footer = ({ profile }: FooterProps) => {
   const currentYear = new Date().getFullYear();
   const [showResumeModal, setShowResumeModal] = useState(false);
 
@@ -126,6 +133,7 @@ const Footer = () => {
         <ResumeModal
           isOpen={showResumeModal}
           onClose={() => setShowResumeModal(false)}
+          cvPdfUrl={profile?.cvPdf}
         />
       )}
     </>
