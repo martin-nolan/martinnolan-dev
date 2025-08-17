@@ -6,7 +6,7 @@ import ResumeModal from "@/features/resume-modal";
 interface FooterProps {
   profile?: {
     cvPdf?: string | null;
-    [key: string]: any;
+    [key: string]: unknown;
   } | null;
 }
 

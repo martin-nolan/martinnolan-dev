@@ -1,6 +1,7 @@
 // Example usage of the enhanced ContentService with media support
 
 import { contentService } from "./content-service";
+import type { FeaturedProject } from "../types";
 
 // Example 1: Get profile with CV PDF
 async function getProfileWithCV() {
@@ -22,17 +23,19 @@ async function getProjectsWithImages() {
   try {
     const projects = await contentService.getFeaturedProjects();
 
-    projects.forEach((project: any) => {
+    projects.forEach((project: FeaturedProject) => {
       console.log(`Project: ${project.title}`);
 
       if (project.images && project.images.length > 0) {
         console.log("Project images:");
-        project.images.forEach((image: any, index: number) => {
-          console.log(`  Image ${index + 1}: ${image.src}`);
-          console.log(
-            `  Description: ${image.description || "No description"}`
-          );
-        });
+        project.images.forEach(
+          (image: { src: string; description: string }, index: number) => {
+            console.log(`  Image ${index + 1}: ${image.src}`);
+            console.log(
+              `  Description: ${image.description || "No description"}`
+            );
+          }
+        );
       }
     });
   } catch (error) {

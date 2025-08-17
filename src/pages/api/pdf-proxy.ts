@@ -22,7 +22,7 @@ export default async function handler(
 
     if (!url.startsWith(strapiBaseUrl)) {
       return res.status(403).json({
-        message: "Unauthorized PDF source"
+        message: "Unauthorized PDF source",
       });
     }
 
@@ -67,7 +67,7 @@ export default async function handler(
   } catch (error) {
     res.status(500).json({
       message: "Failed to load PDF",
-      error: error instanceof Error ? error.message : "Unknown error"
+      error: error instanceof Error ? error.message : "Unknown error",
     });
   }
 }

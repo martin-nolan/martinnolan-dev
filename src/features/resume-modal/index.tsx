@@ -66,7 +66,7 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
               href={cvPdfUrl || "./martin-nolan-cv.pdf"}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center border border-primary text-primary hover:bg-primary hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              className="inline-flex items-center rounded-md border border-primary px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-white"
             >
               <Download className="mr-2 size-4" />
               Download PDF
