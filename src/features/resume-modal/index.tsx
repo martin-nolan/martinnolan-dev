@@ -43,7 +43,7 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
         } catch {
           return false;
         }
-      })() &&
+      isStrapiUrl(cvPdfUrl, strapiBaseUrl) &&
       process.env.NODE_ENV === "development"
     ) {
       pdfUrl = cvPdfUrl;
