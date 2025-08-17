@@ -12,7 +12,18 @@ import {
 } from "@/shared/ui";
 import { useToast } from "@/shared/ui/use-toast";
 
-const ContactSection = () => {
+interface ContactSectionProps {
+  contactMethods?: ContactMethod[] | null;
+  profile?: {
+    email?: string;
+    [key: string]: any;
+  } | null;
+}
+
+const ContactSection = ({
+  contactMethods: externalContactMethods,
+  profile,
+}: ContactSectionProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -52,8 +63,8 @@ const ContactSection = () => {
       icon: <Mail className="size-6" />,
       title: "Email",
       description: "Direct communication",
-      value: "martinnolan_1@live.co.uk",
-      href: "mailto:martinnolan_1@live.co.uk",
+      value: profile?.email || "martinnolan_1@hotmail.co.uk",
+      href: `mailto:${profile?.email || "martinnolan_1@hotmail.co.uk"}`,
       primary: true,
     },
     {
@@ -73,6 +84,12 @@ const ContactSection = () => {
       primary: false,
     },
   ];
+
+  // Use external contact methods if provided, otherwise use defaults
+  const contactMethodsToRender =
+    externalContactMethods && externalContactMethods.length > 0
+      ? externalContactMethods
+      : contactMethods;
 
   return (
     <section id="contact" className="px-4 py-20 sm:px-6 lg:px-8">
@@ -98,7 +115,7 @@ const ContactSection = () => {
             </div>
 
             <div className="space-y-4">
-              {contactMethods.map((method) => (
+              {contactMethodsToRender.map((method) => (
                 <a
                   key={method.title}
                   href={method.href}

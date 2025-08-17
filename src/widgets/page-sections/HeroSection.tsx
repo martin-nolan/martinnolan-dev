@@ -1,7 +1,20 @@
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/shared/ui";
 
-const HeroSection = () => {
+interface Profile {
+  fullName?: string;
+  title?: string;
+  tagline?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  [key: string]: any;
+}
+
+interface HeroSectionProps {
+  profile?: Profile | null;
+}
+
+const HeroSection = ({ profile }: HeroSectionProps) => {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
       <div className="hero-gradient absolute inset-0">
@@ -22,26 +35,29 @@ const HeroSection = () => {
     lg:text-7xl
   "
           >
-            Engineering{" "}
-            <span
-              className="
+            {profile?.heroTitle || (
+              <>
+                Engineering{" "}
+                <span
+                  className="
       inline-block animate-gradient-shift 
       whitespace-nowrap bg-gradient-to-r from-primary 
       to-accent bg-[length:200%_200%] 
       bg-clip-text text-transparent 
       drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]
     "
-            >
-              Generative&nbsp;AI
-            </span>
-            <br />
-            for Real-World Impact
+                >
+                  Generative&nbsp;AI
+                </span>
+                <br />
+                for Real-World Impact
+              </>
+            )}
           </h1>
 
           <p className="mx-auto mb-8 max-w-2xl text-xl text-muted-foreground sm:text-2xl">
-            Associate Gen AI Software Engineer at Sky UK, building human-centred
-            AI tools that make work more efficient and accessible through rapid
-            demos and feedback loops.
+            {profile?.heroSubtitle ||
+              "Associate Gen AI Software Engineer at Sky UK, building human-centred AI tools that make work more efficient and accessible through rapid demos and feedback loops."}
           </p>
 
           <div className="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -90,7 +106,7 @@ const HeroSection = () => {
               <Linkedin className="size-6 text-muted-foreground group-hover:text-primary" />
             </a>
             <a
-              href="mailto:martinnolan_1@live.co.uk"
+              href="mailto:martinnolan_1@hotmail.co.uk"
               target="_blank"
               rel="noopener noreferrer"
               className="group rounded-full border border-surface-border bg-surface p-3 transition-all duration-200 hover:bg-surface-hover"

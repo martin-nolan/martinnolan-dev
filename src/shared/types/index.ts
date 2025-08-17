@@ -103,7 +103,12 @@ export interface PageProps {
 }
 
 export interface AboutSectionProps {
-  user: UserInfo;
+  profile?: {
+    fullName?: string;
+    bio?: string;
+    skills?: string[];
+    [key: string]: any;
+  } | null;
 }
 
 export interface MartinInfo {

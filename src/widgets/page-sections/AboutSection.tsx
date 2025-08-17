@@ -46,8 +46,8 @@ const defaultHighlights: Highlight[] = [
   },
 ];
 
-const AboutSection: React.FC<AboutSectionProps> = ({ user }) => {
-  const skills = user.skills ?? defaultSkills;
+const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
+  const skills = profile?.skills ?? defaultSkills;
   const highlights = defaultHighlights;
 
   return (
@@ -55,10 +55,13 @@ const AboutSection: React.FC<AboutSectionProps> = ({ user }) => {
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 text-center">
           <h2 className="mb-6 text-4xl font-bold sm:text-5xl">
-            About <span className="gradient-text">{user.name ?? "Martin"}</span>
+            About{" "}
+            <span className="gradient-text">
+              {profile?.fullName ?? "Martin"}
+            </span>
           </h2>
           <p className="mx-auto max-w-3xl text-xl text-muted-foreground">
-            {user.bio ??
+            {profile?.bio ??
               "Associate Gen AI Software Engineer at Sky UK, building human-centred AI tools that make work more efficient and accessible through rapid demos and feedback loops."}
           </p>
         </div>
@@ -67,7 +70,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ user }) => {
           <div className="space-y-6">
             <div className="prose prose-lg text-foreground">
               <p className="mb-6 text-lg leading-relaxed">
-                {user.bio ??
+                {profile?.bio ??
                   "I'm Martin Nolan, an Associate Gen AI Software Engineer at Sky UK. I build human-centred AI tools—covering ideation, stakeholder engagement, full-stack development and Google Cloud deployment—then refine through rapid demos and feedback loops."}
               </p>
             </div>

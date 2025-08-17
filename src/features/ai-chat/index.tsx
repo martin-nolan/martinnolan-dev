@@ -5,13 +5,7 @@ import { MessageCircle, X, Send } from "lucide-react";
 import { Button, Input, GlassCard } from "@/shared/ui";
 import { useToast } from "@/shared/ui/use-toast";
 import { buildSystemPrompt } from "./lib/buildSystemPrompt";
-import { martinInfo } from "@/entities/martin/martinInfo";
-import type {
-  MartinInfo,
-  Message,
-  ErrorResponse,
-  ChatOK,
-} from "@/shared/types";
+import type { Message, ErrorResponse, ChatOK } from "@/shared/types";
 
 export const AIChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,7 +71,7 @@ export const AIChatWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const systemPrompt = buildSystemPrompt(martinInfo as MartinInfo);
+      const systemPrompt = await buildSystemPrompt();
       const chatMessages = [
         { role: "system", content: systemPrompt },
         ...messages.map((m) => ({

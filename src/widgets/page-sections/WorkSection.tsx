@@ -1,8 +1,15 @@
 import { Building2, Users, Code } from "lucide-react";
 import { GlassCard, GradientText } from "@/shared/ui";
 import type { Experience } from "@/shared/types";
-const WorkSection = () => {
-  const experiences: Experience[] = [
+
+interface WorkSectionProps {
+  experiences?: Experience[] | null;
+}
+
+const WorkSection = ({
+  experiences: externalExperiences,
+}: WorkSectionProps) => {
+  const defaultExperiences: Experience[] = [
     {
       role: "Associate Gen AI Software Engineer",
       company: "Sky UK",
@@ -46,6 +53,15 @@ const WorkSection = () => {
       ],
     },
   ];
+
+  // Use external experiences if provided, otherwise use default
+  const experiences =
+    externalExperiences && externalExperiences.length > 0
+      ? externalExperiences.map((exp) => ({
+          ...exp,
+          icon: Code, // Default icon for CMS experiences
+        }))
+      : defaultExperiences;
 
   return (
     <section id="work" className="relative py-20">

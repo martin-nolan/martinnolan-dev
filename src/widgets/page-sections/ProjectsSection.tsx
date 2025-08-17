@@ -10,8 +10,16 @@ import {
 } from "@/shared/ui";
 import type { FeaturedProject, PersonalProject } from "@/shared/types";
 
-const ProjectsSection = () => {
-  const featuredProjects: FeaturedProject[] = [
+interface ProjectsSectionProps {
+  featuredProjects?: FeaturedProject[] | null;
+  personalProjects?: PersonalProject[] | null;
+}
+
+const ProjectsSection = ({
+  featuredProjects: externalFeaturedProjects,
+  personalProjects: externalPersonalProjects,
+}: ProjectsSectionProps) => {
+  const defaultFeaturedProjects: FeaturedProject[] = [
     {
       title: "Cricket Command Centre",
       role: "Associate Gen AI Software Engineer",
@@ -180,6 +188,17 @@ const ProjectsSection = () => {
     },
   ];
 
+  // Use external data if provided, otherwise use defaults
+  const featuredProjects =
+    externalFeaturedProjects && externalFeaturedProjects.length > 0
+      ? externalFeaturedProjects
+      : defaultFeaturedProjects;
+
+  const personalProjectsToRender =
+    externalPersonalProjects && externalPersonalProjects.length > 0
+      ? externalPersonalProjects
+      : personalProjects;
+
   return (
     <section id="projects" className="px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -287,7 +306,7 @@ const ProjectsSection = () => {
           </div>
 
           <div className="grid gap-8 md:grid-cols-2">
-            {personalProjects.map((project) => (
+            {personalProjectsToRender.map((project) => (
               <GlassCard
                 key={project.title}
                 className="group border-surface-border transition-all duration-300 hover:bg-surface-hover"

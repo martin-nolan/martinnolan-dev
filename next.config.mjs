@@ -27,7 +27,7 @@ const nextConfig = {
               default-src 'self';
               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
               font-src 'self' https://fonts.gstatic.com;
-              connect-src 'self' https://api.emailjs.com https://models.github.ai;
+              connect-src 'self' https://api.emailjs.com https://models.github.ai http://localhost:1337;
               img-src 'self' data: https: blob:;
               media-src 'self' https:;
               script-src 'self'${isDev ? " 'unsafe-eval'" : ""};
