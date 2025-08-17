@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Highlight {
   icon: React.ReactNode;
   title: string;
@@ -111,24 +112,49 @@ export interface AboutSectionProps {
   } | null;
 }
 
-export interface MartinInfo {
+// CMS Data Types
+export interface CMSProfile {
+  name: string;
   bio: string;
-  contact: {
-    email: string;
-    website: string;
-  };
+  email: string;
+  website?: string;
+  linkedin?: string;
+  github?: string;
+  jobTitle?: string;
+  company?: string;
   skills: string[];
-  experience: Array<{
-    role: string;
-    company: string;
-    years: string;
-    description: string;
-  }>;
-  projects: Array<Project>;
-  education: Array<{
-    degree: string;
-    institution: string;
-    years: string;
-  }>;
-  cv_pdf: string;
+  cvPdf?: string;
+}
+
+export interface CMSExperience {
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+  achievements: string[];
+}
+
+export interface CMSFeaturedProject {
+  title: string;
+  role: string;
+  year: string;
+  company: string;
+  description: string;
+  stack: string[];
+  highlights: string[];
+  category: string;
+}
+
+export interface CMSPersonalProject {
+  title: string;
+  description: string;
+  stack: string[];
+  category: string;
+}
+
+export interface CMSContentForAI {
+  profile: CMSProfile;
+  experiences: CMSExperience[];
+  featuredProjects: CMSFeaturedProject[];
+  personalProjects: CMSPersonalProject[];
 }

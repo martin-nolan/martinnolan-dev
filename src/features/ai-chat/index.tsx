@@ -84,7 +84,7 @@ export const AIChatWidget: React.FC = () => {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: chatMessages, max_tokens: 256 }),
+        body: JSON.stringify({ messages: chatMessages, maxTokens: 256 }),
       });
 
       const data = await safeJson(res);

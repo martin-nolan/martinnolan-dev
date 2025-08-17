@@ -1,17 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/shared/ui";
 
-interface Profile {
-  fullName?: string;
-  title?: string;
-  tagline?: string;
-  heroTitle?: string;
-  heroSubtitle?: string;
-  [key: string]: any;
-}
-
 interface HeroSectionProps {
-  profile?: Profile | null;
+  profile?: any;
 }
 
 const HeroSection = ({ profile }: HeroSectionProps) => {
@@ -35,29 +27,11 @@ const HeroSection = ({ profile }: HeroSectionProps) => {
     lg:text-7xl
   "
           >
-            {profile?.heroTitle || (
-              <>
-                Engineering{" "}
-                <span
-                  className="
-      inline-block animate-gradient-shift 
-      whitespace-nowrap bg-gradient-to-r from-primary 
-      to-accent bg-[length:200%_200%] 
-      bg-clip-text text-transparent 
-      drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]
-    "
-                >
-                  Generative&nbsp;AI
-                </span>
-                <br />
-                for Real-World Impact
-              </>
-            )}
+            {profile?.heroTitle || "Welcome to My Portfolio"}
           </h1>
 
           <p className="mx-auto mb-8 max-w-2xl text-xl text-muted-foreground sm:text-2xl">
-            {profile?.heroSubtitle ||
-              "Associate Gen AI Software Engineer at Sky UK, building human-centred AI tools that make work more efficient and accessible through rapid demos and feedback loops."}
+            {profile?.heroSubtitle || "Professional portfolio and AI assistant"}
           </p>
 
           <div className="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row">

@@ -17,6 +17,7 @@ const AIChatWidget = dynamic(
   { ssr: false }
 );
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface Props {
   profile?: any;
   experiences?: any[];
@@ -41,7 +42,7 @@ const Index = ({
   // If there's an error, show error page
   if (error) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <Head>
           <title>Content Unavailable - Martin Nolan Portfolio</title>
           <meta
@@ -49,11 +50,11 @@ const Index = ({
             content="Content management system temporarily unavailable"
           />
         </Head>
-        <div className="text-center max-w-2xl mx-auto px-4">
-          <h1 className="text-4xl font-bold text-foreground mb-4">
+        <div className="mx-auto max-w-2xl px-4 text-center">
+          <h1 className="mb-4 text-4xl font-bold text-foreground">
             Content Unavailable
           </h1>
-          <p className="text-xl text-muted-foreground mb-8">
+          <p className="mb-8 text-xl text-muted-foreground">
             {errorMessage ||
               "The content management system is temporarily unavailable."}
           </p>

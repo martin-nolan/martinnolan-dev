@@ -17,8 +17,7 @@ const Footer = () => {
                 <GradientText>Martin Nolan</GradientText>
               </h3>
               <p className="text-muted-foreground">
-                AI Engineer building the future of human-computer interaction at
-                Sky.
+                Professional portfolio and AI assistant
               </p>
               <div className="flex justify-center space-x-4 md:justify-start">
                 <a

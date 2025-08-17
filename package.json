@@ -1,8 +1,33 @@
 {
-  "name": "nextjs_react_shadcn_ts",
+  "name": "martin-nolan-portfolio",
+  "description": "Modern, CMS-driven portfolio with AI chat assistant for Martin Nolan - Associate Gen AI Software Engineer at Sky UK",
+  "version": "2.0.0",
   "private": true,
-  "version": "1.0.0",
   "type": "module",
+  "author": {
+    "name": "Martin Nolan",
+    "email": "martinnolan_1@hotmail.co.uk",
+    "url": "https://martinnolan.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martin-nolan/martinnolan-dev"
+  },
+  "bugs": {
+    "url": "https://github.com/martin-nolan/martinnolan-dev/issues"
+  },
+  "homepage": "https://martinnolan.dev",
+  "keywords": [
+    "portfolio",
+    "nextjs",
+    "typescript",
+    "ai-assistant",
+    "personal-website",
+    "cms",
+    "strapi",
+    "tailwindcss",
+    "react"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

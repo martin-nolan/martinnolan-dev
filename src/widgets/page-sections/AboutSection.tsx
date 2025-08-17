@@ -2,52 +2,32 @@ import { Code, Brain, Rocket, Users } from "lucide-react";
 import { CardContent, GlassCard } from "@/shared/ui";
 import type { AboutSectionProps, Highlight } from "@/shared/types";
 
-const defaultSkills = [
-  "TypeScript",
-  "Python",
-  "React",
-  "Next.js",
-  "TailwindCSS",
-  "Google Cloud",
-  "OpenAI",
-  "LLMs",
-  "Full-Stack Development",
-  "Stakeholder Management",
-  "Agile Product Ownership",
-  "Cloud Deployment",
-  "Observability",
-  "Django",
-];
-
+// Keep default highlights as they provide good structure when no CMS data
 const defaultHighlights: Highlight[] = [
   {
     icon: <Brain className="size-8 text-primary" />,
-    title: "Gen AI Development",
-    description:
-      "Building internal AI-driven platforms with rapid prototyping and user feedback loops.",
+    title: "AI Development",
+    description: "Building AI-powered solutions and platforms",
   },
   {
     icon: <Code className="size-8 text-accent" />,
     title: "Full-Stack Development",
-    description:
-      "End-to-end development with Next.js, TypeScript, and TailwindCSS deployed on Google Cloud.",
+    description: "End-to-end web development and deployment",
   },
   {
     icon: <Users className="size-8 text-primary" />,
-    title: "Stakeholder Engagement",
-    description:
-      "Leading ideation sessions and managing product ownership with agile methodologies.",
+    title: "Product Management",
+    description: "Stakeholder engagement and agile methodologies",
   },
   {
     icon: <Rocket className="size-8 text-accent" />,
-    title: "Cloud Deployment",
-    description:
-      "Deploying and observing AI solutions on Google Cloud Platform with reliability focus.",
+    title: "Cloud Solutions",
+    description: "Deployment and scaling on cloud platforms",
   },
 ];
 
 const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
-  const skills = profile?.skills ?? defaultSkills;
+  const skills = profile?.skills || [];
   const highlights = defaultHighlights;
 
   return (
@@ -61,8 +41,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
             </span>
           </h2>
           <p className="mx-auto max-w-3xl text-xl text-muted-foreground">
-            {profile?.bio ??
-              "Associate Gen AI Software Engineer at Sky UK, building human-centred AI tools that make work more efficient and accessible through rapid demos and feedback loops."}
+            {profile?.bio || "Professional background and expertise"}
           </p>
         </div>
 
@@ -70,8 +49,8 @@ const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
           <div className="space-y-6">
             <div className="prose prose-lg text-foreground">
               <p className="mb-6 text-lg leading-relaxed">
-                {profile?.bio ??
-                  "I'm Martin Nolan, an Associate Gen AI Software Engineer at Sky UK. I build human-centred AI tools—covering ideation, stakeholder engagement, full-stack development and Google Cloud deployment—then refine through rapid demos and feedback loops."}
+                {profile?.bio ||
+                  "Professional experience and technical background"}
               </p>
             </div>
           </div>

@@ -1,24 +1,7 @@
-interface Profile {
-  id: number;
-  attributes: {
-    fullName: string;
-    title: string;
-    company?: string;
-    bio: string;
-    heroTitle?: string;
-    heroSubtitle?: string;
-    tagline?: string;
-    email: string;
-    website?: string;
-    linkedin?: string;
-    github?: string;
-    seoTitle?: string;
-    seoDescription?: string;
-    skills?: Array<{ skill: string }>;
-  };
-}
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { CMSContentForAI } from "../types";
 
-interface Experience {
+interface StrapiExperience {
   id: number;
   attributes: {
     role: string;
@@ -30,7 +13,7 @@ interface Experience {
   };
 }
 
-interface Project {
+interface StrapiProject {
   id: number;
   attributes: {
     title: string;
@@ -47,14 +30,14 @@ interface Project {
   };
 }
 
-interface ContactMethod {
+interface StrapiContactMethod {
   id: number;
   attributes: {
     title: string;
     description: string;
     value: string;
     href: string;
-    icon?: string;
+    icon: string;
     primary: boolean;
     order: number;
   };
@@ -168,7 +151,7 @@ class ContentService {
       );
       const experiences = data.data || [];
 
-      return experiences.map((exp: Experience) => {
+      return experiences.map((exp: StrapiExperience) => {
         const attrs = exp.attributes || exp;
         return {
           ...attrs,
@@ -191,7 +174,7 @@ class ContentService {
       );
       const projects = data.data || [];
 
-      return projects.map((project: Project) => {
+      return projects.map((project: StrapiProject) => {
         const attrs = project.attributes || project;
         return {
           ...attrs,
@@ -218,7 +201,7 @@ class ContentService {
       );
       const projects = data.data || [];
 
-      return projects.map((project: Project) => {
+      return projects.map((project: StrapiProject) => {
         const attrs = project.attributes || project;
         return {
           ...attrs,
@@ -239,7 +222,7 @@ class ContentService {
       );
       const methods = data.data || [];
 
-      return methods.map((method: ContactMethod) => {
+      return methods.map((method: StrapiContactMethod) => {
         const attrs = method.attributes || method;
         return {
           ...attrs,
@@ -251,7 +234,7 @@ class ContentService {
     }
   }
 
-  async getAllContentForAI() {
+  async getAllContentForAI(): Promise<CMSContentForAI> {
     try {
       const [profile, experiences, featuredProjects, personalProjects] =
         await Promise.all([
@@ -271,7 +254,12 @@ class ContentService {
       console.error("Error fetching content for AI:", error);
       // Return empty data structure for AI chat to work with
       return {
-        profile: null,
+        profile: {
+          name: "Portfolio Owner",
+          bio: "Professional portfolio",
+          email: "contact@example.com",
+          skills: [],
+        },
         experiences: [],
         featuredProjects: [],
         personalProjects: [],

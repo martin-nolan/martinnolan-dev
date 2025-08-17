@@ -1,53 +1,31 @@
-# Martin Nolan Portfolio & AI Assistant
+# Martin Nolan Portfolio
 
-## Overview
-
-This is the source code for Martin Nolan's personal portfolio and AI chat assistant. It showcases professional experience, featured and personal projects, technical skills, and includes an interactive AI chat widget powered by OpenAI.
+Modern personal portfolio app with AI-powered chat assistant.
 
 ## Features
 
-- **Portfolio**: Modern, responsive design with sections for About, Work Experience, Projects, and Contact.
-- **AI Chat Widget**: Ask questions about Martin's background, experience, and projects.
-- **Resume Modal**: View and download Martin's CV as a PDF.
-- **Contact Form**: Send messages directly from the site.
+- Responsive, mobile-first design
+- AI chat assistant (GitHub Models)
+- PDF resume viewer
 
 ## Tech Stack
 
-- Next.js
-- React 18
-- TypeScript
-- shadcn/ui
-- Tailwind CSS
-- TanStack Query
-- Zod
+Next.js 15 · React · TypeScript · Tailwind CSS · shadcn/ui
 
-## Project Structure
-
-This project follows a feature-sliced architecture.
-
-- `src/app/` — Global styles and providers.
-- `src/pages/` — Next.js pages and API routes.
-- `src/shared/` — Reusable, low-level modules like UI components, hooks, and utilities.
-- `src/entities/` — Business entities, like data models and domain-specific logic.
-- `src/features/` — User-facing features, such as the AI chat widget or resume modal.
-- `src/widgets/` — Compositional blocks for pages, like the navigation bar or footer.
-
-## Getting Started
-
-First, install the dependencies:
+## Quick Start
 
 ```bash
+git clone https://github.com/martin-nolan/martinnolan-dev.git
+cd martinnolan-dev
 npm install
-```
-
-Then, run the development server:
-
-```bash
+cp .env.example .env.local # Add your GitHub Models token
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contact
+
+[LinkedIn](https://linkedin.com/in/martinnolan0110) · [Email](mailto:martinnolan_1@hotmail.co.uk)
 
 ## License
 
-MIT
+MIT — Fork/adapt for your own use.

@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import type { ContactMethod } from "@/shared/types";
-import { Mail, Linkedin, Github } from "lucide-react";
 import {
   Button,
   CardContent,
@@ -22,7 +22,6 @@ interface ContactSectionProps {
 
 const ContactSection = ({
   contactMethods: externalContactMethods,
-  profile,
 }: ContactSectionProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,38 +57,8 @@ const ContactSection = ({
     }
   };
 
-  const contactMethods: ContactMethod[] = [
-    {
-      icon: <Mail className="size-6" />,
-      title: "Email",
-      description: "Direct communication",
-      value: profile?.email || "martinnolan_1@hotmail.co.uk",
-      href: `mailto:${profile?.email || "martinnolan_1@hotmail.co.uk"}`,
-      primary: true,
-    },
-    {
-      icon: <Linkedin className="size-6" />,
-      title: "LinkedIn",
-      description: "Professional network",
-      value: "Connect on LinkedIn",
-      href: "https://www.linkedin.com/in/martinnolan0110",
-      primary: false,
-    },
-    {
-      icon: <Github className="size-6" />,
-      title: "GitHub",
-      description: "Code & projects",
-      value: "View repositories",
-      href: "https://github.com/martin-nolan",
-      primary: false,
-    },
-  ];
-
-  // Use external contact methods if provided, otherwise use defaults
-  const contactMethodsToRender =
-    externalContactMethods && externalContactMethods.length > 0
-      ? externalContactMethods
-      : contactMethods;
+  // Use only CMS contact methods - no hardcoded fallbacks
+  const contactMethodsToRender = externalContactMethods || [];
 
   return (
     <section id="contact" className="px-4 py-20 sm:px-6 lg:px-8">

@@ -1,4 +1,4 @@
-import { Building2, Users, Code } from "lucide-react";
+import { Code } from "lucide-react";
 import { GlassCard, GradientText } from "@/shared/ui";
 import type { Experience } from "@/shared/types";
 
@@ -9,59 +9,12 @@ interface WorkSectionProps {
 const WorkSection = ({
   experiences: externalExperiences,
 }: WorkSectionProps) => {
-  const defaultExperiences: Experience[] = [
-    {
-      role: "Associate Gen AI Software Engineer",
-      company: "Sky UK",
-      period: "Jul 2025 – Present",
-      icon: Code,
-      description:
-        "Building human-centred AI tools from ideation to deployment on Google Cloud, focusing on internal AI-driven platforms that make work more efficient and accessible.",
-      achievements: [
-        "Developed Cricket Command Centre with AI live commentary",
-        "Built Tough Mutter HR conversation simulator",
-        "Created Knowledge Search semantic platform",
-        "Delivered News Content Assistant for journalists",
-      ],
-    },
-    {
-      role: "Associate Product Owner",
-      company: "Sky Go / Comcast",
-      period: "Mar 2024 – Sep 2024",
-      icon: Users,
-      description:
-        "Led product strategy and stakeholder management for Sky Go streaming platform, driving user experience improvements and feature development.",
-      achievements: [
-        "Managed cross-functional teams across multiple time zones",
-        "Defined product roadmaps and user stories",
-        "Coordinated with Comcast engineering teams",
-        "Delivered key streaming platform enhancements",
-      ],
-    },
-    {
-      role: "Associate Front-End Developer",
-      company: "Sky UK - TV & Content Team",
-      period: "Sep 2023 – Mar 2024",
-      icon: Building2,
-      description:
-        "Developed front-end solutions for Sky's TV and content platforms using modern web technologies, focusing on user interface optimization and performance.",
-      achievements: [
-        "Built responsive TV content interfaces",
-        "Optimized platform performance and user experience",
-        "Collaborated with design and backend teams",
-        "Implemented modern front-end best practices",
-      ],
-    },
-  ];
-
-  // Use external experiences if provided, otherwise use default
+  // Map CMS experiences with appropriate icons (keeping icon system)
   const experiences =
-    externalExperiences && externalExperiences.length > 0
-      ? externalExperiences.map((exp) => ({
-          ...exp,
-          icon: Code, // Default icon for CMS experiences
-        }))
-      : defaultExperiences;
+    externalExperiences?.map((exp) => ({
+      ...exp,
+      icon: Code, // Default icon for all CMS experiences
+    })) || [];
 
   return (
     <section id="work" className="relative py-20">
@@ -71,8 +24,7 @@ const WorkSection = ({
             Professional <GradientText>Experience</GradientText>
           </h2>
           <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
-            My journey through Sky UK, from front-end development to AI
-            engineering
+            Professional experience and career journey
           </p>
         </div>
 

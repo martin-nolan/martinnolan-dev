@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */
 import { useEffect } from "react";
 import { X, Download } from "lucide-react";
 import { Button, GlassCard } from "@/shared/ui";
