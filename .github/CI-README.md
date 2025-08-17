@@ -61,4 +61,4 @@ npm run typecheck
 npm run build
 ```
 
-That's it! Simple, focused, and practical. 🎯
+That's it. Simple, focused, and practical. 🎯
