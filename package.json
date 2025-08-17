@@ -36,7 +36,9 @@
     "lint:check": "next lint",
     "typecheck": "tsc --noEmit",
     "analyze": "ANALYZE=true npm run build",
-    "test:build": "npm run typecheck && npm run lint:check && npm run build"
+    "test:build": "npm run typecheck && npm run lint:check && npm run build",
+    "ci:check": "npm run typecheck && npm run lint:check",
+    "precommit": "npm run ci:check"
   },
   "dependencies": {
     "@azure-rest/ai-inference": "^1.0.0-beta.6",
