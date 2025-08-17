@@ -348,7 +348,7 @@ class ContentService {
         const attrs = method.attributes || method;
         return {
           ...attrs,
-          // Keep icon as string to enable dynamic mapping via the icon-mapping utility; conversion to component happens in React
+          // Icon stored as string for dynamic mapping
           icon: attrs.icon || "mail", // Default to 'mail' if null/undefined
         };
       });
