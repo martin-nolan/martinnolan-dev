@@ -240,7 +240,7 @@ class ContentService {
         ...attrs,
         skills,
         bio: this.convertRichTextToPlain(attrs.bio),
-        cvPdf,
+        cvPdf, // Ensure computed value takes precedence
       };
     } catch (error) {
       console.error("Profile fetch error details:", error);

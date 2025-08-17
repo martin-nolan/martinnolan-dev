@@ -17,7 +17,7 @@ export const getIconComponent = (
   // Handle null, undefined, or empty strings
   if (!iconName) {
     if (process.env.NODE_ENV !== "production") {
-      console.warn(`Icon name is null/undefined, falling back to Mail icon`);
+      console.warn("Icon name is null/undefined, falling back to Mail icon");
     }
     return <Mail className="size-5" />;
   }
