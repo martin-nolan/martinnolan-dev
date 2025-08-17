@@ -59,6 +59,23 @@ const Index = () => {
         />
         <meta property="og:url" content="https://martinnolan.dev" />
         <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://martinnolan.dev/robot.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta
+          property="og:image:alt"
+          content="Martin Nolan - AI Engineer Portfolio"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Martin Nolan - AI Engineer" />
+        <meta
+          name="twitter:description"
+          content="AI Engineer at Sky UK specializing in generative AI and full-stack development"
+        />
+        <meta
+          name="twitter:image"
+          content="https://martinnolan.dev/robot.png"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
@@ -71,19 +88,24 @@ const Index = () => {
       <Navigation setIsResumeOpen={setIsResumeOpen} />
       <main>
         <HeroSection />
-        <AboutSection user={{
-          name: "Martin Nolan",
-          bio: martinInfo.bio,
-          email: martinInfo.contact.email,
-          website: martinInfo.contact.website,
-          skills: martinInfo.skills
-        }} />
+        <AboutSection
+          user={{
+            name: "Martin Nolan",
+            bio: martinInfo.bio,
+            email: martinInfo.contact.email,
+            website: martinInfo.contact.website,
+            skills: martinInfo.skills,
+          }}
+        />
         <WorkSection />
         <ProjectsSection />
         <ContactSection />
       </main>
       <Footer />
-      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+      <ResumeModal
+        isOpen={isResumeOpen}
+        onClose={() => setIsResumeOpen(false)}
+      />
       <AIChatWidget />
     </div>
   );
