@@ -42,7 +42,9 @@ export default async function handler(
     // Prevent path traversal using robust normalization
     const decodedPath = decodeURIComponent(parsedUrl.pathname);
     const normalizedPath = path.posix.normalize(decodedPath);
-    if (normalizedPath.startsWith("..") || normalizedPath.includes("/..")) {
+    // Robust path traversal protection: ensure resolved path stays within root
+    const resolvedPath = path.posix.resolve('/', normalizedPath);
+    if (!resolvedPath.startsWith('/')) {
       return res.status(403).json({
         message: "Path traversal detected",
       });
