@@ -3,8 +3,9 @@ import createClient from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
 import { isUnexpected } from "@azure-rest/ai-inference";
 
-const ENDPOINT = "https://models.github.ai/inference";
-const MODEL_ID = "openai/gpt-4.1";
+const ENDPOINT =
+  process.env.GITHUB_MODELS_ENDPOINT || "https://models.github.ai/inference";
+const MODEL_ID = process.env.GITHUB_MODEL_ID || "openai/gpt-4.1";
 const apiKey = process.env.GITHUB_TOKEN;
 
 export default async function handler(

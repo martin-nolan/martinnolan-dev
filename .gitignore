@@ -54,3 +54,19 @@ dist-ssr
 *.bak
 *.tmp
 *.swp
+
+# Security & Production
+package-lock*.json.backup
+*.key
+*.pem
+*.p12
+*.pfx
+.env.production
+.env.staging
+
+# Build artifacts
+tsconfig.tsbuildinfo
+.next/
+dist/
+build/
+out/

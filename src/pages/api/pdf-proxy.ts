@@ -5,6 +5,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Handle CORS preflight requests
+  if (req.method === "OPTIONS") {
+    res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Max-Age", "86400");
+    return res.status(200).end();
+  }
+
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Method not allowed" });
   }
@@ -17,8 +26,14 @@ export default async function handler(
 
   try {
     // Validate that the URL is from your Strapi instance (security measure)
-    const strapiApiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337/api";
+    const strapiApiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+
+    if (!strapiApiUrl) {
+      return res.status(500).json({
+        message: "Strapi configuration missing",
+      });
+    }
+
     const strapiBaseUrl = strapiApiUrl.replace("/api", "");
 
     let parsedUrl;
@@ -29,11 +44,20 @@ export default async function handler(
     }
     const baseParsedUrl = new URL(strapiBaseUrl);
 
-    // Check protocol and hostname match
-    if (
-      parsedUrl.protocol !== baseParsedUrl.protocol ||
-      parsedUrl.hostname !== baseParsedUrl.hostname
-    ) {
+    // Check protocol and hostname match (allow media subdomains for Strapi)
+    const isValidStrapiDomain =
+      parsedUrl.protocol === baseParsedUrl.protocol &&
+      (parsedUrl.hostname === baseParsedUrl.hostname ||
+        // Allow *.media.strapiapp.com for media files
+        (parsedUrl.hostname.includes(".media.strapiapp.com") &&
+          baseParsedUrl.hostname.includes("strapiapp.com")) ||
+        // Allow same base domain for Strapi cloud
+        (parsedUrl.hostname.includes("strapiapp.com") &&
+          baseParsedUrl.hostname.includes("strapiapp.com") &&
+          parsedUrl.hostname.split(".")[0] ===
+            baseParsedUrl.hostname.split(".")[0]));
+
+    if (!isValidStrapiDomain) {
       return res.status(403).json({
         message: "Unauthorized PDF source",
       });
@@ -43,8 +67,8 @@ export default async function handler(
     const decodedPath = decodeURIComponent(parsedUrl.pathname);
     const normalizedPath = path.posix.normalize(decodedPath);
     // Robust path traversal protection: ensure resolved path stays within root
-    const resolvedPath = path.posix.resolve('/', normalizedPath);
-    if (!resolvedPath.startsWith('/')) {
+    const resolvedPath = path.posix.resolve("/", normalizedPath);
+    if (!resolvedPath.startsWith("/")) {
       return res.status(403).json({
         message: "Path traversal detected",
       });
@@ -52,14 +76,25 @@ export default async function handler(
 
     let response;
     try {
+      // Prepare headers for Strapi media fetch
+      const fetchHeaders: Record<string, string> = {
+        "User-Agent": "Martin-Nolan-CV-Viewer",
+        Accept: "application/pdf,*/*",
+        "Cache-Control": "no-cache",
+      };
+
+      // Add authorization if available for private media files
+      const strapiToken =
+        process.env.STRAPI_API_TOKEN ||
+        process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+      if (strapiToken) {
+        fetchHeaders.Authorization = `Bearer ${strapiToken}`;
+      }
+
       // Fetch the PDF from Strapi
       response = await fetch(url, {
         method: "GET",
-        headers: {
-          "User-Agent": "NextJS-PDF-Proxy",
-          Accept: "application/pdf,*/*",
-          "Cache-Control": "no-cache",
-        },
+        headers: fetchHeaders,
       });
     } catch (fetchError) {
       throw new Error(
@@ -79,11 +114,22 @@ export default async function handler(
       response.headers.get("content-type") || "application/pdf";
     const buffer = await response.arrayBuffer();
 
-    // Set appropriate headers for PDF display
+    // Set appropriate headers for PDF display in iframe
     res.setHeader("Content-Type", contentType);
     res.setHeader("Content-Disposition", "inline");
     res.setHeader("Cache-Control", "public, max-age=31536000");
-    res.setHeader("X-Frame-Options", "SAMEORIGIN"); // Prevent clickjacking, allow same-origin iframe embedding
+    res.setHeader("X-Frame-Options", "SAMEORIGIN"); // Allow iframe embedding from same origin
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+    res.setHeader(
+      "Access-Control-Expose-Headers",
+      "Content-Length, Content-Type"
+    );
 
     // Send the PDF buffer
     res.status(200).end(Buffer.from(buffer));

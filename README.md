@@ -1,26 +1,90 @@
 # Martin Nolan Portfolio
 
-Modern personal portfolio app with AI-powered chat assistant.
+Modern personal portfolio app with AI-powered chat assistant and cloud-hosted content management.
 
 ## Features
 
-- Responsive, mobile-first design
-- AI chat assistant (GitHub Models)
-- PDF resume viewer
+- 🎨 Responsive, mobile-first design with dark/light theme support
+- 🤖 AI chat assistant powered by GitHub Models
+- 📄 Secure PDF resume viewer with proxy protection
+- ☁️ Cloud CMS integration via **Strapi Cloud**
+- 🛡️ Production-ready security hardening
+- ⚡ Optimized performance with automated validation
+
+## Architecture
+
+- **Frontend**: Next.js 15 with TypeScript and Tailwind CSS
+- **CMS**: Strapi Cloud hosted at `https://your-instance.strapiapp.com`
+- **AI**: GitHub Models integration for chat assistant
+- **Security**: Automated validation pipeline with environment-based configuration
 
 ## Tech Stack
 
-Next.js 15 · React · TypeScript · Tailwind CSS · shadcn/ui
+Next.js 15 · React · TypeScript · Tailwind CSS · shadcn/ui · Strapi Cloud
 
 ## Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- GitHub Models API access
+- Environment variables configured
+
+### Installation
 
 ```bash
 git clone https://github.com/martin-nolan/martinnolan-dev.git
 cd martinnolan-dev
 npm install
-cp .env.example .env.local # Add your GitHub Models token
+cp .env.example .env.local
+```
+
+### Environment Configuration
+
+Add your API keys to `.env.local`:
+
+```bash
+# Required for AI chat functionality
+GITHUB_TOKEN=your_github_models_token
+
+# Required for CMS content (uses cloud instance)
+NEXT_PUBLIC_STRAPI_API_URL=https://your-strapi-instance.strapiapp.com/api
+
+# Optional: Enhanced CMS features
+STRAPI_API_TOKEN=your_strapi_token
+
+# Optional: Contact form integration
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+### Development
+
+```bash
 npm run dev
 ```
+
+Visit `http://localhost:3000` to see your portfolio.
+
+### Production Deployment
+
+The application is production-ready with:
+
+- ✅ Security validation pipeline
+- ✅ Environment-based configuration
+- ✅ Automated CI/CD checks
+- ✅ Cloud CMS integration
+
+## CMS Content Management
+
+Content is managed through **Strapi Cloud**:
+
+- **Admin Panel**: `https://your-strapi-instance-url/admin`
+- **API Endpoint**: `https://your-instance.strapiapp.com/api`
+- **Media CDN**: `https://your-instance.media.strapiapp.com`
+
+The portfolio automatically syncs with cloud content updates.
 
 ## Contact
 
