@@ -48,7 +48,7 @@ Add your API keys to `.env.local`:
 GITHUB_TOKEN=your_github_models_token
 
 # Required for CMS content (uses cloud instance)
-NEXT_PUBLIC_STRAPI_API_URL=https://ethical-sharing-51be20efdb.strapiapp.com/api
+NEXT_PUBLIC_STRAPI_API_URL=https://your-strapi-instance.strapiapp.com/api
 
 # Optional: Enhanced CMS features
 STRAPI_API_TOKEN=your_strapi_token
