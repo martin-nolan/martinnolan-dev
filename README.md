@@ -81,7 +81,7 @@ The application is production-ready with:
 Content is managed through **Strapi Cloud**:
 
 - **Admin Panel**: `https://your-strapi-instance-url/admin`
-- **API Endpoint**: `https://ethical-sharing-51be20efdb.strapiapp.com/api`
+- **API Endpoint**: `https://your-instance.strapiapp.com/api`
 - **Media CDN**: `https://ethical-sharing-51be20efdb.media.strapiapp.com`
 
 The portfolio automatically syncs with cloud content updates.
