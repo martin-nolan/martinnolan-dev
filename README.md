@@ -14,7 +14,7 @@ Modern personal portfolio app with AI-powered chat assistant and cloud-hosted co
 ## Architecture
 
 - **Frontend**: Next.js 15 with TypeScript and Tailwind CSS
-- **CMS**: Strapi Cloud hosted at `https://ethical-sharing-51be20efdb.strapiapp.com`
+- **CMS**: Strapi Cloud hosted at `https://your-instance.strapiapp.com`
 - **AI**: GitHub Models integration for chat assistant
 - **Security**: Automated validation pipeline with environment-based configuration
 
