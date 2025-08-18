@@ -63,7 +63,14 @@ const sourceFiles = [
   "src/shared/lib/content-service.ts",
   "src/features/resume-modal/index.tsx",
   "src/pages/api/pdf-proxy.ts",
+
+// Only check source code files, not documentation like README.md
+const sourceFiles = [
+  "src/shared/lib/content-service.ts",
+  "src/features/resume-modal/index.tsx",
+  "src/pages/api/pdf-proxy.ts",
   "next.config.mjs",
+  // "README.md", // <-- Do NOT include documentation files here
 ];
 
 const dangerousPatterns = [
