@@ -7,6 +7,7 @@ Modern personal portfolio app with AI-powered chat assistant.
 - Responsive, mobile-first design
 - AI chat assistant (GitHub Models)
 - PDF resume viewer
+- Cloud CMS integration (Strapi)
 
 ## Tech Stack
 
@@ -18,7 +19,7 @@ Next.js 15 · React · TypeScript · Tailwind CSS · shadcn/ui
 git clone https://github.com/martin-nolan/martinnolan-dev.git
 cd martinnolan-dev
 npm install
-cp .env.example .env.local # Add your GitHub Models token
+cp .env.example .env.local # Add your GitHub Models token and Strapi API token
 npm run dev
 ```
 

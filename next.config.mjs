@@ -1,6 +1,25 @@
 /** @type {import('next').NextConfig} */
 const isDev = process.env.NODE_ENV !== "production";
 
+// Get domains from environment variables for better security
+const getStrapiDomains = () => {
+  const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+  if (!strapiUrl) return [];
+
+  try {
+    const url = new URL(strapiUrl);
+    const baseUrl = strapiUrl.replace("/api", "");
+    const mediaUrl = new URL(baseUrl);
+    mediaUrl.hostname = mediaUrl.hostname.replace(".", ".media.");
+
+    return [url.hostname, mediaUrl.hostname];
+  } catch {
+    return [];
+  }
+};
+
+const strapiDomains = getStrapiDomains();
+
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
@@ -10,13 +29,25 @@ const nextConfig = {
     domains: [
       "localhost",
       "martinnolan.dev",
-      // Future CMS domains
+      ...strapiDomains,
+      // Common CDN domains
       "res.cloudinary.com",
       "images.unsplash.com",
-    ],
+    ].filter(Boolean),
     formats: ["image/webp", "image/avif"],
   },
   async headers() {
+    // Build CSP with dynamic Strapi URLs
+    const strapiConnections =
+      strapiDomains.length > 0
+        ? ` ${strapiDomains.map((domain) => `https://${domain}`).join(" ")}`
+        : "";
+
+    const strapiMedia =
+      strapiDomains.length > 0
+        ? ` ${strapiDomains.map((domain) => `https://${domain}`).join(" ")}`
+        : "";
+
     return [
       {
         // Apply security headers to all routes except API routes
@@ -28,11 +59,11 @@ const nextConfig = {
               default-src 'self';
               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
               font-src 'self' https://fonts.gstatic.com;
-              connect-src 'self' https://api.emailjs.com https://models.github.ai http://localhost:1337;
-              img-src 'self' data: https: blob:;
-              media-src 'self' https:;
+              connect-src 'self' https://api.emailjs.com https://models.github.ai${strapiConnections};
+              img-src 'self' data: https: blob:${strapiMedia};
+              media-src 'self' https:${strapiMedia};
               script-src 'self'${isDev ? " 'unsafe-eval'" : ""};
-              frame-src 'self' http://localhost:1337;
+              frame-src 'self' data:${strapiConnections};
             `
               .replace(/\s{2,}/g, " ")
               .trim(),
@@ -48,21 +79,6 @@ const nextConfig = {
           {
             key: "Referrer-Policy",
             value: "origin-when-cross-origin",
-          },
-        ],
-      },
-      {
-        // Special headers for PDF proxy API to allow iframe embedding
-        source: "/api/pdf-proxy",
-        headers: [
-          {
-            key: "Content-Type",
-            value: "application/pdf",
-          },
-          // No X-Frame-Options header to allow iframe embedding
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000",
           },
         ],
       },

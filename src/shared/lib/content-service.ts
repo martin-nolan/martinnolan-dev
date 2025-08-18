@@ -88,11 +88,13 @@ interface StrapiMedia {
   };
 }
 
+// Strapi Configuration - All endpoints must come from environment variables
 const STRAPI_API_URL =
-  process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-  process.env.STRAPI_API_URL ||
-  "http://localhost:1337/api";
-const STRAPI_BASE_URL = STRAPI_API_URL.replace("/api", "");
+  process.env.NEXT_PUBLIC_STRAPI_API_URL || process.env.STRAPI_API_URL;
+const STRAPI_BASE_URL = STRAPI_API_URL
+  ? STRAPI_API_URL.replace("/api", "")
+  : "";
+// API token is optional - content can be public or require authentication
 const STRAPI_API_TOKEN =
   process.env.NEXT_PUBLIC_STRAPI_API_TOKEN || process.env.STRAPI_API_TOKEN;
 
@@ -172,19 +174,23 @@ class ContentService {
   }
 
   private async fetchFromStrapi(endpoint: string) {
-    if (!STRAPI_API_URL || !STRAPI_API_TOKEN) {
+    if (!STRAPI_API_URL) {
       throw new Error(
-        "Strapi configuration missing. Please check your environment variables."
+        "Strapi API URL missing. Please check your environment variables."
       );
     }
 
     const url = `${STRAPI_API_URL}${endpoint}`;
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${STRAPI_API_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+
+    // Add authorization if token is available (for private content)
+    if (STRAPI_API_TOKEN) {
+      headers.Authorization = `Bearer ${STRAPI_API_TOKEN}`;
+    }
+
+    const response = await fetch(url, { headers });
 
     if (!response.ok) {
       throw new Error(
