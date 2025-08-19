@@ -66,9 +66,16 @@ const WorkSection = ({
                     </div>
                   </div>
 
-                  <p className="leading-relaxed text-muted-foreground">
-                    {exp.description}
-                  </p>
+                  <ul className="list-disc ml-6 space-y-2 text-muted-foreground leading-relaxed">
+                    {exp.description
+                      ?.split("\n")
+                      .filter((line) => line.trim())
+                      .map((line, lineIndex) => (
+                        <li key={lineIndex} className="mb-1">
+                          {line.trim()}
+                        </li>
+                      ))}
+                  </ul>
                 </div>
               </div>
             </GlassCard>
