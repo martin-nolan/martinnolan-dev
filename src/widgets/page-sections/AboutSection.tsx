@@ -31,7 +31,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
   const highlights = defaultHighlights;
 
   return (
-    <section id="about" className="px-4 py-20 sm:px-6 lg:px-8">
+    <section id="about" className="px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 text-center">
           <h2 className="mb-6 text-4xl font-bold sm:text-5xl">

@@ -62,7 +62,7 @@ const ContactSection = ({
   const contactMethodsToRender = externalContactMethods || [];
 
   return (
-    <section id="contact" className="px-4 py-20 sm:px-6 lg:px-8">
+    <section id="contact" className="px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-4xl">
         <div className="mb-16 text-center">
           <h2 className="mb-6 text-4xl font-bold sm:text-5xl">

@@ -1,4 +1,4 @@
-import { Code } from "lucide-react";
+import { Code, Users } from "lucide-react";
 import { GlassCard, GradientText } from "@/shared/ui";
 import type { Experience } from "@/shared/types";
 
@@ -10,14 +10,22 @@ const WorkSection = ({
   experiences: externalExperiences,
 }: WorkSectionProps) => {
   // Map CMS experiences with appropriate icons (keeping icon system)
+  function getIconForRole(role: string) {
+    if (/product owner/i.test(role)) return Users;
+    if (/software|developer|engineer/i.test(role)) return Code;
+    return Code;
+  }
+
   const experiences =
-    externalExperiences?.map((exp) => ({
-      ...exp,
-      icon: Code, // Default icon for all CMS experiences
-    })) || [];
+    externalExperiences?.map((exp) => {
+      return {
+        ...exp,
+        icon: getIconForRole(exp.role),
+      };
+    }) || [];
 
   return (
-    <section id="work" className="relative py-20">
+    <section id="work" className="relative py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-4xl font-bold">
