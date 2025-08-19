@@ -343,6 +343,136 @@ class ContentService {
     }
   }
 
+  // New unified projects method
+  async getProjects() {
+    try {
+      const data = await this.fetchFromStrapi(
+        "/all-projects?populate=*&sort=order:asc"
+      );
+      const projects = data.data || [];
+
+      return projects.map((project: any) => {
+        // Handle both Strapi v4 format (attributes nested) and v3/local format (direct)
+        const attrs = project.attributes || project;
+
+        // Handle images - support both Strapi media and legacy string arrays
+        let images: Array<{ src: string; description: string }> = [];
+
+        if (attrs.image) {
+          if (Array.isArray(attrs.image)) {
+            // Direct array of Strapi media objects
+            images = this.processMediaArray(attrs.image);
+          } else if (
+            typeof attrs.image === "object" &&
+            "data" in attrs.image &&
+            Array.isArray(attrs.image.data)
+          ) {
+            // Handle possible { data: [...] } wrapper
+            images = this.processMediaArray(attrs.image.data);
+          }
+        }
+
+        // Parse JSON strings for technologies and highlights (local format)
+        let technologies = [];
+        let highlights = [];
+        
+        try {
+          if (typeof attrs.technologies === 'string') {
+            // Handle JSON string format (local Strapi)
+            const techData = JSON.parse(attrs.technologies);
+            technologies = Array.isArray(techData) 
+              ? techData.map((tech: any) => typeof tech === 'string' ? tech : tech.name || tech)
+              : [];
+          } else if (Array.isArray(attrs.technologies)) {
+            technologies = attrs.technologies.map((tech: any) => typeof tech === 'string' ? tech : tech.name || tech);
+          } else if (attrs.stack) {
+            // Fallback to old stack format
+            technologies = attrs.stack.map((s: any) => s.technology || s);
+          }
+        } catch (e) {
+          technologies = [];
+        }
+        
+        try {
+          if (typeof attrs.highlights === 'string') {
+            // Handle JSON string format (local Strapi) or plain text with • separators
+            if (attrs.highlights.startsWith('[')) {
+              const highlightData = JSON.parse(attrs.highlights);
+              highlights = Array.isArray(highlightData) 
+                ? highlightData.map((h: any) => typeof h === 'string' ? h : h.text || h)
+                : [];
+            } else {
+              // Plain text with • separators
+              highlights = attrs.highlights.split(' • ').filter((h: string) => h.trim());
+            }
+          } else if (Array.isArray(attrs.highlights)) {
+            highlights = attrs.highlights.map((h: any) => typeof h === 'string' ? h : h.text || h);
+          }
+        } catch (e) {
+          highlights = [];
+        }
+
+        // Handle description - could be rich text JSON or plain text
+        let description = '';
+        if (typeof attrs.description === 'string') {
+          if (attrs.description.startsWith('[{')) {
+            // Rich text JSON format
+            description = this.convertRichTextToPlain(attrs.description);
+          } else {
+            // Plain text
+            description = attrs.description;
+          }
+        } else {
+          description = this.convertRichTextToPlain(attrs.description);
+        }
+
+        return {
+          id: project.id || attrs.id,
+          title: attrs.title,
+          description,
+          stack: technologies,
+          highlights,
+          images,
+          // Map projectType to type for consistency
+          type: attrs.projectType || attrs.type || 'personal',
+          // Convert boolean featured to ensure it exists
+          featured: Boolean(attrs.featured),
+          order: attrs.order || 0,
+          github: attrs.github || null,
+          liveUrl: attrs.liveUrl || null
+        };
+      });
+    } catch (error) {
+      console.error("All Projects fetch error:", error);
+      // Fallback to old methods if unified endpoint doesn't exist yet
+      try {
+        const [featuredProjects, personalProjects] = await Promise.all([
+          this.getFeaturedProjects(),
+          this.getPersonalProjects()
+        ]);
+        
+        // Convert to unified format
+        const workProjects = featuredProjects.map((project: any) => ({
+          ...project,
+          type: 'work',
+          featured: true
+        }));
+        
+        const personalProjectsConverted = personalProjects.map((project: any) => ({
+          ...project,
+          type: 'personal',
+          featured: false,
+          highlights: []
+        }));
+        
+        return [...workProjects, ...personalProjectsConverted];
+      } catch (fallbackError) {
+        console.error("Fallback projects fetch also failed:", fallbackError);
+        return [];
+      }
+    }
+  }
+
   async getContactMethods() {
     try {
       const data = await this.fetchFromStrapi(

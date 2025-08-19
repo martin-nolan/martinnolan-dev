@@ -15,41 +15,50 @@ import type {
 interface ProjectsSectionProps {
   featuredProjects?: FeaturedProject[] | null;
   personalProjects?: PersonalProject[] | null;
+  projects?: AdditionalProject[] | null; // New unified projects prop
 }
 
 const ProjectsSection = ({
   featuredProjects: externalFeaturedProjects,
   personalProjects: externalPersonalProjects,
+  projects: unifiedProjects,
 }: ProjectsSectionProps) => {
-  // Convert and combine projects into unified format
-  const workProjects: AdditionalProject[] = (
-    externalFeaturedProjects || []
-  ).map((project) => ({
-    title: project.title,
-    description: project.description,
-    stack: project.stack,
-    type: "work" as const,
-    year: project.year,
-    company: project.company,
-    role: project.role,
-    category: project.category,
-    highlights: project.highlights,
-    images: project.images,
-  }));
+  
+  let allProjects: AdditionalProject[] = [];
+  
+  // Use unified projects if available, otherwise convert from separate types
+  if (unifiedProjects && unifiedProjects.length > 0) {
+    allProjects = unifiedProjects;
+  } else {
+    // Fallback: Convert and combine projects into unified format (backward compatibility)
+    const workProjects: AdditionalProject[] = (
+      externalFeaturedProjects || []
+    ).map((project) => ({
+      title: project.title,
+      description: project.description,
+      stack: project.stack,
+      type: "work" as const,
+      year: project.year,
+      company: project.company,
+      role: project.role,
+      category: project.category,
+      highlights: project.highlights,
+      images: project.images,
+    }));
 
-  const personalProjectsConverted: AdditionalProject[] = (
-    externalPersonalProjects || []
-  ).map((project) => ({
-    title: project.title,
-    description: project.description,
-    stack: project.stack,
-    type: "personal" as const,
-    category: project.category,
-    github: project.github,
-  }));
+    const personalProjectsConverted: AdditionalProject[] = (
+      externalPersonalProjects || []
+    ).map((project) => ({
+      title: project.title,
+      description: project.description,
+      stack: project.stack,
+      type: "personal" as const,
+      category: project.category,
+      github: project.github,
+    }));
 
-  // Combine all projects
-  const allProjects = [...workProjects, ...personalProjectsConverted];
+    allProjects = [...workProjects, ...personalProjectsConverted];
+  }
 
   return (
     <section id="projects" className="px-4 py-12 sm:px-6 lg:px-8">
@@ -159,7 +168,7 @@ const ProjectsSection = ({
                 </p>
 
                 {/* Highlights for work projects */}
-                {project.highlights && project.highlights.length > 0 && (
+                {project.type === 'work' && project.highlights && project.highlights.length > 0 && (
                   <div className="mb-4">
                     <h4 className="mb-2 text-sm font-semibold text-primary">
                       Key Achievements
