@@ -48,10 +48,17 @@ const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
         <div className="mb-16 grid items-center gap-12 lg:grid-cols-2">
           <div className="space-y-6">
             <div className="prose prose-lg text-foreground">
-              <p className="mb-6 text-lg leading-relaxed">
-                {profile?.bio ||
-                  "Professional experience and technical background"}
-              </p>
+              {profile?.bio ? (
+                profile.bio.split("\n").map((paragraph, idx) => (
+                  <p key={idx} className="mb-6 text-lg leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))
+              ) : (
+                <p className="mb-6 text-lg leading-relaxed">
+                  Professional experience and technical background
+                </p>
+              )}
             </div>
           </div>
 

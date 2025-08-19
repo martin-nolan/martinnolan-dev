@@ -193,59 +193,12 @@ export const getStaticProps: GetStaticProps = async () => {
       personalProjects,
       contactMethods,
     ] = await Promise.all([
-      contentService.getProfile().catch((error) => {
-        console.error("Profile fetch failed:", error.message);
-        return null;
-      }),
-      contentService.getExperiences().catch((error) => {
-        console.error("Experiences fetch failed:", error.message);
-        return [];
-      }),
-      contentService.getFeaturedProjects().catch((error) => {
-        console.error("Featured projects fetch failed:", error.message);
-        return [];
-      }),
-      contentService.getPersonalProjects().catch((error) => {
-        console.error("Personal projects fetch failed:", error.message);
-        return [];
-      }),
-      contentService.getContactMethods().catch((error) => {
-        console.error("Contact methods fetch failed:", error.message);
-        return [];
-      }),
+      contentService.getProfile(),
+      contentService.getExperiences(),
+      contentService.getFeaturedProjects(),
+      contentService.getPersonalProjects(),
+      contentService.getContactMethods(),
     ]);
-
-    // If profile failed to load, we can't render the page properly
-    if (!profile) {
-      console.error("Profile is required but failed to load. Using fallback.");
-      return {
-        props: {
-          profile: {
-            name: "Martin Nolan",
-            title: "Associate Gen AI Software Engineer",
-            company: "Sky UK",
-            bio: "AI Engineer building practical solutions",
-            heroTitle: "Practical AI, Built for People",
-            heroSubtitle: "Full-stack Gen AI Engineer",
-            tagline: null,
-            email: "martinnolan_1@hotmail.co.uk",
-            website: null,
-            linkedin: "https://www.linkedin.com/in/martinnolan0110/",
-            github: "https://github.com/martin-nolan",
-            seoTitle: "Martin Nolan — Associate Gen AI Software Engineer",
-            seoDescription: "AI Engineer portfolio",
-            skills: ["TypeScript", "Next.js", "AI/ML", "React"],
-            cvPdf: null,
-          },
-          experiences: [],
-          featuredProjects: [],
-          personalProjects: [],
-          projects: [],
-          contactMethods: [],
-        },
-        revalidate: 10, // Try again sooner when using fallbacks
-      };
-    }
 
     // Try to get unified projects (will fallback to separate types if not available)
     let projects = null;

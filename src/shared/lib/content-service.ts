@@ -156,32 +156,62 @@ class ContentService {
   ): Array<{ src: string; description: string }> {
     if (!Array.isArray(mediaArray)) return [];
 
-    // Parse imageCaption string if provided (format: "filename1.png: Description 1\nfilename2.png: Description 2")
+    // Debug logging for imageCaption
+    console.log('🔍 ProcessMediaArray Debug:');
+    console.log('  imageCaption:', imageCaption);
+    console.log('  mediaArray length:', mediaArray.length);
+
+    // Parse imageCaption string to create a filename -> description mapping
     const captionMap = new Map<string, string>();
     if (imageCaption) {
       const lines = imageCaption.split('\n');
-      lines.forEach(line => {
+      console.log('  imageCaption lines:', lines);
+      for (const line of lines) {
         const colonIndex = line.indexOf(':');
         if (colonIndex > 0) {
           const filename = line.substring(0, colonIndex).trim();
           const description = line.substring(colonIndex + 1).trim();
-          captionMap.set(filename, description);
+          if (filename && description) {
+            captionMap.set(filename, description);
+            console.log(`  📝 Mapped: "${filename}" -> "${description}"`);
+          }
         }
-      });
+      }
     }
+    console.log('  captionMap size:', captionMap.size);
 
     return mediaArray
       .map((item) => {
         if (typeof item === "object") {
           // Handle both nested attributes format and direct format
           const url = this.getMediaUrl(item);
-          const filename = item.name || item.attributes?.name || "";
           const altText =
             item.attributes?.alternativeText || item.alternativeText || "";
           const caption = item.attributes?.caption || item.caption || "";
           
-          // Use caption from imageCaption field if available, otherwise fallback to altText/caption
-          const description = captionMap.get(filename) || altText || caption;
+          // Extract filename from URL for caption mapping
+          let description = altText || caption;
+          if (url && captionMap.size > 0) {
+            const filename = url.split('/').pop()?.split('?')[0]; // Get filename without query params
+            console.log(`  🔗 Processing URL: ${url}`);
+            console.log(`  📄 Extracted filename: ${filename}`);
+            
+            // Try exact match first
+            if (filename && captionMap.has(filename)) {
+              description = captionMap.get(filename) || description;
+              console.log(`  ✅ Found exact caption for ${filename}: "${description}"`);
+            } else if (filename) {
+              // Try matching without hash suffix (e.g., "notes_a0f91bfad4.png" -> "notes.png")
+              const baseFilename = filename.replace(/_[a-f0-9]+(\.[^.]+)$/, '$1');
+              console.log(`  🔄 Trying base filename: ${baseFilename}`);
+              if (captionMap.has(baseFilename)) {
+                description = captionMap.get(baseFilename) || description;
+                console.log(`  ✅ Found base caption for ${baseFilename}: "${description}"`);
+              } else {
+                console.log(`  ❌ No caption found for ${filename} or ${baseFilename}`);
+              }
+            }
+          }
 
           return url
             ? {
