@@ -48,8 +48,10 @@ const nextConfig = {
         ? ` ${strapiDomains.map((domain) => `https://${domain}`).join(" ")}`
         : "";
 
-    // Add localhost development URLs
-    const devStrapiUrls = isDev ? " http://localhost:1337" : "";
+    // Add development URLs from environment variable
+    const devStrapiUrls = isDev && process.env.NEXT_PUBLIC_STRAPI_DEV_URL 
+      ? ` ${process.env.NEXT_PUBLIC_STRAPI_DEV_URL}` 
+      : "";
 
     return [
       {
