@@ -2,7 +2,6 @@ import Head from "next/head";
 import Navigation from "@/widgets/navigation";
 import HeroSection from "@/widgets/page-sections/HeroSection";
 import AboutSection from "@/widgets/page-sections/AboutSection";
-import WorkSection from "@/widgets/page-sections/WorkSection";
 import ProjectsSection from "@/widgets/page-sections/ProjectsSection";
 import ContactSection from "@/widgets/page-sections/ContactSection";
 import Footer from "@/widgets/footer";
@@ -20,7 +19,6 @@ const AIChatWidget = dynamic(
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface Props {
   profile?: any;
-  experiences?: any[];
   featuredProjects?: any[];
   personalProjects?: any[];
   contactMethods?: any[];
@@ -30,7 +28,6 @@ interface Props {
 
 const Index = ({
   profile,
-  experiences,
   featuredProjects,
   personalProjects,
   contactMethods,
@@ -163,7 +160,6 @@ const Index = ({
       <main>
         <HeroSection profile={profile} />
         <AboutSection profile={profile} />
-        <WorkSection experiences={experiences} />
         <ProjectsSection
           featuredProjects={featuredProjects}
           personalProjects={personalProjects}
@@ -183,24 +179,17 @@ const Index = ({
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const [
-      profile,
-      experiences,
-      featuredProjects,
-      personalProjects,
-      contactMethods,
-    ] = await Promise.all([
-      contentService.getProfile(),
-      contentService.getExperiences(),
-      contentService.getFeaturedProjects(),
-      contentService.getPersonalProjects(),
-      contentService.getContactMethods(),
-    ]);
+    const [profile, featuredProjects, personalProjects, contactMethods] =
+      await Promise.all([
+        contentService.getProfile(),
+        contentService.getFeaturedProjects(),
+        contentService.getPersonalProjects(),
+        contentService.getContactMethods(),
+      ]);
 
     return {
       props: {
         profile,
-        experiences,
         featuredProjects,
         personalProjects,
         contactMethods,

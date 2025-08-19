@@ -50,6 +50,21 @@ export interface PersonalProject {
   category: string;
 }
 
+// Unified project interface for the new Additional Projects section
+export interface AdditionalProject {
+  title: string;
+  description: string;
+  stack: string[];
+  type: "work" | "personal"; // Badge to indicate project type
+  year?: string;
+  company?: string;
+  role?: string;
+  category: string;
+  highlights?: string[];
+  images?: Array<{ src: string; description: string }>;
+  github?: string;
+}
+
 export interface Experience {
   role: string;
   company: string;
