@@ -93,20 +93,10 @@ const ContactSection = ({
                   rel="noopener noreferrer"
                   className="group block"
                 >
-                  <GlassCard
-                    className={`border-surface-border transition-all duration-200 hover:bg-surface-hover ${
-                      method.primary ? "ring-1 ring-primary/30" : ""
-                    }`}
-                  >
+                  <GlassCard className="border-surface-border transition-all duration-200 hover:bg-surface-hover">
                     <CardContent className="p-6">
                       <div className="flex items-center space-x-4">
-                        <div
-                          className={`rounded-lg p-3 ${
-                            method.primary
-                              ? "bg-primary/10 text-primary"
-                              : "bg-surface text-muted-foreground"
-                          } transition-transform duration-200 group-hover:scale-110`}
-                        >
+                        <div className="rounded-lg p-3 bg-surface text-muted-foreground transition-all duration-200 group-hover:scale-110 group-hover:text-primary">
                           {getIconComponent(method.icon)}
                         </div>
                         <div className="flex-1">
@@ -116,13 +106,7 @@ const ContactSection = ({
                           <p className="mb-1 text-sm text-muted-foreground">
                             {method.description}
                           </p>
-                          <p
-                            className={`text-sm ${
-                              method.primary
-                                ? "font-medium text-primary"
-                                : "text-foreground"
-                            }`}
-                          >
+                          <p className="text-sm text-foreground">
                             {method.value}
                           </p>
                         </div>
