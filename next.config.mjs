@@ -74,6 +74,11 @@ const nextConfig = {
         ? ` ${strapiDomains.map((domain) => `https://${domain}`).join(" ")}`
         : "";
 
+    // Add localhost development URLs
+    const devConnections = isDev ? " http://localhost:1337" : "";
+    const devFrameSrc = isDev ? " http://localhost:1337" : "";
+    const devMediaSrc = isDev ? " http://localhost:1337" : "";
+
     return [
       {
         // Apply security headers to all routes except API routes
@@ -85,11 +90,11 @@ const nextConfig = {
               default-src 'self';
               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
               font-src 'self' https://fonts.gstatic.com;
-              connect-src 'self' https://api.emailjs.com https://models.github.ai${strapiConnections};
-              img-src 'self' data: https: blob:${strapiMedia};
-              media-src 'self' https:${strapiMedia};
+              connect-src 'self' https://api.emailjs.com https://models.github.ai${strapiConnections}${devConnections};
+              img-src 'self' data: https: blob:${strapiMedia}${devMediaSrc};
+              media-src 'self' https:${strapiMedia}${devMediaSrc};
               script-src 'self'${isDev ? " 'unsafe-eval'" : ""};
-              frame-src 'self' data:${strapiConnections};
+              frame-src 'self' data:${strapiConnections}${devFrameSrc};
             `
               .replace(/\s{2,}/g, " ")
               .trim(),

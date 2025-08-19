@@ -151,23 +151,42 @@ class ContentService {
 
   // Helper function to process media array (for project images)
   private processMediaArray(
-    mediaArray: any[]
+    mediaArray: any[],
+    imageCaption?: string | null
   ): Array<{ src: string; description: string }> {
     if (!Array.isArray(mediaArray)) return [];
+
+    // Parse imageCaption string if provided (format: "filename1.png: Description 1\nfilename2.png: Description 2")
+    const captionMap = new Map<string, string>();
+    if (imageCaption) {
+      const lines = imageCaption.split('\n');
+      lines.forEach(line => {
+        const colonIndex = line.indexOf(':');
+        if (colonIndex > 0) {
+          const filename = line.substring(0, colonIndex).trim();
+          const description = line.substring(colonIndex + 1).trim();
+          captionMap.set(filename, description);
+        }
+      });
+    }
 
     return mediaArray
       .map((item) => {
         if (typeof item === "object") {
           // Handle both nested attributes format and direct format
           const url = this.getMediaUrl(item);
+          const filename = item.name || item.attributes?.name || "";
           const altText =
             item.attributes?.alternativeText || item.alternativeText || "";
           const caption = item.attributes?.caption || item.caption || "";
+          
+          // Use caption from imageCaption field if available, otherwise fallback to altText/caption
+          const description = captionMap.get(filename) || altText || caption;
 
           return url
             ? {
                 src: url,
-                description: altText || caption,
+                description,
               }
             : null;
         } else if (typeof item === "string") {
@@ -296,7 +315,7 @@ class ContentService {
         // Handle images
         let images: Array<{ src: string; description: string }> = [];
         if (project.image && Array.isArray(project.image)) {
-          images = this.processMediaArray(project.image);
+          images = this.processMediaArray(project.image, project.imageCaption);
         }
 
         return {
@@ -360,7 +379,7 @@ class ContentService {
         // Handle images
         let images: Array<{ src: string; description: string }> = [];
         if (project.image && Array.isArray(project.image)) {
-          images = this.processMediaArray(project.image);
+          images = this.processMediaArray(project.image, project.imageCaption);
         }
 
         return {
