@@ -26,13 +26,39 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
   images: {
-    domains: [
-      "localhost",
-      "martinnolan.dev",
-      ...strapiDomains,
-      // Common CDN domains
-      "res.cloudinary.com",
-      "images.unsplash.com",
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "1337",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "martinnolan.dev",
+        pathname: "/**",
+      },
+      ...strapiDomains.map((domain) => ({
+        protocol: "https",
+        hostname: domain,
+        pathname: "/**",
+      })),
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
     ].filter(Boolean),
     formats: ["image/webp", "image/avif"],
   },

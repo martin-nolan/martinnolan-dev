@@ -1,9 +1,9 @@
 import { Code, Users } from "lucide-react";
 import { GlassCard, GradientText } from "@/shared/ui";
-import type { Experience } from "@/shared/types";
+import type { CMSExperience } from "@/shared/types";
 
 interface WorkSectionProps {
-  experiences?: Experience[] | null;
+  experiences?: CMSExperience[] | null;
 }
 
 const WorkSection = ({
@@ -66,23 +66,9 @@ const WorkSection = ({
                     </div>
                   </div>
 
-                  <p className="mb-6 leading-relaxed text-muted-foreground">
+                  <p className="leading-relaxed text-muted-foreground">
                     {exp.description}
                   </p>
-
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {exp.achievements.map((achievement, achievementIndex) => (
-                      <div
-                        key={achievementIndex}
-                        className="flex items-start space-x-3"
-                      >
-                        <div className="mt-2 size-2 shrink-0 rounded-full bg-accent"></div>
-                        <span className="text-sm text-muted-foreground">
-                          {achievement}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
             </GlassCard>

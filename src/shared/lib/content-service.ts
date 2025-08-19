@@ -3,48 +3,72 @@ import type { CMSContentForAI } from "../types";
 
 interface StrapiExperience {
   id: number;
-  attributes: {
-    role: string;
-    company: string;
-    period: string;
-    description: string;
-    achievements?: Array<{ achievement: string }>;
-    order: number;
-  };
-}
-
-interface StrapiImageFormats {
-  data?: StrapiMedia[];
+  documentId: string;
+  role: string;
+  company: string;
+  period: string;
+  description: any[]; // Rich text blocks
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 interface StrapiProject {
   id: number;
-  attributes: {
-    title: string;
-    description: string;
-    category?: string;
-    role?: string;
-    year?: string;
-    company?: string;
-    github?: string;
-    stack?: Array<{ technology: string }>;
-    highlights?: Array<{ highlight: string }>;
-    images?: StrapiImageFormats | StrapiMedia[] | null;
-    order: number;
-  };
+  documentId: string;
+  title: string;
+  description: string;
+  projectType: "work" | "personal";
+  featured: boolean;
+  order: number;
+  github: string | null;
+  liveUrl: string | null;
+  technologies: string[]; // JSON array
+  highlights: string[]; // JSON array
+  image: StrapiMedia[] | null;
+  imageCaption: string | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 interface StrapiContactMethod {
   id: number;
-  attributes: {
-    title: string;
-    description: string;
-    value: string;
-    href: string;
-    icon: string;
-    primary: boolean;
-    order: number;
-  };
+  documentId: string;
+  title: string;
+  description: string;
+  value: string;
+  href: string;
+  icon: string | null;
+  primary: boolean | null;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+interface StrapiProfile {
+  id: number;
+  documentId: string;
+  fullName: string;
+  title: string;
+  company: string;
+  bio: any[]; // Rich text blocks
+  heroTitle: string;
+  heroSubtitle: string;
+  tagline: string | null;
+  email: string;
+  website: string | null;
+  linkedin: string;
+  github: string;
+  seoTitle: string;
+  seoDescription: string;
+  skills: string[]; // JSON array
+  cvPdf: StrapiMedia | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 interface StrapiMediaFormat {
@@ -176,7 +200,7 @@ class ContentService {
   private async fetchFromStrapi(endpoint: string) {
     if (!STRAPI_API_URL) {
       throw new Error(
-        "Strapi API URL missing. Please check your environment variables."
+        "Strapi API URL not configured. Please set NEXT_PUBLIC_STRAPI_API_URL or STRAPI_API_URL environment variable."
       );
     }
 
@@ -198,54 +222,37 @@ class ContentService {
       );
     }
 
-    return response.json();
+    return await response.json();
   }
 
   async getProfile() {
     try {
       const data = await this.fetchFromStrapi("/profile?populate=*");
-      const profile = data.data;
+      const profile: StrapiProfile = data.data;
 
+      // For single types in Strapi, if no content is created yet, data will be null
       if (!profile) {
-        throw new Error("No profile data found in CMS");
-      }
-
-      // Handle skills - check if profile has attributes or is flat
-      let skills: string[] = [];
-      const attrs = profile.attributes || profile; // Support both structures
-
-      if (Array.isArray(attrs.skill)) {
-        // Strapi repeatable component: array of objects with 'skill' property
-        skills = attrs.skill
-          .map((s: any) => s.skill || s.name || s)
-          .filter(Boolean);
-      } else if (attrs.skills) {
-        // Fallback for plural or string
-        if (Array.isArray(attrs.skills)) {
-          skills = attrs.skills
-            .map((s: any) => s.skill || s.name || s)
-            .filter(Boolean);
-        } else if (typeof attrs.skills === "string") {
-          skills = attrs.skills
-            .split(",")
-            .map((s: string) => s.trim())
-            .filter(Boolean);
-        }
-      } else if (typeof attrs.skill === "string") {
-        // Single string
-        skills = attrs.skill
-          .split(",")
-          .map((s: string) => s.trim())
-          .filter(Boolean);
+        throw new Error("No profile content has been created in Strapi yet");
       }
 
       // Handle CV PDF
-      const cvPdf = this.getMediaUrl(attrs.cvPdf?.data || attrs.cvPdf);
+      const cvPdf = this.getMediaUrl(profile.cvPdf);
 
       return {
-        ...attrs,
-        skills,
-        bio: this.convertRichTextToPlain(attrs.bio),
+        name: profile.fullName,
+        title: profile.title,
+        company: profile.company,
+        bio: this.convertRichTextToPlain(profile.bio),
+        heroTitle: profile.heroTitle,
+        heroSubtitle: profile.heroSubtitle,
+        tagline: profile.tagline || null,
+        email: profile.email,
+        website: profile.website || null,
+        linkedin: profile.linkedin,
+        github: profile.github,
+        seoTitle: profile.seoTitle,
+        seoDescription: profile.seoDescription,
+        skills: Array.isArray(profile.skills) ? profile.skills : [],
         cvPdf,
       };
     } catch (error) {
@@ -260,60 +267,52 @@ class ContentService {
 
   async getExperiences() {
     try {
-      const data = await this.fetchFromStrapi(
-        "/experiences?populate=*&sort=order:asc"
-      );
-      const experiences = data.data || [];
+      const data = await this.fetchFromStrapi("/experiences?sort=order:asc");
+      const experiences: StrapiExperience[] = data.data || [];
 
-      return experiences.map((exp: StrapiExperience) => {
-        const attrs = exp.attributes || exp;
-        return {
-          ...attrs,
-          description: this.convertRichTextToPlain(attrs.description),
-          achievements:
-            attrs.achievements?.map((a: any) => a.achievement || a) || [],
-        };
-      });
+      return experiences.map((experience) => ({
+        id: experience.id,
+        role: experience.role,
+        company: experience.company,
+        period: experience.period,
+        description: this.convertRichTextToPlain(experience.description),
+        order: experience.order,
+      }));
     } catch (error) {
       console.error("Experiences fetch error:", error);
-      // Return empty array instead of throwing - experiences are optional
       return [];
     }
   }
 
   async getFeaturedProjects() {
     try {
+      // Use the unified all-projects endpoint and filter for featured projects
       const data = await this.fetchFromStrapi(
-        "/featured-projects?populate=*&sort=order:asc"
+        "/all-projects?populate=*&filters[featured][$eq]=true&sort=order:asc"
       );
-      const projects = data.data || [];
+      const projects: StrapiProject[] = data.data || [];
 
-      return projects.map((project: StrapiProject) => {
-        const attrs = project.attributes || project;
-
-        // Handle images - support both Strapi media and legacy string arrays
+      return projects.map((project) => {
+        // Handle images
         let images: Array<{ src: string; description: string }> = [];
-
-        if (attrs.images) {
-          if (Array.isArray(attrs.images)) {
-            // Direct array of Strapi media objects
-            images = this.processMediaArray(attrs.images);
-          } else if (
-            typeof attrs.images === "object" &&
-            "data" in attrs.images &&
-            Array.isArray(attrs.images.data)
-          ) {
-            // Handle possible { data: [...] } wrapper
-            images = this.processMediaArray(attrs.images.data);
-          }
+        if (project.image && Array.isArray(project.image)) {
+          images = this.processMediaArray(project.image);
         }
 
         return {
-          ...attrs,
-          description: this.convertRichTextToPlain(attrs.description),
-          stack: attrs.stack?.map((s: any) => s.technology || s) || [],
-          highlights: attrs.highlights?.map((h: any) => h.highlight || h) || [],
+          id: project.id,
+          title: project.title,
+          description: project.description,
+          stack: Array.isArray(project.technologies)
+            ? project.technologies
+            : [],
+          highlights: Array.isArray(project.highlights)
+            ? project.highlights
+            : [],
           images,
+          github: project.github,
+          liveUrl: project.liveUrl,
+          order: project.order,
         };
       });
     } catch (error) {
@@ -324,17 +323,23 @@ class ContentService {
 
   async getPersonalProjects() {
     try {
+      // Use the unified all-projects endpoint and filter for personal projects that are not featured
       const data = await this.fetchFromStrapi(
-        "/personal-projects?populate=*&sort=order:asc"
+        "/all-projects?populate=*&filters[projectType][$eq]=personal&filters[featured][$eq]=false&sort=order:asc"
       );
-      const projects = data.data || [];
+      const projects: StrapiProject[] = data.data || [];
 
-      return projects.map((project: StrapiProject) => {
-        const attrs = project.attributes || project;
+      return projects.map((project) => {
         return {
-          ...attrs,
-          description: this.convertRichTextToPlain(attrs.description),
-          stack: attrs.stack?.map((s: any) => s.technology || s) || [],
+          id: project.id,
+          title: project.title,
+          description: project.description,
+          stack: Array.isArray(project.technologies)
+            ? project.technologies
+            : [],
+          github: project.github,
+          liveUrl: project.liveUrl,
+          order: project.order,
         };
       });
     } catch (error) {
@@ -349,97 +354,31 @@ class ContentService {
       const data = await this.fetchFromStrapi(
         "/all-projects?populate=*&sort=order:asc"
       );
-      const projects = data.data || [];
+      const projects: StrapiProject[] = data.data || [];
 
-      return projects.map((project: any) => {
-        // Handle both Strapi v4 format (attributes nested) and v3/local format (direct)
-        const attrs = project.attributes || project;
-
-        // Handle images - support both Strapi media and legacy string arrays
+      return projects.map((project) => {
+        // Handle images
         let images: Array<{ src: string; description: string }> = [];
-
-        if (attrs.image) {
-          if (Array.isArray(attrs.image)) {
-            // Direct array of Strapi media objects
-            images = this.processMediaArray(attrs.image);
-          } else if (
-            typeof attrs.image === "object" &&
-            "data" in attrs.image &&
-            Array.isArray(attrs.image.data)
-          ) {
-            // Handle possible { data: [...] } wrapper
-            images = this.processMediaArray(attrs.image.data);
-          }
-        }
-
-        // Parse JSON strings for technologies and highlights (local format)
-        let technologies = [];
-        let highlights = [];
-        
-        try {
-          if (typeof attrs.technologies === 'string') {
-            // Handle JSON string format (local Strapi)
-            const techData = JSON.parse(attrs.technologies);
-            technologies = Array.isArray(techData) 
-              ? techData.map((tech: any) => typeof tech === 'string' ? tech : tech.name || tech)
-              : [];
-          } else if (Array.isArray(attrs.technologies)) {
-            technologies = attrs.technologies.map((tech: any) => typeof tech === 'string' ? tech : tech.name || tech);
-          } else if (attrs.stack) {
-            // Fallback to old stack format
-            technologies = attrs.stack.map((s: any) => s.technology || s);
-          }
-        } catch (e) {
-          technologies = [];
-        }
-        
-        try {
-          if (typeof attrs.highlights === 'string') {
-            // Handle JSON string format (local Strapi) or plain text with • separators
-            if (attrs.highlights.startsWith('[')) {
-              const highlightData = JSON.parse(attrs.highlights);
-              highlights = Array.isArray(highlightData) 
-                ? highlightData.map((h: any) => typeof h === 'string' ? h : h.text || h)
-                : [];
-            } else {
-              // Plain text with • separators
-              highlights = attrs.highlights.split(' • ').filter((h: string) => h.trim());
-            }
-          } else if (Array.isArray(attrs.highlights)) {
-            highlights = attrs.highlights.map((h: any) => typeof h === 'string' ? h : h.text || h);
-          }
-        } catch (e) {
-          highlights = [];
-        }
-
-        // Handle description - could be rich text JSON or plain text
-        let description = '';
-        if (typeof attrs.description === 'string') {
-          if (attrs.description.startsWith('[{')) {
-            // Rich text JSON format
-            description = this.convertRichTextToPlain(attrs.description);
-          } else {
-            // Plain text
-            description = attrs.description;
-          }
-        } else {
-          description = this.convertRichTextToPlain(attrs.description);
+        if (project.image && Array.isArray(project.image)) {
+          images = this.processMediaArray(project.image);
         }
 
         return {
-          id: project.id || attrs.id,
-          title: attrs.title,
-          description,
-          stack: technologies,
-          highlights,
+          id: project.id,
+          title: project.title,
+          description: project.description,
+          stack: Array.isArray(project.technologies)
+            ? project.technologies
+            : [],
+          highlights: Array.isArray(project.highlights)
+            ? project.highlights
+            : [],
           images,
-          // Map projectType to type for consistency
-          type: attrs.projectType || attrs.type || 'personal',
-          // Convert boolean featured to ensure it exists
-          featured: Boolean(attrs.featured),
-          order: attrs.order || 0,
-          github: attrs.github || null,
-          liveUrl: attrs.liveUrl || null
+          type: project.projectType,
+          featured: Boolean(project.featured),
+          order: project.order,
+          github: project.github || null,
+          liveUrl: project.liveUrl || null,
         };
       });
     } catch (error) {
@@ -448,23 +387,25 @@ class ContentService {
       try {
         const [featuredProjects, personalProjects] = await Promise.all([
           this.getFeaturedProjects(),
-          this.getPersonalProjects()
+          this.getPersonalProjects(),
         ]);
-        
+
         // Convert to unified format
         const workProjects = featuredProjects.map((project: any) => ({
           ...project,
-          type: 'work',
-          featured: true
+          type: "work",
+          featured: true,
         }));
-        
-        const personalProjectsConverted = personalProjects.map((project: any) => ({
-          ...project,
-          type: 'personal',
-          featured: false,
-          highlights: []
-        }));
-        
+
+        const personalProjectsConverted = personalProjects.map(
+          (project: any) => ({
+            ...project,
+            type: "personal",
+            featured: false,
+            highlights: [],
+          })
+        );
+
         return [...workProjects, ...personalProjectsConverted];
       } catch (fallbackError) {
         console.error("Fallback projects fetch also failed:", fallbackError);
@@ -478,14 +419,18 @@ class ContentService {
       const data = await this.fetchFromStrapi(
         "/contact-methods?sort=order:asc"
       );
-      const methods = data.data || [];
+      const methods: StrapiContactMethod[] = data.data || [];
 
-      return methods.map((method: StrapiContactMethod) => {
-        const attrs = method.attributes || method;
+      return methods.map((method) => {
         return {
-          ...attrs,
-          // Icon stored as string for dynamic mapping
-          icon: attrs.icon || "mail", // Default to 'mail' if null/undefined
+          id: method.id,
+          title: method.title,
+          description: method.description,
+          value: method.value,
+          href: method.href,
+          icon: method.icon || "mail", // Default to 'mail' if null/undefined
+          primary: method.primary || false,
+          order: method.order,
         };
       });
     } catch (error) {
@@ -563,8 +508,14 @@ class ContentService {
       return {
         profile: {
           name: "Portfolio Owner",
+          title: "Developer",
+          company: "Not Available",
           bio: "Professional portfolio",
+          heroTitle: "Professional Developer",
+          heroSubtitle: "Building great software",
           email: "contact@example.com",
+          seoTitle: "Portfolio",
+          seoDescription: "Professional portfolio",
           skills: [],
           cvPdf: null,
         },
