@@ -23,6 +23,7 @@ interface Props {
   experiences?: any[];
   featuredProjects?: any[];
   personalProjects?: any[];
+  projects?: any[]; // New unified projects
   contactMethods?: any[];
   error?: boolean;
   errorMessage?: string;
@@ -33,6 +34,7 @@ const Index = ({
   experiences,
   featuredProjects,
   personalProjects,
+  projects,
   contactMethods,
   error,
   errorMessage,
@@ -167,6 +169,7 @@ const Index = ({
         <ProjectsSection
           featuredProjects={featuredProjects}
           personalProjects={personalProjects}
+          projects={projects}
         />
         <ContactSection contactMethods={contactMethods} profile={profile} />
       </main>
@@ -197,12 +200,21 @@ export const getStaticProps: GetStaticProps = async () => {
       contentService.getContactMethods(),
     ]);
 
+    // Try to get unified projects (will fallback to separate types if not available)
+    let projects = null;
+    try {
+      projects = await contentService.getProjects();
+    } catch (error) {
+      console.log("Unified projects not available yet, using separate types");
+    }
+
     return {
       props: {
         profile,
         experiences,
         featuredProjects,
         personalProjects,
+        projects,
         contactMethods,
       },
       revalidate: 60, // Revalidate every minute in production

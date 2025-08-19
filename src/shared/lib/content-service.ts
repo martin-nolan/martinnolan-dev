@@ -3,48 +3,72 @@ import type { CMSContentForAI } from "../types";
 
 interface StrapiExperience {
   id: number;
-  attributes: {
-    role: string;
-    company: string;
-    period: string;
-    description: string;
-    achievements?: Array<{ achievement: string }>;
-    order: number;
-  };
-}
-
-interface StrapiImageFormats {
-  data?: StrapiMedia[];
+  documentId: string;
+  role: string;
+  company: string;
+  period: string;
+  description: any[]; // Rich text blocks
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 interface StrapiProject {
   id: number;
-  attributes: {
-    title: string;
-    description: string;
-    category?: string;
-    role?: string;
-    year?: string;
-    company?: string;
-    github?: string;
-    stack?: Array<{ technology: string }>;
-    highlights?: Array<{ highlight: string }>;
-    images?: StrapiImageFormats | StrapiMedia[] | null;
-    order: number;
-  };
+  documentId: string;
+  title: string;
+  description: string;
+  projectType: "work" | "personal";
+  featured: boolean;
+  order: number;
+  github: string | null;
+  liveUrl: string | null;
+  technologies: string[]; // JSON array
+  highlights: string[]; // JSON array
+  image: StrapiMedia[] | null;
+  imageCaption: string | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 interface StrapiContactMethod {
   id: number;
-  attributes: {
-    title: string;
-    description: string;
-    value: string;
-    href: string;
-    icon: string;
-    primary: boolean;
-    order: number;
-  };
+  documentId: string;
+  title: string;
+  description: string;
+  value: string;
+  href: string;
+  icon: string | null;
+  primary: boolean | null;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+interface StrapiProfile {
+  id: number;
+  documentId: string;
+  fullName: string;
+  title: string;
+  company: string;
+  bio: any[]; // Rich text blocks
+  heroTitle: string;
+  heroSubtitle: string;
+  tagline: string | null;
+  email: string;
+  website: string | null;
+  linkedin: string;
+  github: string;
+  seoTitle: string;
+  seoDescription: string;
+  skills: string[]; // JSON array
+  cvPdf: StrapiMedia | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 interface StrapiMediaFormat {
@@ -127,9 +151,34 @@ class ContentService {
 
   // Helper function to process media array (for project images)
   private processMediaArray(
-    mediaArray: any[]
+    mediaArray: any[],
+    imageCaption?: string | null
   ): Array<{ src: string; description: string }> {
     if (!Array.isArray(mediaArray)) return [];
+
+    // Debug logging for imageCaption
+    console.log('🔍 ProcessMediaArray Debug:');
+    console.log('  imageCaption:', imageCaption);
+    console.log('  mediaArray length:', mediaArray.length);
+
+    // Parse imageCaption string to create a filename -> description mapping
+    const captionMap = new Map<string, string>();
+    if (imageCaption) {
+      const lines = imageCaption.split('\n');
+      console.log('  imageCaption lines:', lines);
+      for (const line of lines) {
+        const colonIndex = line.indexOf(':');
+        if (colonIndex > 0) {
+          const filename = line.substring(0, colonIndex).trim();
+          const description = line.substring(colonIndex + 1).trim();
+          if (filename && description) {
+            captionMap.set(filename, description);
+            console.log(`  📝 Mapped: "${filename}" -> "${description}"`);
+          }
+        }
+      }
+    }
+    console.log('  captionMap size:', captionMap.size);
 
     return mediaArray
       .map((item) => {
@@ -139,11 +188,35 @@ class ContentService {
           const altText =
             item.attributes?.alternativeText || item.alternativeText || "";
           const caption = item.attributes?.caption || item.caption || "";
+          
+          // Extract filename from URL for caption mapping
+          let description = altText || caption;
+          if (url && captionMap.size > 0) {
+            const filename = url.split('/').pop()?.split('?')[0]; // Get filename without query params
+            console.log(`  🔗 Processing URL: ${url}`);
+            console.log(`  📄 Extracted filename: ${filename}`);
+            
+            // Try exact match first
+            if (filename && captionMap.has(filename)) {
+              description = captionMap.get(filename) || description;
+              console.log(`  ✅ Found exact caption for ${filename}: "${description}"`);
+            } else if (filename) {
+              // Try matching without hash suffix (e.g., "notes_a0f91bfad4.png" -> "notes.png")
+              const baseFilename = filename.replace(/_[a-f0-9]+(\.[^.]+)$/, '$1');
+              console.log(`  🔄 Trying base filename: ${baseFilename}`);
+              if (captionMap.has(baseFilename)) {
+                description = captionMap.get(baseFilename) || description;
+                console.log(`  ✅ Found base caption for ${baseFilename}: "${description}"`);
+              } else {
+                console.log(`  ❌ No caption found for ${filename} or ${baseFilename}`);
+              }
+            }
+          }
 
           return url
             ? {
                 src: url,
-                description: altText || caption,
+                description,
               }
             : null;
         } else if (typeof item === "string") {
@@ -176,7 +249,7 @@ class ContentService {
   private async fetchFromStrapi(endpoint: string) {
     if (!STRAPI_API_URL) {
       throw new Error(
-        "Strapi API URL missing. Please check your environment variables."
+        "Strapi API URL not configured. Please set NEXT_PUBLIC_STRAPI_API_URL or STRAPI_API_URL environment variable."
       );
     }
 
@@ -198,54 +271,37 @@ class ContentService {
       );
     }
 
-    return response.json();
+    return await response.json();
   }
 
   async getProfile() {
     try {
       const data = await this.fetchFromStrapi("/profile?populate=*");
-      const profile = data.data;
+      const profile: StrapiProfile = data.data;
 
+      // For single types in Strapi, if no content is created yet, data will be null
       if (!profile) {
-        throw new Error("No profile data found in CMS");
-      }
-
-      // Handle skills - check if profile has attributes or is flat
-      let skills: string[] = [];
-      const attrs = profile.attributes || profile; // Support both structures
-
-      if (Array.isArray(attrs.skill)) {
-        // Strapi repeatable component: array of objects with 'skill' property
-        skills = attrs.skill
-          .map((s: any) => s.skill || s.name || s)
-          .filter(Boolean);
-      } else if (attrs.skills) {
-        // Fallback for plural or string
-        if (Array.isArray(attrs.skills)) {
-          skills = attrs.skills
-            .map((s: any) => s.skill || s.name || s)
-            .filter(Boolean);
-        } else if (typeof attrs.skills === "string") {
-          skills = attrs.skills
-            .split(",")
-            .map((s: string) => s.trim())
-            .filter(Boolean);
-        }
-      } else if (typeof attrs.skill === "string") {
-        // Single string
-        skills = attrs.skill
-          .split(",")
-          .map((s: string) => s.trim())
-          .filter(Boolean);
+        throw new Error("No profile content has been created in Strapi yet");
       }
 
       // Handle CV PDF
-      const cvPdf = this.getMediaUrl(attrs.cvPdf?.data || attrs.cvPdf);
+      const cvPdf = this.getMediaUrl(profile.cvPdf);
 
       return {
-        ...attrs,
-        skills,
-        bio: this.convertRichTextToPlain(attrs.bio),
+        name: profile.fullName,
+        title: profile.title,
+        company: profile.company,
+        bio: this.convertRichTextToPlain(profile.bio),
+        heroTitle: profile.heroTitle,
+        heroSubtitle: profile.heroSubtitle,
+        tagline: profile.tagline || null,
+        email: profile.email,
+        website: profile.website || null,
+        linkedin: profile.linkedin,
+        github: profile.github,
+        seoTitle: profile.seoTitle,
+        seoDescription: profile.seoDescription,
+        skills: Array.isArray(profile.skills) ? profile.skills : [],
         cvPdf,
       };
     } catch (error) {
@@ -260,60 +316,52 @@ class ContentService {
 
   async getExperiences() {
     try {
-      const data = await this.fetchFromStrapi(
-        "/experiences?populate=*&sort=order:asc"
-      );
-      const experiences = data.data || [];
+      const data = await this.fetchFromStrapi("/experiences?sort=order:asc");
+      const experiences: StrapiExperience[] = data.data || [];
 
-      return experiences.map((exp: StrapiExperience) => {
-        const attrs = exp.attributes || exp;
-        return {
-          ...attrs,
-          description: this.convertRichTextToPlain(attrs.description),
-          achievements:
-            attrs.achievements?.map((a: any) => a.achievement || a) || [],
-        };
-      });
+      return experiences.map((experience) => ({
+        id: experience.id,
+        role: experience.role,
+        company: experience.company,
+        period: experience.period,
+        description: this.convertRichTextToPlain(experience.description),
+        order: experience.order,
+      }));
     } catch (error) {
       console.error("Experiences fetch error:", error);
-      // Return empty array instead of throwing - experiences are optional
       return [];
     }
   }
 
   async getFeaturedProjects() {
     try {
+      // Use the unified all-projects endpoint and filter for featured projects
       const data = await this.fetchFromStrapi(
-        "/featured-projects?populate=*&sort=order:asc"
+        "/all-projects?populate=*&filters[featured][$eq]=true&sort=order:asc"
       );
-      const projects = data.data || [];
+      const projects: StrapiProject[] = data.data || [];
 
-      return projects.map((project: StrapiProject) => {
-        const attrs = project.attributes || project;
-
-        // Handle images - support both Strapi media and legacy string arrays
+      return projects.map((project) => {
+        // Handle images
         let images: Array<{ src: string; description: string }> = [];
-
-        if (attrs.images) {
-          if (Array.isArray(attrs.images)) {
-            // Direct array of Strapi media objects
-            images = this.processMediaArray(attrs.images);
-          } else if (
-            typeof attrs.images === "object" &&
-            "data" in attrs.images &&
-            Array.isArray(attrs.images.data)
-          ) {
-            // Handle possible { data: [...] } wrapper
-            images = this.processMediaArray(attrs.images.data);
-          }
+        if (project.image && Array.isArray(project.image)) {
+          images = this.processMediaArray(project.image, project.imageCaption);
         }
 
         return {
-          ...attrs,
-          description: this.convertRichTextToPlain(attrs.description),
-          stack: attrs.stack?.map((s: any) => s.technology || s) || [],
-          highlights: attrs.highlights?.map((h: any) => h.highlight || h) || [],
+          id: project.id,
+          title: project.title,
+          description: project.description,
+          stack: Array.isArray(project.technologies)
+            ? project.technologies
+            : [],
+          highlights: Array.isArray(project.highlights)
+            ? project.highlights
+            : [],
           images,
+          github: project.github,
+          liveUrl: project.liveUrl,
+          order: project.order,
         };
       });
     } catch (error) {
@@ -324,17 +372,23 @@ class ContentService {
 
   async getPersonalProjects() {
     try {
+      // Use the unified all-projects endpoint and filter for personal projects that are not featured
       const data = await this.fetchFromStrapi(
-        "/personal-projects?populate=*&sort=order:asc"
+        "/all-projects?populate=*&filters[projectType][$eq]=personal&filters[featured][$eq]=false&sort=order:asc"
       );
-      const projects = data.data || [];
+      const projects: StrapiProject[] = data.data || [];
 
-      return projects.map((project: StrapiProject) => {
-        const attrs = project.attributes || project;
+      return projects.map((project) => {
         return {
-          ...attrs,
-          description: this.convertRichTextToPlain(attrs.description),
-          stack: attrs.stack?.map((s: any) => s.technology || s) || [],
+          id: project.id,
+          title: project.title,
+          description: project.description,
+          stack: Array.isArray(project.technologies)
+            ? project.technologies
+            : [],
+          github: project.github,
+          liveUrl: project.liveUrl,
+          order: project.order,
         };
       });
     } catch (error) {
@@ -343,19 +397,89 @@ class ContentService {
     }
   }
 
+  // New unified projects method
+  async getProjects() {
+    try {
+      const data = await this.fetchFromStrapi(
+        "/all-projects?populate=*&sort=order:asc"
+      );
+      const projects: StrapiProject[] = data.data || [];
+
+      return projects.map((project) => {
+        // Handle images
+        let images: Array<{ src: string; description: string }> = [];
+        if (project.image && Array.isArray(project.image)) {
+          images = this.processMediaArray(project.image, project.imageCaption);
+        }
+
+        return {
+          id: project.id,
+          title: project.title,
+          description: project.description,
+          stack: Array.isArray(project.technologies)
+            ? project.technologies
+            : [],
+          highlights: Array.isArray(project.highlights)
+            ? project.highlights
+            : [],
+          images,
+          type: project.projectType,
+          featured: Boolean(project.featured),
+          order: project.order,
+          github: project.github || null,
+          liveUrl: project.liveUrl || null,
+        };
+      });
+    } catch (error) {
+      console.error("All Projects fetch error:", error);
+      // Fallback to old methods if unified endpoint doesn't exist yet
+      try {
+        const [featuredProjects, personalProjects] = await Promise.all([
+          this.getFeaturedProjects(),
+          this.getPersonalProjects(),
+        ]);
+
+        // Convert to unified format
+        const workProjects = featuredProjects.map((project: any) => ({
+          ...project,
+          type: "work",
+          featured: true,
+        }));
+
+        const personalProjectsConverted = personalProjects.map(
+          (project: any) => ({
+            ...project,
+            type: "personal",
+            featured: false,
+            highlights: [],
+          })
+        );
+
+        return [...workProjects, ...personalProjectsConverted];
+      } catch (fallbackError) {
+        console.error("Fallback projects fetch also failed:", fallbackError);
+        return [];
+      }
+    }
+  }
+
   async getContactMethods() {
     try {
       const data = await this.fetchFromStrapi(
         "/contact-methods?sort=order:asc"
       );
-      const methods = data.data || [];
+      const methods: StrapiContactMethod[] = data.data || [];
 
-      return methods.map((method: StrapiContactMethod) => {
-        const attrs = method.attributes || method;
+      return methods.map((method) => {
         return {
-          ...attrs,
-          // Icon stored as string for dynamic mapping
-          icon: attrs.icon || "mail", // Default to 'mail' if null/undefined
+          id: method.id,
+          title: method.title,
+          description: method.description,
+          value: method.value,
+          href: method.href,
+          icon: method.icon || "mail", // Default to 'mail' if null/undefined
+          primary: method.primary || false,
+          order: method.order,
         };
       });
     } catch (error) {
@@ -433,8 +557,14 @@ class ContentService {
       return {
         profile: {
           name: "Portfolio Owner",
+          title: "Developer",
+          company: "Not Available",
           bio: "Professional portfolio",
+          heroTitle: "Professional Developer",
+          heroSubtitle: "Building great software",
           email: "contact@example.com",
+          seoTitle: "Portfolio",
+          seoDescription: "Professional portfolio",
           skills: [],
           cvPdf: null,
         },

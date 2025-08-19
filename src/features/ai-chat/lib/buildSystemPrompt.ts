@@ -23,27 +23,22 @@ Contact: email ${profile.email} | website ${profile.website}
 ${profile.linkedin ? `LinkedIn: ${profile.linkedin}` : ""}
 ${profile.github ? `GitHub: ${profile.github}` : ""}
 
-Current Role: ${profile.jobTitle} at ${profile.company}
+Current Role: ${profile.title} at ${profile.company}
 
 Key skills: ${profile.skills.join(", ")}
 
 Work Experience:
 ${experiences
   .map(
-    (e: CMSExperience) => `- ${e.role} at ${e.company} (${e.period}): ${
-      e.description
-    }
-  Key achievements: ${e.achievements.join(", ")}`
+    (e: CMSExperience) =>
+      `- ${e.role} at ${e.company} (${e.period}): ${e.description}`
   )
   .join("\n")}
 
 Featured Projects:
 ${featuredProjects
   .map(
-    (p: CMSFeaturedProject) => `- ${p.title} (${p.year}, ${p.company}): ${
-      p.description
-    }
-  Role: ${p.role}
+    (p: CMSFeaturedProject) => `- ${p.title}: ${p.description}
   Technologies: ${p.stack.join(", ")}
   Key highlights: ${p.highlights.join(", ")}`
   )
@@ -53,8 +48,7 @@ Personal Projects:
 ${personalProjects
   .map(
     (p: CMSPersonalProject) => `- ${p.title}: ${p.description}
-  Technologies: ${p.stack.join(", ")}
-  Category: ${p.category}`
+  Technologies: ${p.stack.join(", ")}`
   )
   .join("\n")}
 

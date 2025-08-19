@@ -1,23 +1,31 @@
-import { Code } from "lucide-react";
+import { Code, Users } from "lucide-react";
 import { GlassCard, GradientText } from "@/shared/ui";
-import type { Experience } from "@/shared/types";
+import type { CMSExperience } from "@/shared/types";
 
 interface WorkSectionProps {
-  experiences?: Experience[] | null;
+  experiences?: CMSExperience[] | null;
 }
 
 const WorkSection = ({
   experiences: externalExperiences,
 }: WorkSectionProps) => {
   // Map CMS experiences with appropriate icons (keeping icon system)
+  function getIconForRole(role: string) {
+    if (/product owner/i.test(role)) return Users;
+    if (/software|developer|engineer/i.test(role)) return Code;
+    return Code;
+  }
+
   const experiences =
-    externalExperiences?.map((exp) => ({
-      ...exp,
-      icon: Code, // Default icon for all CMS experiences
-    })) || [];
+    externalExperiences?.map((exp) => {
+      return {
+        ...exp,
+        icon: getIconForRole(exp.role),
+      };
+    }) || [];
 
   return (
-    <section id="work" className="relative py-20">
+    <section id="work" className="relative py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-4xl font-bold">
@@ -58,23 +66,16 @@ const WorkSection = ({
                     </div>
                   </div>
 
-                  <p className="mb-6 leading-relaxed text-muted-foreground">
-                    {exp.description}
-                  </p>
-
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {exp.achievements.map((achievement, achievementIndex) => (
-                      <div
-                        key={achievementIndex}
-                        className="flex items-start space-x-3"
-                      >
-                        <div className="mt-2 size-2 shrink-0 rounded-full bg-accent"></div>
-                        <span className="text-sm text-muted-foreground">
-                          {achievement}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  <ul className="list-disc ml-6 space-y-2 text-muted-foreground leading-relaxed">
+                    {exp.description
+                      ?.split("\n")
+                      .filter((line) => line.trim())
+                      .map((line, lineIndex) => (
+                        <li key={lineIndex} className="mb-1">
+                          {line.trim()}
+                        </li>
+                      ))}
+                  </ul>
                 </div>
               </div>
             </GlassCard>

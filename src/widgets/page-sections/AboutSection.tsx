@@ -31,7 +31,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
   const highlights = defaultHighlights;
 
   return (
-    <section id="about" className="px-4 py-20 sm:px-6 lg:px-8">
+    <section id="about" className="px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 text-center">
           <h2 className="mb-6 text-4xl font-bold sm:text-5xl">
@@ -41,17 +41,24 @@ const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
             </span>
           </h2>
           <p className="mx-auto max-w-3xl text-xl text-muted-foreground">
-            {profile?.bio || "Professional background and expertise"}
+            Professional experience and technical background
           </p>
         </div>
 
         <div className="mb-16 grid items-center gap-12 lg:grid-cols-2">
           <div className="space-y-6">
             <div className="prose prose-lg text-foreground">
-              <p className="mb-6 text-lg leading-relaxed">
-                {profile?.bio ||
-                  "Professional experience and technical background"}
-              </p>
+              {profile?.bio ? (
+                profile.bio.split("\n").map((paragraph, idx) => (
+                  <p key={idx} className="mb-6 text-lg leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))
+              ) : (
+                <p className="mb-6 text-lg leading-relaxed">
+                  Professional experience and technical background
+                </p>
+              )}
             </div>
           </div>
 

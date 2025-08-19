@@ -50,6 +50,21 @@ export interface PersonalProject {
   category: string;
 }
 
+// Unified project interface for the new Additional Projects section
+export interface AdditionalProject {
+  title: string;
+  description: string;
+  stack: string[];
+  type: "work" | "personal"; // Badge to indicate project type
+  year?: string;
+  company?: string;
+  role?: string;
+  category: string;
+  highlights?: string[];
+  images?: Array<{ src: string; description: string }>;
+  github?: string;
+}
+
 export interface Experience {
   role: string;
   company: string;
@@ -116,41 +131,62 @@ export interface AboutSectionProps {
 // CMS Data Types
 export interface CMSProfile {
   name: string;
+  title: string;
+  company: string;
   bio: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  tagline?: string | null;
   email: string;
-  website?: string;
+  website?: string | null;
   linkedin?: string;
   github?: string;
-  jobTitle?: string;
-  company?: string;
+  seoTitle: string;
+  seoDescription: string;
   skills: string[];
   cvPdf?: string | null;
 }
 
 export interface CMSExperience {
+  id: number;
   role: string;
   company: string;
   period: string;
   description: string;
-  achievements: string[];
+  order: number;
 }
 
 export interface CMSFeaturedProject {
+  id: number;
   title: string;
-  role: string;
-  year: string;
-  company: string;
   description: string;
   stack: string[];
   highlights: string[];
-  category: string;
+  images: Array<{ src: string; description: string }>;
+  github?: string | null;
+  liveUrl?: string | null;
+  order: number;
 }
 
 export interface CMSPersonalProject {
+  id: number;
   title: string;
   description: string;
   stack: string[];
-  category: string;
+  github?: string | null;
+  liveUrl?: string | null;
+  order: number;
+}
+
+export interface CMSContactMethod {
+  id: number;
+  title: string;
+  description: string;
+  value: string;
+  href: string;
+  icon?: string | null;
+  primary?: boolean | null;
+  order: number;
 }
 
 export interface CMSMediaFile {
