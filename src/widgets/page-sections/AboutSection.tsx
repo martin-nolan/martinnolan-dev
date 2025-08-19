@@ -41,7 +41,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
             </span>
           </h2>
           <p className="mx-auto max-w-3xl text-xl text-muted-foreground">
-            {profile?.bio || "Professional background and expertise"}
+            Professional experience and technical background
           </p>
         </div>
 
