@@ -66,7 +66,7 @@ const ImageModal = ({
         onKeyDown={handleOverlayKeyDown}
         aria-label="Close image modal"
       />
-      <div className="relative mx-4 flex h-[80vh] w-full max-w-3xl items-center justify-center">
+      <div className="relative mx-4 flex h-[90vh] w-full max-w-6xl items-center justify-center">
         <GlassCard className="flex size-full flex-col">
           <div className="flex items-center justify-between border-b border-surface-border p-6">
             <div>
@@ -109,9 +109,9 @@ const ImageModal = ({
               <Image
                 src={currentImage.src}
                 alt={`${alt} - Image ${activeIndex + 1}`}
-                width={500}
-                height={300}
-                className="size-auto max-h-[60vh] max-w-[90%] rounded-lg object-contain"
+                width={800}
+                height={600}
+                className="size-auto max-h-[75vh] max-w-full rounded-lg object-contain"
                 style={{ margin: "0 auto", display: "block" }}
               />
             </div>
