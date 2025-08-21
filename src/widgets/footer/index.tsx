@@ -1,7 +1,8 @@
-import { useState } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
-import { GradientText } from "@/shared/ui";
+import { useState } from "react";
+
 import ResumeModal from "@/features/resume-modal";
+import { GradientText } from "@/shared/ui";
 
 interface FooterProps {
   profile?: {

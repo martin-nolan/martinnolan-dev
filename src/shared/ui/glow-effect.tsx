@@ -1,5 +1,6 @@
-import { cn } from "@/shared/lib";
 import { forwardRef } from "react";
+
+import { cn } from "@/shared/lib";
 
 interface GlowEffectProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;

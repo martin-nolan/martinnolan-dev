@@ -1,13 +1,14 @@
 import Head from "next/head";
-import Link from "next/link";
-import { GradientText } from "@/shared/ui";
-import { GlassCard } from "@/shared/ui/glass-card";
 import Image from "next/image";
-
-import { Button } from "@/shared/ui/button";
-import { useTheme } from "@/shared/ui/theme-context";
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import Link from "next/link";
 import { useEffect, useState } from "react";
+
+import { GradientText } from "@/shared/ui";
+import { Button } from "@/shared/ui/button";
+import { GlassCard } from "@/shared/ui/glass-card";
+import { useTheme } from "@/shared/ui/theme-context";
+
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 const NotFound = () => {
   const { isDark } = useTheme();

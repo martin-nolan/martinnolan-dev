@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { ImageWithFallback } from "@/shared/ui/image-with-fallback";
+
 import { ImageModal, ImageObj } from "@/shared/ui/image-modal";
+import { ImageWithFallback } from "@/shared/ui/image-with-fallback";
 
 export interface ImageCarouselProps {
   images: ImageObj[];

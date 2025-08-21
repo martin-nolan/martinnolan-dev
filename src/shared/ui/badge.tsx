@@ -1,6 +1,8 @@
 import * as React from "react"
-import { cn } from "@/shared/lib"
+
 import { badgeVariants, BadgeVariantProps } from "./badge-utils"
+
+import { cn } from "@/shared/lib"
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,

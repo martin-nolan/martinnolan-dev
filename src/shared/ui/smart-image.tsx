@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { cn } from "@/shared/lib";
 import Image from "next/image";
+import { useState } from "react";
+
+import { cn } from "@/shared/lib";
 
 type SmartImageProps = {
   src: string;

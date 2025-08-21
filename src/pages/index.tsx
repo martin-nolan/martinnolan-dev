@@ -1,15 +1,17 @@
-import Head from "next/head";
-import Navigation from "@/widgets/navigation";
-import HeroSection from "@/widgets/page-sections/HeroSection";
-import AboutSection from "@/widgets/page-sections/AboutSection";
-import WorkSection from "@/widgets/page-sections/WorkSection";
-import ProjectsSection from "@/widgets/page-sections/ProjectsSection";
-import ContactSection from "@/widgets/page-sections/ContactSection";
-import Footer from "@/widgets/footer";
-import ResumeModal from "@/features/resume-modal";
-import dynamic from "next/dynamic";
-import { useState } from "react";
 import { GetStaticProps } from "next";
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import { useState } from "react";
+
+import ResumeModal from "@/features/resume-modal";
+import Footer from "@/widgets/footer";
+import Navigation from "@/widgets/navigation";
+import AboutSection from "@/widgets/page-sections/AboutSection";
+import ContactSection from "@/widgets/page-sections/ContactSection";
+import HeroSection from "@/widgets/page-sections/HeroSection";
+import ProjectsSection from "@/widgets/page-sections/ProjectsSection";
+import WorkSection from "@/widgets/page-sections/WorkSection";
+
 // ⚠️ Removed top-level import of contentService to avoid client bundle exposure
 // import { contentService } from "@/shared/lib/content-service";
 
@@ -157,12 +159,12 @@ const Index = ({
         />
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
+           
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
+           
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </Head>

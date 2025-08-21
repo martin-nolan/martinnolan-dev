@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */
-import { useEffect, useState } from "react";
-import { X, Download, FileX, RefreshCw } from "lucide-react";
-import { Button, GlassCard, GradientText } from "@/shared/ui";
-import { useTheme } from "@/shared/ui/theme-context";
-// Remove unused import
+import { X, Download, FileX, RefreshCw } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+
+import { Button, GlassCard, GradientText } from '@/shared/ui';
+import { useTheme } from '@/shared/ui/theme-context';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -11,14 +12,8 @@ interface ResumeModalProps {
   cvPdfUrl?: string;
   cvText?: string | null;
 }
-import Image from "next/image";
 
-const ResumeModal = ({
-  isOpen,
-  onClose,
-  cvPdfUrl,
-  cvText,
-}: ResumeModalProps) => {
+const ResumeModal = ({ isOpen, onClose, cvPdfUrl, cvText }: ResumeModalProps) => {
   const { isDark } = useTheme();
   // ...existing code...
 
@@ -26,15 +21,13 @@ const ResumeModal = ({
 
   const [pdfError, setPdfError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorType, setErrorType] = useState<"load" | "config" | "network">(
-    "load"
-  );
+  const [errorType, setErrorType] = useState<'load' | 'config' | 'network'>('load');
 
   // Prevent background scroll when modal is open
   useEffect(() => {
     if (!isOpen) return;
     const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = originalOverflow;
     };
@@ -49,7 +42,7 @@ const ResumeModal = ({
           return null;
         }
 
-        const strapiBaseUrl = strapiApiUrl.replace("/api", "");
+        const strapiBaseUrl = strapiApiUrl.replace('/api', '');
 
         if (
           (() => {
@@ -65,7 +58,7 @@ const ResumeModal = ({
               return false;
             }
           })() &&
-          process.env.NODE_ENV === "development"
+          process.env.NODE_ENV === 'development'
         ) {
           return cvPdfUrl;
         } else {
@@ -88,7 +81,7 @@ const ResumeModal = ({
   useEffect(() => {
     if (configError) {
       setPdfError(true);
-      setErrorType("config");
+      setErrorType('config');
     }
   }, [configError]);
 
@@ -100,16 +93,14 @@ const ResumeModal = ({
   const handlePdfError = () => {
     setIsLoading(false);
     setPdfError(true);
-    setErrorType("load");
+    setErrorType('load');
   };
 
   const handleRetry = () => {
     setIsLoading(true);
     setPdfError(false);
     // Force iframe reload by updating src
-    const iframe = document.querySelector(
-      'iframe[title="Martin Nolan CV"]'
-    ) as HTMLIFrameElement;
+    const iframe = document.querySelector('iframe[title="Martin Nolan CV"]') as HTMLIFrameElement;
     if (iframe && pdfUrl) {
       iframe.src = pdfUrl;
     }
@@ -118,19 +109,19 @@ const ResumeModal = ({
   if (!isOpen) return null;
 
   const handleOverlayKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === 'Enter' || e.key === ' ') {
       onClose();
     }
   };
 
   // 404-style gradient background and GlassCard background
   const containerClass =
-    "fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br " +
+    'fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br ' +
     (isDark
-      ? "from-background via-background/80 to-primary/10"
-      : "from-white via-gray-100 to-primary/10");
+      ? 'from-background via-background/80 to-primary/10'
+      : 'from-white via-gray-100 to-primary/10');
   const cardClass =
-    "relative mx-4 h-[90vh] w-full max-w-4xl animate-scale-in overflow-hidden rounded-2xl bg-white/80 dark:bg-background/80";
+    'relative mx-4 h-[90vh] w-full max-w-4xl animate-scale-in overflow-hidden rounded-2xl bg-white/80 dark:bg-background/80';
 
   return (
     <div
@@ -169,7 +160,7 @@ const ResumeModal = ({
         </div>
 
         <div className="h-[calc(100%-88px)] p-6">
-          <div className="flex size-full items-center justify-center rounded-lg border border-surface-border bg-surface/20 relative">
+          <div className="relative flex size-full items-center justify-center rounded-lg border border-surface-border bg-surface/20">
             {pdfUrl ? (
               <>
                 <iframe
@@ -181,22 +172,20 @@ const ResumeModal = ({
                 />
                 {/* Loading indicator */}
                 {isLoading && (
-                  <div className="absolute inset-4 flex flex-col items-center justify-center rounded-lg bg-surface/95 backdrop-blur-sm border border-surface-border">
+                  <div className="absolute inset-4 flex flex-col items-center justify-center rounded-lg border border-surface-border bg-surface/95 backdrop-blur-sm">
                     <div className="flex flex-col items-center gap-4 text-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent"></div>
-                      <p className="text-sm text-muted-foreground">
-                        Loading PDF...
-                      </p>
+                      <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+                      <p className="text-sm text-muted-foreground">Loading PDF...</p>
                     </div>
                   </div>
                 )}
               </>
             ) : cvText ? (
-              <div className="flex flex-col items-center justify-center text-muted-foreground p-6">
+              <div className="flex flex-col items-center justify-center p-6 text-muted-foreground">
                 <h3 className="mb-2 text-lg font-semibold">
                   <GradientText>Extracted Resume Text</GradientText>
                 </h3>
-                <pre className="max-w-2xl whitespace-pre-wrap text-sm bg-surface/40 p-4 rounded-lg border border-surface-border overflow-auto">
+                <pre className="max-w-2xl overflow-auto whitespace-pre-wrap rounded-lg border border-surface-border bg-surface/40 p-4 text-sm">
                   {cvText}
                 </pre>
               </div>
@@ -207,14 +196,13 @@ const ResumeModal = ({
                   <GradientText>Resume not available</GradientText>
                 </h3>
                 <p className="mb-4 max-w-md text-center text-sm">
-                  Resume loading requires Strapi CMS configuration. Please
-                  contact the site owner.
+                  Resume loading requires Strapi CMS configuration. Please contact the site owner.
                 </p>
               </div>
             )}
 
             {pdfError && (
-              <div className="absolute inset-4 flex flex-col items-center justify-center rounded-lg bg-surface/95 backdrop-blur-sm border border-surface-border">
+              <div className="absolute inset-4 flex flex-col items-center justify-center rounded-lg border border-surface-border bg-surface/95 backdrop-blur-sm">
                 {/* Error content matching 404 page styling */}
                 <div className="flex flex-col items-center gap-4 p-6 text-center">
                   <Image
@@ -222,37 +210,32 @@ const ResumeModal = ({
                     alt="Error robot"
                     width={60}
                     height={60}
-                    className="drop-shadow-lg opacity-80"
+                    className="opacity-80 drop-shadow-lg"
                   />
 
                   <div className="space-y-2">
                     <h3 className="text-xl font-bold">
                       <GradientText>
-                        {errorType === "config"
-                          ? "Configuration Error"
-                          : errorType === "network"
-                          ? "Network Error"
-                          : "PDF Unavailable"}
+                        {errorType === 'config'
+                          ? 'Configuration Error'
+                          : errorType === 'network'
+                            ? 'Network Error'
+                            : 'PDF Unavailable'}
                       </GradientText>
                     </h3>
 
-                    <p className="text-sm text-muted-foreground max-w-xs">
-                      {errorType === "config"
-                        ? "Resume service is not properly configured. Please contact the site administrator."
-                        : errorType === "network"
-                        ? "Unable to connect to the resume service. Please check your connection and try again."
-                        : "The PDF could not be displayed in your browser, but you can still download it."}
+                    <p className="max-w-xs text-sm text-muted-foreground">
+                      {errorType === 'config'
+                        ? 'Resume service is not properly configured. Please contact the site administrator.'
+                        : errorType === 'network'
+                          ? 'Unable to connect to the resume service. Please check your connection and try again.'
+                          : 'The PDF could not be displayed in your browser, but you can still download it.'}
                     </p>
                   </div>
 
-                  <div className="flex gap-2 mt-2">
-                    {errorType !== "config" && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={handleRetry}
-                        className="text-xs"
-                      >
+                  <div className="mt-2 flex gap-2">
+                    {errorType !== 'config' && (
+                      <Button variant="outline" size="sm" onClick={handleRetry} className="text-xs">
                         <RefreshCw className="mr-2 size-3" />
                         Try Again
                       </Button>
@@ -262,7 +245,7 @@ const ResumeModal = ({
                       <Button
                         variant="default"
                         size="sm"
-                        onClick={() => window.open(cvPdfUrl, "_blank")}
+                        onClick={() => window.open(cvPdfUrl, '_blank')}
                         className="text-xs"
                       >
                         <Download className="mr-2 size-3" />

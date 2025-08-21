@@ -1,8 +1,9 @@
 "use client";
 
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+
 import { Button, GlassCard } from "@/shared/ui";
 import { ImageWithFallback } from "@/shared/ui/image-with-fallback";
 
@@ -146,7 +147,7 @@ export const ImageModal = ({
 
           {/* Body */}
           <div className="relative flex flex-1 flex-col p-6">
-            <div className="grid h-full w-full grid-cols-[2.5rem_1fr_2.5rem] items-center gap-3">
+            <div className="grid size-full grid-cols-[2.5rem_1fr_2.5rem] items-center gap-3">
               {/* Left rail */}
               {images.length > 1 ? (
                 <div className="flex items-center justify-center">
@@ -164,8 +165,8 @@ export const ImageModal = ({
               )}
 
               {/* Image + Description */}
-              <div className="flex flex-col items-center justify-center h-full w-full">
-                <div className="relative flex items-center justify-center w-full h-full overflow-hidden">
+              <div className="flex size-full flex-col items-center justify-center">
+                <div className="relative flex size-full items-center justify-center overflow-hidden">
                   <ImageWithFallback
                     src={currentImage.src}
                     alt={`${alt} - Image ${activeIndex + 1}`}

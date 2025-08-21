@@ -1,11 +1,15 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+
+import { buildSystemPrompt } from "./lib/buildSystemPrompt";
+
+import type { Message, ErrorResponse, ChatOK } from "@/shared/types";
 import { Button, Input, GlassCard } from "@/shared/ui";
 import { useToast } from "@/shared/ui/use-toast";
-import { buildSystemPrompt } from "./lib/buildSystemPrompt";
-import type { Message, ErrorResponse, ChatOK } from "@/shared/types";
+
+
 
 export const AIChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

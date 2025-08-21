@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import Image, { ImageProps } from "next/image";
 import { RefreshCw } from "lucide-react";
+import Image, { ImageProps } from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
+
 // If you don't have a cn util, replace cn(...) with a simple template string
 import { cn } from "@/shared/lib";
 
@@ -58,7 +59,7 @@ export function ImageWithFallback({
   const fallbackNode = useMemo(
     () =>
       fallback ?? (
-        <div className="flex h-full w-full items-center justify-center rounded-lg border border-surface-border bg-black/50 text-sm text-muted-foreground">
+        <div className="flex size-full items-center justify-center rounded-lg border border-surface-border bg-black/50 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <span>Image unavailable</span>
             <button

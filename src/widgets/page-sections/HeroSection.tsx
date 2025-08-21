@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+
 import { Button } from "@/shared/ui";
 
 interface HeroSectionProps {

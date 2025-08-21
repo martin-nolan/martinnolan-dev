@@ -1,8 +1,9 @@
-import { useState } from "react";
-import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { Button, ThemeToggle } from "@/shared/ui";
+import Link from "next/link";
+import { useState } from "react";
+
 import type { NavigationProps } from "@/shared/types";
+import { Button, ThemeToggle } from "@/shared/ui";
 
 const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);

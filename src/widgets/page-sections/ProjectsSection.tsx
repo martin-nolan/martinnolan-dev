@@ -1,10 +1,11 @@
 import { Github, Calendar } from "lucide-react";
-import { Badge, ImageCarousel, GlassCard, GradientText } from "@/shared/ui";
+
 import type {
   FeaturedProject,
   PersonalProject,
   AdditionalProject,
 } from "@/shared/types";
+import { Badge, ImageCarousel, GlassCard, GradientText } from "@/shared/ui";
 
 interface ProjectsSectionProps {
   featuredProjects?: FeaturedProject[] | null;
@@ -77,7 +78,7 @@ const ProjectsSection = ({
         {/* Projects with Images */}
         {projectsWithImages.length > 0 && (
           <div className="mb-12">
-            <h3 className="mb-8 text-2xl font-semibold text-center">
+            <h3 className="mb-8 text-center text-2xl font-semibold">
               Featured Work
             </h3>
             <div className="grid gap-8 lg:grid-cols-2">
@@ -207,7 +208,7 @@ const ProjectsSection = ({
         {/* Projects without Images */}
         {projectsWithoutImages.length > 0 && (
           <div className="mb-12">
-            <h3 className="mb-8 text-2xl font-semibold text-center">
+            <h3 className="mb-8 text-center text-2xl font-semibold">
               Additional Projects
             </h3>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
