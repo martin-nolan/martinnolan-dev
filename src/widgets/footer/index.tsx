@@ -45,8 +45,6 @@ const Footer = ({ profile }: FooterProps) => {
                 </a>
                 <a
                   href="mailto:martinnolan_1@hotmail.co.uk"
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="group rounded-lg border border-surface-border bg-surface p-2 transition-all duration-200 hover:bg-surface-hover"
                 >
                   <Mail className="size-5 text-muted-foreground group-hover:text-primary" />
@@ -111,8 +109,6 @@ const Footer = ({ profile }: FooterProps) => {
                 </a>
                 <a
                   href="mailto:martinnolan_1@hotmail.co.uk?subject=Collaboration Inquiry"
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="text-muted-foreground transition-colors duration-200 hover:text-primary"
                 >
                   Collaborate
