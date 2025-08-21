@@ -24,10 +24,30 @@ export const AIChatWidget: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
+  const chatScrollRef = useRef<HTMLDivElement>(null);
   const scrollToBottom = () =>
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 
   useEffect(scrollToBottom, [messages]);
+
+  // Prevent background scroll when reaching top/bottom of chat
+  useEffect(() => {
+    const el = chatScrollRef.current;
+    if (!el) return;
+    const handleWheel = (e: WheelEvent) => {
+      const { scrollTop, scrollHeight, clientHeight } = el;
+      const atTop = scrollTop === 0;
+      const atBottom = scrollTop + clientHeight >= scrollHeight - 1;
+      if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      el.removeEventListener("wheel", handleWheel);
+    };
+  }, [isOpen]);
 
   const withinRate = () => {
     const now = Date.now();
@@ -139,7 +159,10 @@ export const AIChatWidget: React.FC = () => {
               </p>
             </div>
 
-            <div className="flex-1 space-y-3 overflow-y-auto p-4">
+            <div
+              ref={chatScrollRef}
+              className="flex-1 space-y-3 overflow-y-auto p-4"
+            >
               {messages.map((m) => (
                 <div
                   key={m.id}
