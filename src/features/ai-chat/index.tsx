@@ -13,7 +13,7 @@ export const AIChatWidget: React.FC = () => {
     {
       id: "welcome",
       content:
-        "Hi! I'm Martin's AI assistant. Ask me anything about his background, experience, or projects!",
+        "Hi! I'm Marty - Martin's AI assistant. Ask me anything about his background, experience, or projects!",
       isUser: false,
       timestamp: new Date(),
     },
