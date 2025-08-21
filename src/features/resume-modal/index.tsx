@@ -3,14 +3,32 @@ import { useEffect, useState } from "react";
 import { X, Download, FileX, RefreshCw } from "lucide-react";
 import { Button, GlassCard, GradientText } from "@/shared/ui";
 import { useTheme } from "@/shared/ui/theme-context";
-import type { ResumeModalProps } from "@/shared/types";
+// Remove unused import
+
+interface ResumeModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  cvPdfUrl?: string;
+  cvText?: string | null;
+}
 import Image from "next/image";
 
-const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
+const ResumeModal = ({
+  isOpen,
+  onClose,
+  cvPdfUrl,
+  cvText,
+}: ResumeModalProps) => {
   const { isDark } = useTheme();
+  // ...existing code...
+
+  // Duplicate interface removed; already declared above.
+
   const [pdfError, setPdfError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorType, setErrorType] = useState<'load' | 'config' | 'network'>('load');
+  const [errorType, setErrorType] = useState<"load" | "config" | "network">(
+    "load"
+  );
 
   // Prevent background scroll when modal is open
   useEffect(() => {
@@ -23,36 +41,38 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
   }, [isOpen]);
 
   // Handle PDF URL configuration and error states
-  const pdfUrl: string | null = cvPdfUrl ? (() => {
-    const strapiApiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+  const pdfUrl: string | null = cvPdfUrl
+    ? (() => {
+        const strapiApiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
-    if (!strapiApiUrl) {
-      return null;
-    }
-
-    const strapiBaseUrl = strapiApiUrl.replace("/api", "");
-
-    if (
-      (() => {
-        try {
-          const cvUrl = new URL(cvPdfUrl);
-          const strapiUrl = new URL(strapiBaseUrl);
-          return (
-            cvUrl.hostname === strapiUrl.hostname &&
-            cvUrl.protocol === strapiUrl.protocol &&
-            cvUrl.port === strapiUrl.port
-          );
-        } catch {
-          return false;
+        if (!strapiApiUrl) {
+          return null;
         }
-      })() &&
-      process.env.NODE_ENV === "development"
-    ) {
-      return cvPdfUrl;
-    } else {
-      return `/api/pdf-proxy?url=${encodeURIComponent(cvPdfUrl)}`;
-    }
-  })() : null;
+
+        const strapiBaseUrl = strapiApiUrl.replace("/api", "");
+
+        if (
+          (() => {
+            try {
+              const cvUrl = new URL(cvPdfUrl);
+              const strapiUrl = new URL(strapiBaseUrl);
+              return (
+                cvUrl.hostname === strapiUrl.hostname &&
+                cvUrl.protocol === strapiUrl.protocol &&
+                cvUrl.port === strapiUrl.port
+              );
+            } catch {
+              return false;
+            }
+          })() &&
+          process.env.NODE_ENV === "development"
+        ) {
+          return cvPdfUrl;
+        } else {
+          return `/api/pdf-proxy?url=${encodeURIComponent(cvPdfUrl)}`;
+        }
+      })()
+    : null;
 
   const configError = cvPdfUrl && !process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
@@ -68,7 +88,7 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
   useEffect(() => {
     if (configError) {
       setPdfError(true);
-      setErrorType('config');
+      setErrorType("config");
     }
   }, [configError]);
 
@@ -80,14 +100,16 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
   const handlePdfError = () => {
     setIsLoading(false);
     setPdfError(true);
-    setErrorType('load');
+    setErrorType("load");
   };
 
   const handleRetry = () => {
     setIsLoading(true);
     setPdfError(false);
     // Force iframe reload by updating src
-    const iframe = document.querySelector('iframe[title="Martin Nolan CV"]') as HTMLIFrameElement;
+    const iframe = document.querySelector(
+      'iframe[title="Martin Nolan CV"]'
+    ) as HTMLIFrameElement;
     if (iframe && pdfUrl) {
       iframe.src = pdfUrl;
     }
@@ -157,17 +179,27 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
                   onError={handlePdfError}
                   onLoad={handlePdfLoad}
                 />
-                
                 {/* Loading indicator */}
                 {isLoading && (
                   <div className="absolute inset-4 flex flex-col items-center justify-center rounded-lg bg-surface/95 backdrop-blur-sm border border-surface-border">
                     <div className="flex flex-col items-center gap-4 text-center">
                       <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent"></div>
-                      <p className="text-sm text-muted-foreground">Loading PDF...</p>
+                      <p className="text-sm text-muted-foreground">
+                        Loading PDF...
+                      </p>
                     </div>
                   </div>
                 )}
               </>
+            ) : cvText ? (
+              <div className="flex flex-col items-center justify-center text-muted-foreground p-6">
+                <h3 className="mb-2 text-lg font-semibold">
+                  <GradientText>Extracted Resume Text</GradientText>
+                </h3>
+                <pre className="max-w-2xl whitespace-pre-wrap text-sm bg-surface/40 p-4 rounded-lg border border-surface-border overflow-auto">
+                  {cvText}
+                </pre>
+              </div>
             ) : (
               <div className="flex flex-col items-center justify-center text-muted-foreground">
                 <FileX className="mb-4 size-12 text-muted-foreground" />
@@ -192,27 +224,29 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
                     height={60}
                     className="drop-shadow-lg opacity-80"
                   />
-                  
+
                   <div className="space-y-2">
                     <h3 className="text-xl font-bold">
                       <GradientText>
-                        {errorType === 'config' ? 'Configuration Error' : 
-                         errorType === 'network' ? 'Network Error' : 
-                         'PDF Unavailable'}
+                        {errorType === "config"
+                          ? "Configuration Error"
+                          : errorType === "network"
+                          ? "Network Error"
+                          : "PDF Unavailable"}
                       </GradientText>
                     </h3>
-                    
+
                     <p className="text-sm text-muted-foreground max-w-xs">
-                      {errorType === 'config' 
-                        ? 'Resume service is not properly configured. Please contact the site administrator.'
-                        : errorType === 'network' 
-                        ? 'Unable to connect to the resume service. Please check your connection and try again.'
-                        : 'The PDF could not be displayed in your browser, but you can still download it.'}
+                      {errorType === "config"
+                        ? "Resume service is not properly configured. Please contact the site administrator."
+                        : errorType === "network"
+                        ? "Unable to connect to the resume service. Please check your connection and try again."
+                        : "The PDF could not be displayed in your browser, but you can still download it."}
                     </p>
                   </div>
 
                   <div className="flex gap-2 mt-2">
-                    {errorType !== 'config' && (
+                    {errorType !== "config" && (
                       <Button
                         variant="outline"
                         size="sm"
@@ -223,7 +257,7 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl }: ResumeModalProps) => {
                         Try Again
                       </Button>
                     )}
-                    
+
                     {cvPdfUrl && (
                       <Button
                         variant="default"
