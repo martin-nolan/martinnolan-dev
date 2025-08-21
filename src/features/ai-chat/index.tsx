@@ -209,7 +209,7 @@ export const AIChatWidget: React.FC = () => {
                 >
                   LinkedIn
                 </a>
-                , CV, or{" "}
+                , Resume, or{" "}
                 <a
                   href="mailto:martinnolan_1@hotmail.co.uk"
                   className="underline"
