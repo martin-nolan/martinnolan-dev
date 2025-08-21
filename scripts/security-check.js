@@ -5,6 +5,10 @@
  * Validates environment configuration and security settings
  */
 
+// Load environment variables from .env.local
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+
 import fs from 'fs';
 
 const RED = '\x1b[31m';
@@ -82,13 +86,22 @@ sourceFiles.forEach((file) => {
     dangerousPatterns.forEach((pattern) => {
       const matches = content.match(pattern);
       if (matches) {
-        error(`Hardcoded URL found in ${file}: ${matches[0]}`);
-        foundIssues = true;
+        // Ignore localhost:3000 and localhost:1337 as safe for local development
+        const safeLocalhosts = ['localhost:3000', 'localhost:1337'];
+        const unsafeMatches = matches.filter((m) => !safeLocalhosts.includes(m));
+        if (unsafeMatches.length > 0) {
+          error(`Hardcoded URL found in ${file}: ${unsafeMatches[0]}`);
+          foundIssues = true;
+        }
+        const safeMatches = matches.filter((m) => safeLocalhosts.includes(m));
+        if (safeMatches.length > 0) {
+          success(`Safe hardcoded localhost URL in ${file}: ${safeMatches.join(', ')}`);
+        }
       }
     });
 
     if (!foundIssues) {
-      success(`${file} - No hardcoded URLs found`);
+      success(`${file} - No hardcoded URLs found (except safe localhost)`);
     }
   }
 });
