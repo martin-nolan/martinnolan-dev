@@ -1,22 +1,28 @@
-import { Menu, X } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
 
-import type { NavigationProps } from "@/shared/types";
-import { Button, ThemeToggle } from "@/shared/ui";
+import type { NavigationProps } from '@/shared/types';
+import { Button, ThemeToggle } from '@/shared/ui';
 
 const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { href: "about", label: "About" },
-    { href: "work", label: "Work" },
-    { href: "projects", label: "Projects" },
-    { href: "contact", label: "Contact" },
+    { href: 'about', label: 'About' },
+    { href: 'work', label: 'Work' },
+    { href: 'projects', label: 'Projects' },
+    { href: 'contact', label: 'Contact' },
   ];
 
   const handleScroll = (elementId: string) => {
-    document.getElementById(elementId)?.scrollIntoView({ behavior: "smooth" });
+    const target = document.getElementById(elementId);
+    if (target) {
+      const header = document.querySelector('nav.fixed');
+      const headerHeight = header ? (header as HTMLElement).offsetHeight : 0;
+      const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -63,11 +69,7 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-foreground"
               >
-                {isOpen ? (
-                  <X className="size-6" />
-                ) : (
-                  <Menu className="size-6" />
-                )}
+                {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
               </Button>
             </div>
           </div>

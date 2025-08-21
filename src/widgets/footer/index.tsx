@@ -1,8 +1,8 @@
-import { Github, Linkedin, Mail } from "lucide-react";
-import { useState } from "react";
+import { Github, Linkedin, Mail } from 'lucide-react';
+import { useState } from 'react';
 
-import ResumeModal from "@/features/resume-modal";
-import { GradientText } from "@/shared/ui";
+import ResumeModal from '@/features/resume-modal';
+import { GradientText } from '@/shared/ui';
 
 interface FooterProps {
   profile?: {
@@ -24,9 +24,7 @@ const Footer = ({ profile }: FooterProps) => {
               <h3 className="text-xl font-bold">
                 <GradientText>Martin Nolan</GradientText>
               </h3>
-              <p className="text-muted-foreground">
-                Professional portfolio and AI assistant
-              </p>
+              <p className="text-muted-foreground">Professional portfolio and AI assistant</p>
               <div className="flex justify-center space-x-4 md:justify-start">
                 <a
                   href="https://github.com/martin-nolan"
@@ -56,30 +54,70 @@ const Footer = ({ profile }: FooterProps) => {
             <div className="space-y-4 text-center md:text-left">
               <h4 className="font-semibold">Quick Links</h4>
               <nav className="flex flex-col space-y-2">
-                <a
-                  href="#about"
-                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
+                <button
+                  type="button"
+                  className="text-left text-muted-foreground transition-colors duration-200 hover:text-primary"
+                  onClick={() => {
+                    const target = document.getElementById('about');
+                    if (target) {
+                      const header = document.querySelector('nav.fixed');
+                      const headerHeight = header ? (header as HTMLElement).offsetHeight : 0;
+                      const targetPosition =
+                        target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    }
+                  }}
                 >
                   About
-                </a>
-                <a
-                  href="#work"
-                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
+                </button>
+                <button
+                  type="button"
+                  className="text-left text-muted-foreground transition-colors duration-200 hover:text-primary"
+                  onClick={() => {
+                    const target = document.getElementById('work');
+                    if (target) {
+                      const header = document.querySelector('nav.fixed');
+                      const headerHeight = header ? (header as HTMLElement).offsetHeight : 0;
+                      const targetPosition =
+                        target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    }
+                  }}
                 >
                   Work
-                </a>
-                <a
-                  href="#projects"
-                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
+                </button>
+                <button
+                  type="button"
+                  className="text-left text-muted-foreground transition-colors duration-200 hover:text-primary"
+                  onClick={() => {
+                    const target = document.getElementById('projects');
+                    if (target) {
+                      const header = document.querySelector('nav.fixed');
+                      const headerHeight = header ? (header as HTMLElement).offsetHeight : 0;
+                      const targetPosition =
+                        target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    }
+                  }}
                 >
                   Projects
-                </a>
-                <a
-                  href="#contact"
-                  className="text-muted-foreground transition-colors duration-200 hover:text-primary"
+                </button>
+                <button
+                  type="button"
+                  className="text-left text-muted-foreground transition-colors duration-200 hover:text-primary"
+                  onClick={() => {
+                    const target = document.getElementById('contact');
+                    if (target) {
+                      const header = document.querySelector('nav.fixed');
+                      const headerHeight = header ? (header as HTMLElement).offsetHeight : 0;
+                      const targetPosition =
+                        target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    }
+                  }}
                 >
                   Contact
-                </a>
+                </button>
               </nav>
             </div>
 
@@ -87,6 +125,7 @@ const Footer = ({ profile }: FooterProps) => {
               <h4 className="font-semibold">Professional</h4>
               <nav className="flex flex-col space-y-2">
                 <button
+                  type="button"
                   onClick={() => setShowResumeModal(true)}
                   className="text-left text-muted-foreground transition-colors duration-200 hover:text-primary"
                 >
