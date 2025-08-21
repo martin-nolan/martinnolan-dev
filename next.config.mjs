@@ -26,15 +26,30 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
   images: {
-    domains: [
-      "localhost",
-      "martinnolan.dev",
-      ...strapiDomains,
-      // Common CDN domains
-      "res.cloudinary.com",
-      "images.unsplash.com",
-    ].filter(Boolean),
     formats: ["image/webp", "image/avif"],
+    remotePatterns: [
+      // Local dev Strapi uploads
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "1337",
+        pathname: "/uploads/**",
+      },
+
+      // Your domain
+      { protocol: "https", hostname: "martinnolan.dev", pathname: "/**" },
+
+      // Strapi dynamic domains (if strapiDomains is an array of hostnames)
+      ...strapiDomains.map((domain) => ({
+        protocol: "https",
+        hostname: domain,
+        pathname: "/**",
+      })),
+
+      // Common CDN domains
+      { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
+      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
+    ].filter(Boolean),
   },
   async headers() {
     // Build CSP with dynamic Strapi URLs

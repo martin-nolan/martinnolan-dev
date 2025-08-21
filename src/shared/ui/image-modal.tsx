@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button, GlassCard } from "@/shared/ui";
 import { ImageWithFallback } from "@/shared/ui/image-with-fallback";
@@ -43,6 +43,7 @@ export const ImageModal = ({
     prevActiveElRef.current = document.activeElement;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    // Move focus to the modal container
     setTimeout(() => containerRef.current?.focus(), 0);
     return () => {
       document.body.style.overflow = prevOverflow;
@@ -72,7 +73,7 @@ export const ImageModal = ({
     return () => window.removeEventListener("keydown", onKey);
   }, [isOpen, images.length, onClose]);
 
-  // Preload neighbour images for snappier next/prev
+  // Preload neighbour images
   useEffect(() => {
     if (!isOpen || images.length < 2) return;
     const next = (activeIndex + 1) % images.length;
@@ -85,12 +86,16 @@ export const ImageModal = ({
 
   if (!isOpen || !images.length) return null;
 
+  // Guard for SSR / environments without document
+  const portalTarget = typeof document !== "undefined" ? document.body : null;
+  if (!portalTarget) return null;
+
   const nextImage = () => setActiveIndex((p) => (p + 1) % images.length);
   const prevImage = () =>
     setActiveIndex((p) => (p - 1 + images.length) % images.length);
   const currentImage = images[activeIndex];
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
       role="dialog"
@@ -106,6 +111,9 @@ export const ImageModal = ({
         role="button"
         tabIndex={0}
         aria-label="Close image modal"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") onClose();
+        }}
       />
 
       {/* Modal container */}
@@ -114,7 +122,7 @@ export const ImageModal = ({
         tabIndex={-1}
         className="relative mx-4 flex h-[90vh] w-full max-w-6xl items-center justify-center outline-none"
       >
-        <GlassCard className="flex size-full flex-col">
+        <GlassCard className="flex size-full flex-col overflow-hidden">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-surface-border p-6">
             <div>
@@ -137,54 +145,67 @@ export const ImageModal = ({
           </div>
 
           {/* Body */}
-          <div className="relative flex flex-1 flex-col items-center justify-center p-6">
-            {images.length > 1 && (
-              <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={prevImage}
-                  className="absolute left-1 top-1/2 z-10 -translate-y-1/2"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft className="size-6" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={nextImage}
-                  className="absolute right-1 top-1/2 z-10 -translate-y-1/2"
-                  aria-label="Next image"
-                >
-                  <ChevronRight className="size-6" />
-                </Button>
-              </>
-            )}
+          <div className="relative flex flex-1 flex-col p-6">
+            <div className="grid h-full w-full grid-cols-[2.5rem_1fr_2.5rem] items-center gap-3">
+              {/* Left rail */}
+              {images.length > 1 ? (
+                <div className="flex items-center justify-center">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={prevImage}
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft className="size-6" />
+                  </Button>
+                </div>
+              ) : (
+                <div />
+              )}
 
-            <div className="relative flex w-full items-center justify-center">
-              <ImageWithFallback
-                src={currentImage.src}
-                alt={`${alt} - Image ${activeIndex + 1}`}
-                width={1200}
-                height={800}
-                className="size-auto max-h-[75vh] max-w-full rounded-lg object-contain"
-                timeoutMs={10000}
-                sizes="(min-width: 1024px) 75vw, 100vw"
-                fetchPriority="high"
-                draggable={false}
-              />
-            </div>
-
-            {currentImage.description && (
-              <div className="mt-6 w-full max-w-xl rounded-lg border border-surface-border bg-black/60 px-6 py-3 text-center text-base text-muted-foreground shadow-lg backdrop-blur-md">
-                {currentImage.description}
+              {/* Image + Description */}
+              <div className="flex flex-col items-center justify-center h-full w-full">
+                <div className="relative flex items-center justify-center w-full h-full overflow-hidden">
+                  <ImageWithFallback
+                    src={currentImage.src}
+                    alt={`${alt} - Image ${activeIndex + 1}`}
+                    width={1200}
+                    height={800}
+                    className="max-h-[75vh] w-auto max-w-full rounded-lg object-contain"
+                    timeoutMs={10000}
+                    sizes="(min-width: 1024px) 75vw, 100vw"
+                    fetchPriority="high"
+                    draggable={false}
+                  />
+                </div>
+                {currentImage.description && (
+                  <div className="mt-6 w-full max-w-xl rounded-lg border border-surface-border bg-black/60 px-6 py-3 text-center text-base text-muted-foreground shadow-lg backdrop-blur-md">
+                    {currentImage.description}
+                  </div>
+                )}
               </div>
-            )}
+
+              {/* Right rail */}
+              {images.length > 1 ? (
+                <div className="flex items-center justify-center">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={nextImage}
+                    aria-label="Next image"
+                  >
+                    <ChevronRight className="size-6" />
+                  </Button>
+                </div>
+              ) : (
+                <div />
+              )}
+            </div>
           </div>
         </GlassCard>
       </div>
     </div>,
-    document.body
+    portalTarget
   );
 };
 

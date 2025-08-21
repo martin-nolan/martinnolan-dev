@@ -129,7 +129,7 @@ const Footer = ({ profile }: FooterProps) => {
         <ResumeModal
           isOpen={showResumeModal}
           onClose={() => setShowResumeModal(false)}
-          cvPdfUrl={profile?.cvPdf}
+          cvPdfUrl={profile?.cvPdf ?? undefined}
         />
       )}
     </>
