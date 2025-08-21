@@ -157,28 +157,46 @@ class ContentService {
     if (!Array.isArray(mediaArray)) return [];
 
     // Debug logging for imageCaption
-    console.log('🔍 ProcessMediaArray Debug:');
-    console.log('  imageCaption:', imageCaption);
-    console.log('  mediaArray length:', mediaArray.length);
+    console.log("🔍 ProcessMediaArray Debug:");
+    console.log("  imageCaption:", imageCaption);
+    console.log("  mediaArray length:", mediaArray.length);
 
     // Parse imageCaption string to create a filename -> description mapping
     const captionMap = new Map<string, string>();
     if (imageCaption) {
-      const lines = imageCaption.split('\n');
-      console.log('  imageCaption lines:', lines);
+      const lines = imageCaption.split("\n");
+      console.log("  imageCaption lines:", lines);
       for (const line of lines) {
-        const colonIndex = line.indexOf(':');
+        const colonIndex = line.indexOf(":");
         if (colonIndex > 0) {
           const filename = line.substring(0, colonIndex).trim();
           const description = line.substring(colonIndex + 1).trim();
           if (filename && description) {
+            // Add the original caption filename
             captionMap.set(filename, description);
             console.log(`  📝 Mapped: "${filename}" -> "${description}"`);
+
+            // Also add variations to handle different naming conventions
+            const underscoreVersion = filename.replace(/-/g, "_");
+            const hyphenVersion = filename.replace(/_/g, "-");
+
+            if (underscoreVersion !== filename) {
+              captionMap.set(underscoreVersion, description);
+              console.log(
+                `  📝 Also mapped underscore version: "${underscoreVersion}" -> "${description}"`
+              );
+            }
+            if (hyphenVersion !== filename) {
+              captionMap.set(hyphenVersion, description);
+              console.log(
+                `  📝 Also mapped hyphen version: "${hyphenVersion}" -> "${description}"`
+              );
+            }
           }
         }
       }
     }
-    console.log('  captionMap size:', captionMap.size);
+    console.log("  captionMap size:", captionMap.size);
 
     return mediaArray
       .map((item) => {
@@ -188,27 +206,36 @@ class ContentService {
           const altText =
             item.attributes?.alternativeText || item.alternativeText || "";
           const caption = item.attributes?.caption || item.caption || "";
-          
+
           // Extract filename from URL for caption mapping
           let description = altText || caption;
           if (url && captionMap.size > 0) {
-            const filename = url.split('/').pop()?.split('?')[0]; // Get filename without query params
+            const filename = url.split("/").pop()?.split("?")[0]; // Get filename without query params
             console.log(`  🔗 Processing URL: ${url}`);
             console.log(`  📄 Extracted filename: ${filename}`);
-            
+
             // Try exact match first
             if (filename && captionMap.has(filename)) {
               description = captionMap.get(filename) || description;
-              console.log(`  ✅ Found exact caption for ${filename}: "${description}"`);
+              console.log(
+                `  ✅ Found exact caption for ${filename}: "${description}"`
+              );
             } else if (filename) {
               // Try matching without hash suffix (e.g., "notes_a0f91bfad4.png" -> "notes.png")
-              const baseFilename = filename.replace(/_[a-f0-9]+(\.[^.]+)$/, '$1');
+              const baseFilename = filename.replace(
+                /_[a-f0-9]+(\.[^.]+)$/,
+                "$1"
+              );
               console.log(`  🔄 Trying base filename: ${baseFilename}`);
               if (captionMap.has(baseFilename)) {
                 description = captionMap.get(baseFilename) || description;
-                console.log(`  ✅ Found base caption for ${baseFilename}: "${description}"`);
+                console.log(
+                  `  ✅ Found base caption for ${baseFilename}: "${description}"`
+                );
               } else {
-                console.log(`  ❌ No caption found for ${filename} or ${baseFilename}`);
+                console.log(
+                  `  ❌ No caption found for ${filename} or ${baseFilename}`
+                );
               }
             }
           }
