@@ -133,7 +133,7 @@ export const AIChatWidget: React.FC = () => {
         <div className="fixed bottom-24 right-6 z-50 h-[32rem] w-[26rem] animate-scale-in">
           <GlassCard className="flex h-full flex-col border-surface-border">
             <div className="border-b border-surface-border p-4">
-              <h3 className="font-semibold">Chat with Martin's AI</h3>
+              <h3 className="font-semibold">Chat with Marty</h3>
               <p className="text-xs text-muted-foreground">
                 Ask about experience, projects &amp; more
               </p>
@@ -198,6 +198,26 @@ export const AIChatWidget: React.FC = () => {
                   <Send className="size-4" />
                 </Button>
               </div>
+              <p className="mt-2 text-[11px] text-muted-foreground">
+                Note: AI responses may not always be accurate. For verified
+                info, please refer to my{" "}
+                <a
+                  href="https://www.linkedin.com/in/martinnolan/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  LinkedIn
+                </a>
+                , CV, or{" "}
+                <a
+                  href="mailto:martinnolan_1@hotmail.co.uk"
+                  className="underline"
+                >
+                  contact me
+                </a>{" "}
+                directly.
+              </p>
             </div>
           </GlassCard>
         </div>
