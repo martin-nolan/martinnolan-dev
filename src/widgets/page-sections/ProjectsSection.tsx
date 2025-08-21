@@ -1,11 +1,7 @@
-import { Github, Calendar } from "lucide-react";
+import { Github, Calendar, Globe2 } from 'lucide-react';
 
-import type {
-  FeaturedProject,
-  PersonalProject,
-  AdditionalProject,
-} from "@/shared/types";
-import { Badge, ImageCarousel, GlassCard, GradientText } from "@/shared/ui";
+import type { FeaturedProject, PersonalProject, AdditionalProject } from '@/shared/types';
+import { Badge, ImageCarousel, GlassCard, GradientText } from '@/shared/ui';
 
 interface ProjectsSectionProps {
   featuredProjects?: FeaturedProject[] | null;
@@ -25,13 +21,11 @@ const ProjectsSection = ({
     allProjects = unifiedProjects;
   } else {
     // Fallback: Convert and combine projects into unified format (backward compatibility)
-    const workProjects: AdditionalProject[] = (
-      externalFeaturedProjects || []
-    ).map((project) => ({
+    const workProjects: AdditionalProject[] = (externalFeaturedProjects || []).map((project) => ({
       title: project.title,
       description: project.description,
       stack: project.stack,
-      type: "work" as const,
+      type: 'work' as const,
       year: project.year,
       company: project.company,
       role: project.role,
@@ -40,16 +34,16 @@ const ProjectsSection = ({
       images: project.images,
     }));
 
-    const personalProjectsConverted: AdditionalProject[] = (
-      externalPersonalProjects || []
-    ).map((project) => ({
-      title: project.title,
-      description: project.description,
-      stack: project.stack,
-      type: "personal" as const,
-      category: project.category,
-      github: project.github,
-    }));
+    const personalProjectsConverted: AdditionalProject[] = (externalPersonalProjects || []).map(
+      (project) => ({
+        title: project.title,
+        description: project.description,
+        stack: project.stack,
+        type: 'personal' as const,
+        category: project.category,
+        github: project.github,
+      })
+    );
 
     allProjects = [...workProjects, ...personalProjectsConverted];
   }
@@ -70,17 +64,15 @@ const ProjectsSection = ({
             <GradientText>Projects</GradientText>
           </h2>
           <p className="mx-auto max-w-3xl text-xl text-muted-foreground">
-            A mix of professional work and personal projects showcasing
-            different technologies and approaches
+            A mix of professional work and personal projects showcasing different technologies and
+            approaches
           </p>
         </div>
 
         {/* Projects with Images */}
         {projectsWithImages.length > 0 && (
           <div className="mb-12">
-            <h3 className="mb-8 text-center text-2xl font-semibold">
-              Featured Work
-            </h3>
+            <h3 className="mb-8 text-center text-2xl font-semibold">Featured Work</h3>
             <div className="grid gap-8 lg:grid-cols-2">
               {projectsWithImages.map((project) => (
                 <GlassCard
@@ -99,24 +91,22 @@ const ProjectsSection = ({
                       <Badge
                         variant="secondary"
                         className={
-                          project.type === "work"
-                            ? "bg-blue-600 text-white hover:bg-blue-600"
-                            : "bg-purple-600 text-white hover:bg-purple-600"
+                          project.type === 'work'
+                            ? 'bg-blue-600 text-white hover:bg-blue-600'
+                            : 'bg-purple-600 text-white hover:bg-purple-600'
                         }
                       >
-                        {project.type === "work" ? "Work" : "Personal"}
+                        {project.type === 'work' ? 'Work' : 'Personal'}
                       </Badge>
                     </div>
                   </div>
 
                   <div className="flex flex-1 flex-col p-6">
                     <div className="mb-4">
-                      <h3 className="mb-2 text-xl font-bold">
-                        {project.title}
-                      </h3>
+                      <h3 className="mb-2 text-xl font-bold">{project.title}</h3>
 
                       {/* Work project additional info */}
-                      {project.type === "work" && (
+                      {project.type === 'work' && (
                         <div className="mb-2 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
                           {project.year && (
                             <div className="flex items-center gap-1">
@@ -125,15 +115,9 @@ const ProjectsSection = ({
                             </div>
                           )}
                           {project.company && (
-                            <span className="font-medium text-primary">
-                              {project.company}
-                            </span>
+                            <span className="font-medium text-primary">{project.company}</span>
                           )}
-                          {project.role && (
-                            <span className="text-accent">
-                              • {project.role}
-                            </span>
-                          )}
+                          {project.role && <span className="text-accent">• {project.role}</span>}
                         </div>
                       )}
                     </div>
@@ -144,7 +128,7 @@ const ProjectsSection = ({
                     </p>
 
                     {/* Highlights for work projects */}
-                    {project.type === "work" &&
+                    {project.type === 'work' &&
                       project.highlights &&
                       project.highlights.length > 0 && (
                         <div className="mb-4">
@@ -152,19 +136,12 @@ const ProjectsSection = ({
                             Key Achievements
                           </h4>
                           <ul className="space-y-1">
-                            {project.highlights.map(
-                              (highlight, highlightIndex) => (
-                                <li
-                                  key={highlightIndex}
-                                  className="flex items-start text-sm"
-                                >
-                                  <div className="mr-2 mt-1.5 size-1.5 shrink-0 rounded-full bg-accent"></div>
-                                  <span className="text-muted-foreground">
-                                    {highlight}
-                                  </span>
-                                </li>
-                              )
-                            )}
+                            {project.highlights.map((highlight, highlightIndex) => (
+                              <li key={highlightIndex} className="flex items-start text-sm">
+                                <div className="mr-2 mt-1.5 size-1.5 shrink-0 rounded-full bg-accent"></div>
+                                <span className="text-muted-foreground">{highlight}</span>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       )}
@@ -185,8 +162,8 @@ const ProjectsSection = ({
                     </div>
 
                     {/* GitHub link for personal projects only */}
-                    {project.type === "personal" && project.github && (
-                      <div className="mt-auto pt-2">
+                    {project.type === 'personal' && project.github && (
+                      <div className="mt-auto flex gap-4 pt-2">
                         <a
                           href={project.github}
                           target="_blank"
@@ -208,9 +185,7 @@ const ProjectsSection = ({
         {/* Projects without Images */}
         {projectsWithoutImages.length > 0 && (
           <div className="mb-12">
-            <h3 className="mb-8 text-center text-2xl font-semibold">
-              Additional Projects
-            </h3>
+            <h3 className="mb-8 text-center text-2xl font-semibold">Additional Projects</h3>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {projectsWithoutImages.map((project) => (
                 <GlassCard
@@ -224,21 +199,19 @@ const ProjectsSection = ({
                         <Badge
                           variant="secondary"
                           className={
-                            project.type === "work"
-                              ? "bg-blue-600 text-white hover:bg-blue-600"
-                              : "bg-purple-600 text-white hover:bg-purple-600"
+                            project.type === 'work'
+                              ? 'bg-blue-600 text-white hover:bg-blue-600'
+                              : 'bg-purple-600 text-white hover:bg-purple-600'
                           }
                         >
-                          {project.type === "work" ? "Work" : "Personal"}
+                          {project.type === 'work' ? 'Work' : 'Personal'}
                         </Badge>
                       </div>
 
-                      <h3 className="mb-2 text-xl font-bold">
-                        {project.title}
-                      </h3>
+                      <h3 className="mb-2 text-xl font-bold">{project.title}</h3>
 
                       {/* Work project additional info */}
-                      {project.type === "work" && (
+                      {project.type === 'work' && (
                         <div className="mb-2 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
                           {project.year && (
                             <div className="flex items-center gap-1">
@@ -247,15 +220,9 @@ const ProjectsSection = ({
                             </div>
                           )}
                           {project.company && (
-                            <span className="font-medium text-primary">
-                              {project.company}
-                            </span>
+                            <span className="font-medium text-primary">{project.company}</span>
                           )}
-                          {project.role && (
-                            <span className="text-accent">
-                              • {project.role}
-                            </span>
-                          )}
+                          {project.role && <span className="text-accent">• {project.role}</span>}
                         </div>
                       )}
                     </div>
@@ -266,7 +233,7 @@ const ProjectsSection = ({
                     </p>
 
                     {/* Highlights for work projects */}
-                    {project.type === "work" &&
+                    {project.type === 'work' &&
                       project.highlights &&
                       project.highlights.length > 0 && (
                         <div className="mb-4">
@@ -274,19 +241,12 @@ const ProjectsSection = ({
                             Key Achievements
                           </h4>
                           <ul className="space-y-1">
-                            {project.highlights.map(
-                              (highlight, highlightIndex) => (
-                                <li
-                                  key={highlightIndex}
-                                  className="flex items-start text-sm"
-                                >
-                                  <div className="mr-2 mt-1.5 size-1.5 shrink-0 rounded-full bg-accent"></div>
-                                  <span className="text-muted-foreground">
-                                    {highlight}
-                                  </span>
-                                </li>
-                              )
-                            )}
+                            {project.highlights.map((highlight, highlightIndex) => (
+                              <li key={highlightIndex} className="flex items-start text-sm">
+                                <div className="mr-2 mt-1.5 size-1.5 shrink-0 rounded-full bg-accent"></div>
+                                <span className="text-muted-foreground">{highlight}</span>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       )}
@@ -307,8 +267,8 @@ const ProjectsSection = ({
                     </div>
 
                     {/* GitHub link for personal projects only */}
-                    {project.type === "personal" && project.github && (
-                      <div className="mt-auto pt-2">
+                    {project.type === 'personal' && project.github && (
+                      <div className="mt-auto flex gap-4 pt-2">
                         <a
                           href={project.github}
                           target="_blank"
@@ -318,6 +278,17 @@ const ProjectsSection = ({
                           <Github className="size-4" />
                           View Source
                         </a>
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                          >
+                            <Globe2 className="size-4" aria-label="Live Site" />
+                            <span>Live Site</span>
+                          </a>
+                        )}
                       </div>
                     )}
                   </div>
@@ -329,9 +300,7 @@ const ProjectsSection = ({
 
         {allProjects.length === 0 && (
           <div className="py-12 text-center">
-            <p className="text-muted-foreground">
-              No projects available at the moment.
-            </p>
+            <p className="text-muted-foreground">No projects available at the moment.</p>
           </div>
         )}
       </div>
