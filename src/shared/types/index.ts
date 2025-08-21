@@ -55,7 +55,7 @@ export interface AdditionalProject {
   title: string;
   description: string;
   stack: string[];
-  type: "work" | "personal"; // Badge to indicate project type
+  type: 'work' | 'personal'; // Badge to indicate project type
   year?: string;
   company?: string;
   role?: string;
@@ -63,6 +63,7 @@ export interface AdditionalProject {
   highlights?: string[];
   images?: Array<{ src: string; description: string }>;
   github?: string;
+  liveUrl?: string;
 }
 
 export interface Experience {
@@ -106,7 +107,7 @@ export interface Project {
   imageUrl?: string;
 }
 
-export type ToastType = "success" | "error" | "info" | "warning";
+export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
 export interface ToastMessage {
   id: string;
