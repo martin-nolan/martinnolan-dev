@@ -49,9 +49,16 @@ const nextConfig = {
         : "";
 
     // Add development URLs from environment variable
-    const devStrapiUrls = isDev && process.env.NEXT_PUBLIC_STRAPI_DEV_URL 
-      ? ` ${process.env.NEXT_PUBLIC_STRAPI_DEV_URL}` 
-      : "";
+    const devStrapiUrls =
+      isDev && process.env.NEXT_PUBLIC_STRAPI_DEV_URL
+        ? ` ${process.env.NEXT_PUBLIC_STRAPI_DEV_URL}`
+        : "";
+
+    // Add local Strapi http for connect-src and frame-src in dev
+    const devStrapiConnect = isDev ? " http://localhost:1337" : "";
+    const devFrameSrc = isDev ? " http://localhost:1337" : "";
+
+    const netlifyDomain = " https://martinnolan-dev.netlify.app";
 
     return [
       {
@@ -60,18 +67,17 @@ const nextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: `
-              default-src 'self';
-              style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-              font-src 'self' https://fonts.gstatic.com;
-              connect-src 'self' https://api.emailjs.com https://models.github.ai${strapiConnections}${devStrapiUrls};
-              img-src 'self' data: https: blob:${strapiMedia}${devStrapiUrls};
-              media-src 'self' https:${strapiMedia}${devStrapiUrls};
-              script-src 'self'${isDev ? " 'unsafe-eval'" : ""};
-              frame-src 'self' data:${strapiConnections}${devStrapiUrls};
-            `
-              .replace(/\s{2,}/g, " ")
-              .trim(),
+            value:
+              `default-src 'self';` +
+              ` style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;` +
+              ` font-src 'self' https://fonts.gstatic.com;` +
+              ` connect-src 'self' https://api.emailjs.com https://models.github.ai${strapiConnections}${devStrapiUrls}${devStrapiConnect}${netlifyDomain};` +
+              ` img-src 'self' data: https: blob:${strapiMedia}${devStrapiUrls}${devStrapiConnect}${netlifyDomain};` +
+              ` media-src 'self' https:${strapiMedia}${devStrapiUrls}${devStrapiConnect}${netlifyDomain};` +
+              ` script-src 'self'${isDev ? " 'unsafe-eval'" : ""};` +
+              ` frame-src 'self' data:${strapiConnections}${devStrapiUrls}${devFrameSrc}${netlifyDomain};`
+                .replace(/\s{2,}/g, " ")
+                .trim(),
           },
           {
             key: "X-Frame-Options",
