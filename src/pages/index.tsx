@@ -217,7 +217,8 @@ export const getStaticProps: GetStaticProps = async () => {
     try {
       projects = await contentService.getProjects();
     } catch (error) {
-      console.log("Unified projects not available yet, using separate types");
+      console.error("Error fetching unified projects:", error);
+      projects = null; // or fallback to another method if needed
     }
 
     // Extract CV text server-side only
