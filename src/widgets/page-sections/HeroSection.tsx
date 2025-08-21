@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+
 import { Button } from "@/shared/ui";
 
 interface HeroSectionProps {
@@ -81,8 +82,6 @@ const HeroSection = ({ profile }: HeroSectionProps) => {
             </a>
             <a
               href="mailto:martinnolan_1@hotmail.co.uk"
-              target="_blank"
-              rel="noopener noreferrer"
               className="group rounded-full border border-surface-border bg-surface p-3 transition-all duration-200 hover:bg-surface-hover"
             >
               <Mail className="size-6 text-muted-foreground group-hover:text-primary" />

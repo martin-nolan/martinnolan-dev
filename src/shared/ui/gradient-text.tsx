@@ -1,5 +1,6 @@
-import { cn } from "@/shared/lib";
 import { forwardRef } from "react";
+
+import { cn } from "@/shared/lib";
 
 interface GradientTextProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;

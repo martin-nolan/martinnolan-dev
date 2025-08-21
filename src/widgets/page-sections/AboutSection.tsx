@@ -1,6 +1,7 @@
 import { Code, Brain, Rocket, Users } from "lucide-react";
-import { CardContent, GlassCard } from "@/shared/ui";
+
 import type { AboutSectionProps, Highlight } from "@/shared/types";
+import { CardContent, GlassCard } from "@/shared/ui";
 
 // Keep default highlights as they provide good structure when no CMS data
 const defaultHighlights: Highlight[] = [

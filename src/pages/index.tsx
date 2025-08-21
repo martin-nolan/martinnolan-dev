@@ -1,16 +1,19 @@
-import Head from "next/head";
-import Navigation from "@/widgets/navigation";
-import HeroSection from "@/widgets/page-sections/HeroSection";
-import AboutSection from "@/widgets/page-sections/AboutSection";
-import WorkSection from "@/widgets/page-sections/WorkSection";
-import ProjectsSection from "@/widgets/page-sections/ProjectsSection";
-import ContactSection from "@/widgets/page-sections/ContactSection";
-import Footer from "@/widgets/footer";
-import ResumeModal from "@/features/resume-modal";
-import dynamic from "next/dynamic";
-import { useState } from "react";
 import { GetStaticProps } from "next";
-import { contentService } from "@/shared/lib/content-service";
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import { useState } from "react";
+
+import ResumeModal from "@/features/resume-modal";
+import Footer from "@/widgets/footer";
+import Navigation from "@/widgets/navigation";
+import AboutSection from "@/widgets/page-sections/AboutSection";
+import ContactSection from "@/widgets/page-sections/ContactSection";
+import HeroSection from "@/widgets/page-sections/HeroSection";
+import ProjectsSection from "@/widgets/page-sections/ProjectsSection";
+import WorkSection from "@/widgets/page-sections/WorkSection";
+
+// ⚠️ Removed top-level import of contentService to avoid client bundle exposure
+// import { contentService } from "@/shared/lib/content-service";
 
 const AIChatWidget = dynamic(
   () => import("@/features/ai-chat").then((mod) => mod.AIChatWidget),
@@ -27,6 +30,7 @@ interface Props {
   contactMethods?: any[];
   error?: boolean;
   errorMessage?: string;
+  cvText?: string | null;
 }
 
 const Index = ({
@@ -38,6 +42,7 @@ const Index = ({
   contactMethods,
   error,
   errorMessage,
+  cvText,
 }: Props) => {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
@@ -154,10 +159,12 @@ const Index = ({
         />
         <script
           type="application/ld+json"
+           
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
         <script
           type="application/ld+json"
+           
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </Head>
@@ -178,6 +185,7 @@ const Index = ({
         isOpen={isResumeOpen}
         onClose={() => setIsResumeOpen(false)}
         cvPdfUrl={profile?.cvPdf}
+        cvText={cvText}
       />
       <AIChatWidget />
     </div>
@@ -186,6 +194,12 @@ const Index = ({
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
+    // ⬇️ Import contentService and extractPdfTextServer here so they never touch client bundles
+    const { contentService } = await import("@/shared/lib/content-service");
+    const { extractPdfTextServer } = await import(
+      "@/shared/lib/pdfTextExtractor.server"
+    );
+
     const [
       profile,
       experiences,
@@ -201,11 +215,27 @@ export const getStaticProps: GetStaticProps = async () => {
     ]);
 
     // Try to get unified projects (will fallback to separate types if not available)
-    let projects = null;
+    let projects = null as any[] | null;
     try {
       projects = await contentService.getProjects();
     } catch (error) {
-      console.log("Unified projects not available yet, using separate types");
+      console.error("Error fetching unified projects:", error);
+      projects = null; // or fallback to another method if needed
+    }
+
+    // Extract CV text server-side only
+    let cvText = null;
+    if (
+      profile?.cvPdf &&
+      typeof profile.cvPdf === "string" &&
+      profile.cvPdf.trim()
+    ) {
+      try {
+        cvText = await extractPdfTextServer(profile.cvPdf);
+      } catch (err) {
+        console.error("Error extracting CV text:", err);
+        cvText = null;
+      }
     }
 
     return {
@@ -216,13 +246,13 @@ export const getStaticProps: GetStaticProps = async () => {
         personalProjects,
         projects,
         contactMethods,
+        cvText,
       },
       revalidate: 60, // Revalidate every minute in production
     };
   } catch (error) {
     console.error("Error fetching content from CMS:", error);
 
-    // Return error page props instead of fallback content
     return {
       props: {
         error: true,

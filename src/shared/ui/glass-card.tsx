@@ -1,5 +1,6 @@
-import { cn } from "@/shared/lib";
 import { forwardRef } from "react";
+
+import { cn } from "@/shared/lib";
 
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -11,7 +12,7 @@ const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
       <div
         ref={ref}
         className={cn(
-          "backdrop-blur-lg bg-surface/10 border border-surface-border rounded-2xl",
+          "rounded-2xl border border-surface-border bg-surface/10 backdrop-blur-lg",
           className
         )}
         {...props}

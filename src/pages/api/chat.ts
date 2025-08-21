@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import createClient from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
+import createClient from "@azure-rest/ai-inference";
 import { isUnexpected } from "@azure-rest/ai-inference";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const ENDPOINT =
   process.env.GITHUB_MODELS_ENDPOINT || "https://models.github.ai/inference";

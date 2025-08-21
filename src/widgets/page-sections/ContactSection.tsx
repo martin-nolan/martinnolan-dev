@@ -1,17 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useRef } from "react";
-import emailjs from "@emailjs/browser";
-import type { ContactMethod } from "@/shared/types";
-import {
-  Button,
-  CardContent,
-  Input,
-  Textarea,
-  GlassCard,
-  GradientText,
-} from "@/shared/ui";
-import { useToast } from "@/shared/ui/use-toast";
-import { getIconComponent } from "@/shared/lib/icon-mapping";
+import emailjs from '@emailjs/browser';
+import { useState, useRef } from 'react';
+
+import { getIconComponent } from '@/shared/lib/icon-mapping';
+import type { ContactMethod } from '@/shared/types';
+import { Button, CardContent, Input, Textarea, GlassCard, GradientText } from '@/shared/ui';
+import { useToast } from '@/shared/ui/use-toast';
 
 interface ContactSectionProps {
   contactMethods?: ContactMethod[] | null;
@@ -21,9 +15,7 @@ interface ContactSectionProps {
   } | null;
 }
 
-const ContactSection = ({
-  contactMethods: externalContactMethods,
-}: ContactSectionProps) => {
+const ContactSection = ({ contactMethods: externalContactMethods }: ContactSectionProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -43,15 +35,15 @@ const ContactSection = ({
       );
 
       toast({
-        title: "Message sent successfully!",
+        title: 'Message sent successfully!',
         description: "Thank you for reaching out. I'll get back to you soon.",
       });
       formRef.current.reset();
-    } catch (error) {
+    } catch (_error) {
       toast({
-        title: "Failed to send message",
-        description: "Please try again or reach out directly via email.",
-        variant: "destructive",
+        title: 'Failed to send message',
+        description: 'Please try again or reach out directly via email.',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -69,8 +61,8 @@ const ContactSection = ({
             Let's <GradientText>Connect</GradientText>
           </h2>
           <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
-            Whether you're looking to collaborate, discuss opportunities, or
-            just chat about AI and technology, I'd love to hear from you.
+            Whether you're looking to collaborate, discuss opportunities, or just chat about AI and
+            technology, I'd love to hear from you.
           </p>
         </div>
 
@@ -79,8 +71,7 @@ const ContactSection = ({
             <div className="mb-8">
               <h3 className="mb-4 text-2xl font-semibold">Get in Touch</h3>
               <p className="text-muted-foreground">
-                Choose your preferred way to reach out. I typically respond
-                within 24 hours.
+                Choose your preferred way to reach out. I typically respond within 24 hours.
               </p>
             </div>
 
@@ -96,19 +87,15 @@ const ContactSection = ({
                   <GlassCard className="border-surface-border transition-all duration-200 hover:bg-surface-hover">
                     <CardContent className="p-6">
                       <div className="flex items-center space-x-4">
-                        <div className="rounded-lg p-3 bg-surface text-muted-foreground transition-all duration-200 group-hover:scale-110 group-hover:text-primary">
+                        <div className="rounded-lg bg-surface p-3 text-muted-foreground transition-all duration-200 group-hover:scale-110 group-hover:text-primary">
                           {getIconComponent(method.icon)}
                         </div>
                         <div className="flex-1">
                           <h4 className="font-semibold text-foreground transition-colors group-hover:text-primary">
                             {method.title}
                           </h4>
-                          <p className="mb-1 text-sm text-muted-foreground">
-                            {method.description}
-                          </p>
-                          <p className="text-sm text-foreground">
-                            {method.value}
-                          </p>
+                          <p className="mb-1 text-sm text-muted-foreground">{method.description}</p>
+                          <p className="text-sm text-foreground">{method.value}</p>
                         </div>
                       </div>
                     </CardContent>
@@ -122,24 +109,16 @@ const ContactSection = ({
             <div className="mb-8">
               <h3 className="mb-4 text-2xl font-semibold">Send a Message</h3>
               <p className="text-muted-foreground">
-                Prefer to reach out directly? Use the form below and I'll get
-                back to you soon.
+                Prefer to reach out directly? Use the form below and I'll get back to you soon.
               </p>
             </div>
 
             <GlassCard className="border-surface-border">
               <CardContent className="p-6">
-                <form
-                  ref={formRef}
-                  className="space-y-6"
-                  onSubmit={handleSubmit}
-                >
+                <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label
-                        htmlFor="name"
-                        className="mb-2 block text-sm font-medium"
-                      >
+                      <label htmlFor="name" className="mb-2 block text-sm font-medium">
                         Name
                       </label>
                       <Input
@@ -151,10 +130,7 @@ const ContactSection = ({
                       />
                     </div>
                     <div>
-                      <label
-                        htmlFor="email"
-                        className="mb-2 block text-sm font-medium"
-                      >
+                      <label htmlFor="email" className="mb-2 block text-sm font-medium">
                         Email
                       </label>
                       <Input
@@ -168,10 +144,7 @@ const ContactSection = ({
                     </div>
                   </div>
                   <div>
-                    <label
-                      htmlFor="subject"
-                      className="mb-2 block text-sm font-medium"
-                    >
+                    <label htmlFor="subject" className="mb-2 block text-sm font-medium">
                       Subject
                     </label>
                     <Input
@@ -184,10 +157,7 @@ const ContactSection = ({
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="message"
-                      className="mb-2 block text-sm font-medium"
-                    >
+                    <label htmlFor="message" className="mb-2 block text-sm font-medium">
                       Message
                     </label>
                     <Textarea
@@ -205,7 +175,7 @@ const ContactSection = ({
                     className="w-full bg-primary text-white hover:bg-primary/90"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Sending..." : "Send Message"}
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               </CardContent>

@@ -1,6 +1,7 @@
 import { Code, Users } from "lucide-react";
-import { GlassCard, GradientText } from "@/shared/ui";
+
 import type { CMSExperience } from "@/shared/types";
+import { GlassCard, GradientText } from "@/shared/ui";
 
 interface WorkSectionProps {
   experiences?: CMSExperience[] | null;
@@ -66,7 +67,7 @@ const WorkSection = ({
                     </div>
                   </div>
 
-                  <ul className="list-disc ml-6 space-y-2 text-muted-foreground leading-relaxed">
+                  <ul className="ml-6 list-disc space-y-2 leading-relaxed text-muted-foreground">
                     {exp.description
                       ?.split("\n")
                       .filter((line) => line.trim())
