@@ -7,9 +7,22 @@ export default async function handler(
 ) {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
-    res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
+    const allowedOrigins = [
+      "http://localhost:3000",
+      "http://localhost:1337",
+      "https://martinnolan-dev.netlify.app",
+    ];
+    const requestOrigin =
+      typeof req.headers.origin === "string" ? req.headers.origin : "";
+    const originToAllow = allowedOrigins.includes(requestOrigin)
+      ? requestOrigin
+      : allowedOrigins[0];
+    res.setHeader("Access-Control-Allow-Origin", originToAllow);
     res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
     res.setHeader("Access-Control-Max-Age", "86400");
     return res.status(200).end();
   }
@@ -120,7 +133,17 @@ export default async function handler(
     res.setHeader("Cache-Control", "public, max-age=31536000");
     res.setHeader("X-Frame-Options", "SAMEORIGIN"); // Allow iframe embedding from same origin
     res.setHeader("X-Content-Type-Options", "nosniff");
-    res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
+    const allowedOrigins = [
+      "http://localhost:3000",
+      "http://localhost:1337",
+      "https://martinnolan-dev.netlify.app",
+    ];
+    const requestOrigin =
+      typeof req.headers.origin === "string" ? req.headers.origin : "";
+    const originToAllow = allowedOrigins.includes(requestOrigin)
+      ? requestOrigin
+      : allowedOrigins[0];
+    res.setHeader("Access-Control-Allow-Origin", originToAllow);
     res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
     res.setHeader(
       "Access-Control-Allow-Headers",
