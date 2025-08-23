@@ -16,7 +16,15 @@ export const useLocalStorage = <T>(
 
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      if (!item) return initialValue;
+
+      // Handle both JSON and plain string values for backward compatibility
+      try {
+        return JSON.parse(item);
+      } catch {
+        // If JSON parsing fails, treat as plain string (for theme values like "dark", "light")
+        return item as T;
+      }
     } catch (error) {
       console.warn(`Error reading localStorage key "${key}":`, error);
       return initialValue;
@@ -62,7 +70,13 @@ export const useLocalStorage = <T>(
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === key && e.newValue !== null) {
         try {
-          setStoredValue(JSON.parse(e.newValue));
+          // Handle both JSON and plain string values for backward compatibility
+          try {
+            setStoredValue(JSON.parse(e.newValue));
+          } catch {
+            // If JSON parsing fails, treat as plain string
+            setStoredValue(e.newValue as T);
+          }
         } catch (error) {
           console.warn(`Error parsing localStorage value for key "${key}":`, error);
         }
