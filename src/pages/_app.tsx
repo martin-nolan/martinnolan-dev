@@ -1,12 +1,12 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { AppProps } from "next/app";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import type { AppProps } from 'next/app';
 
-import { ErrorBoundary } from "@/shared/ui/error-boundary";
-import { Toaster as Sonner } from "@/shared/ui/sonner";
-import { ThemeProvider } from "@/shared/ui/theme-context";
-import { Toaster } from "@/shared/ui/toaster";
-import { TooltipProvider } from "@/shared/ui/tooltip";
-import "@/index.css";
+import { ErrorBoundary } from '@/ui/error-boundary';
+import { Toaster as Sonner } from '@/ui/sonner';
+import { ThemeProvider } from '@/ui/theme-context';
+import { Toaster } from '@/ui/toaster';
+import { TooltipProvider } from '@/ui/tooltip';
+import '@/index.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {

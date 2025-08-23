@@ -1,12 +1,10 @@
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-import { GradientText } from "@/shared/ui";
-import { Button } from "@/shared/ui/button";
-import { GlassCard } from "@/shared/ui/glass-card";
-import { useTheme } from "@/shared/ui/theme-context";
+import { GradientText, Button, GlassCard } from '@/ui';
+import { useTheme } from '@/ui/theme-context';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
@@ -24,8 +22,8 @@ const NotFound = () => {
       className={
         `relative flex min-h-screen items-center justify-center bg-gradient-to-br ` +
         (isDark
-          ? "from-background via-background/80 to-primary/10"
-          : "from-white via-gray-100 to-primary/10")
+          ? 'from-background via-background/80 to-primary/10'
+          : 'from-white via-gray-100 to-primary/10')
       }
     >
       <Head>
@@ -45,8 +43,7 @@ const NotFound = () => {
           <GradientText>Lost?</GradientText>
         </h1>
         <p className="mb-4 text-center text-lg text-gray-700 dark:text-muted-foreground">
-          Oops! The page you’re looking for doesn’t exist. Maybe you took a
-          wrong turn?
+          Oops! The page you’re looking for doesn’t exist. Maybe you took a wrong turn?
         </p>
         <Link href="/" passHref legacyBehavior>
           <Button asChild variant="default" className="w-full">

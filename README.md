@@ -1,22 +1,19 @@
 # Martin Nolan Portfolio
 
-Modern personal portfolio app with AI-powered chat assistant and cloud-hosted content management.
+Modern personal portfolio with AI-powered chat assistant and cloud-hosted content management.
 
 ## Features
 
-- 🎨 Responsive, mobile-first design with dark/light theme support
+- 🎨 Responsive design with dark/light theme support
 - 🤖 AI chat assistant powered by GitHub Models
 - 📄 Secure PDF resume viewer with proxy protection
 - ☁️ Cloud CMS integration via **Strapi Cloud**
-- 🛡️ Production-ready security hardening
-- ⚡ Optimized performance with automated validation
 
 ## Architecture
 
 - **Frontend**: Next.js 15 with TypeScript and Tailwind CSS
 - **CMS**: Strapi Cloud hosted at `https://your-instance.strapiapp.com`
 - **AI**: GitHub Models integration for chat assistant
-- **Security**: Automated validation pipeline with environment-based configuration
 
 ## Tech Stack
 
@@ -67,14 +64,18 @@ npm run dev
 
 Visit `http://localhost:3000` to see your portfolio.
 
-### Production Deployment
+### Build Commands
 
-The application is production-ready with:
+```bash
+# Development
+npm run dev
 
-- ✅ Security validation pipeline
-- ✅ Environment-based configuration
-- ✅ Automated CI/CD checks
-- ✅ Cloud CMS integration
+# Production build
+npm run build
+
+# Type checking and linting
+npm run test:build
+```
 
 ## CMS Content Management
 

@@ -1,5 +1,17 @@
 # Implementation Plan
 
+## Refactoring Approach
+
+This plan takes an **aggressive cleanup approach** to eliminate unnecessary complexity and "good to have" files that add no real value. The goal is to reduce codebase size by ~40% while maintaining all functionality, focusing on:
+
+- **Aggressive UI cleanup**: Remove 20+ unused components, keep only essentials
+- **Flatten over-engineered structure**: Eliminate unnecessary nested directories
+- **Consolidate duplicate code**: Merge similar components and utilities
+- **Remove bloat**: Delete unused utils, configs, and over-abstracted patterns
+- **Simplify imports**: Clean up import patterns and remove unused dependencies
+
+**Philosophy**: Simple, maintainable, and pragmatic over "enterprise-ready" complexity.
+
 - [x] 1. Setup and Analysis Phase
   - Run static analysis tools (ts-prune, eslint) to identify unused code
   - Create backup of current working state
@@ -20,17 +32,17 @@
     - Clean up any unused build artifacts or config files
     - _Requirements: 1.3, 2.3_
 
-- [ ] 3. Environment Management Centralization
-  - [ ] 3.1 Create centralized environment utility
+- [x] 3. Environment Management Centralization
+  - [x] 3.1 Create centralized environment utility
     - Implement src/shared/lib/env.ts with type-safe environment access
     - Add runtime validation with clear error messages
     - Support both client and server environment variables
     - _Requirements: 3.1_
-  - [ ] 3.2 Create server-specific environment utility
+  - [x] 3.2 Create server-specific environment utility
     - Implement src/shared/lib/server/env-server.ts for server-only variables
     - Add validation for server-side environment requirements
     - _Requirements: 3.1_
-  - [ ] 3.3 Replace direct process.env usage
+  - [x] 3.3 Replace direct process.env usage
     - Update ContactSection.tsx to use centralized env utility
     - Update pdf-proxy.ts to use centralized env utility
     - Update chat.ts to use centralized env utility
@@ -40,35 +52,35 @@
     - Update all remaining files with direct process.env access
     - _Requirements: 3.4_
 
-- [ ] 4. CMS Service Refactoring
-  - [ ] 4.1 Break down monolithic content-service.ts
+- [x] 4. CMS Service Refactoring
+  - [x] 4.1 Break down monolithic content-service.ts
     - Create src/shared/lib/cms/client.ts for base Strapi client
     - Create src/shared/lib/cms/types.ts for CMS-specific types
     - Create src/shared/lib/cms/transformers.ts for data transformation
     - Create src/shared/lib/cms/media.ts for media URL handling
     - _Requirements: 4.2_
-  - [ ] 4.2 Create focused CMS service modules
+  - [x] 4.2 Create focused CMS service modules
     - Implement src/shared/lib/cms/services/profile.ts
     - Implement src/shared/lib/cms/services/projects.ts
     - Implement src/shared/lib/cms/services/experiences.ts
     - Create src/shared/lib/cms/services/index.ts aggregator
     - _Requirements: 4.2_
-  - [ ] 4.3 Update CMS service usage
+  - [x] 4.3 Update CMS service usage
     - Update getStaticProps in index.tsx to use new modular CMS services
     - Ensure backward compatibility during transition
     - _Requirements: 4.2_
 
-- [ ] 5. Server/Client Separation
-  - [ ] 5.1 Create server-only utilities directory
+- [x] 5. Server/Client Separation
+  - [x] 5.1 Create server-only utilities directory
     - Move PDF extraction logic to src/shared/lib/server/pdf-extractor.ts
     - Create src/shared/lib/server/cms-server.ts for server-side CMS operations
     - Create src/shared/lib/server/ai-context-builder.ts for server-side AI context
     - _Requirements: 4.2_
-  - [ ] 5.2 Create client-safe utilities
+  - [x] 5.2 Create client-safe utilities
     - Implement src/shared/lib/client/cms-client.ts for client-side operations
     - Implement src/shared/lib/client/api-client.ts for API route helpers
     - _Requirements: 4.2_
-  - [ ] 5.3 Refactor AI context system
+  - [x] 5.3 Refactor AI context system
     - Split buildSystemPrompt.ts into server and client versions
     - Create src/shared/lib/ai/context-builder.server.ts
     - Create src/shared/lib/ai/context-builder.client.ts
@@ -77,140 +89,155 @@
     - _Requirements: 4.2_
 
 - [ ] 6. Shared Hooks and Utilities
-  - [ ] 6.1 Extract scroll management logic
+  - [x] 6.1 Extract scroll management logic
     - Create src/shared/hooks/useScrollToSection.ts with centralized scroll logic
     - Include header offset calculation and smooth scrolling
     - _Requirements: 4.1_
-  - [ ] 6.2 Update components to use scroll hook
+  - [x] 6.2 Update components to use scroll hook
     - Update Navigation component to use useScrollToSection hook
     - Update Footer component to use useScrollToSection hook
     - Update HeroSection component to use useScrollToSection hook
     - Remove duplicate scroll logic from all components
     - _Requirements: 4.1_
-  - [ ] 6.3 Create additional shared hooks
+  - [x] 6.3 Create additional shared hooks
     - Implement src/shared/hooks/useModal.ts for modal state management
     - Implement src/shared/hooks/useLocalStorage.ts if needed
     - _Requirements: 4.1_
 
 - [ ] 7. Type System Consolidation
-  - [ ] 7.1 Reorganize type definitions
+  - [x] 7.1 Reorganize type definitions
     - Create src/shared/types/cms/ directory for CMS-related types
     - Create src/shared/types/ui/ directory for UI component types
     - Create src/shared/types/api/ directory for API types
     - _Requirements: 4.2_
-  - [ ] 7.2 Move types to appropriate modules
+  - [x] 7.2 Move types to appropriate modules
     - Move CMS types to src/shared/types/cms/
     - Move UI component types to src/shared/types/ui/
     - Move API types to src/shared/types/api/
     - Update src/shared/types/index.ts with proper re-exports
     - _Requirements: 4.2_
-  - [ ] 7.3 Fix duplicate type definitions
+  - [x] 7.3 Fix duplicate type definitions
     - Remove duplicate ResumeModalProps interface
     - Consolidate similar interfaces with different names
     - Ensure consistent naming patterns
     - _Requirements: 4.2_
 
 - [ ] 8. Component Complexity Reduction
-  - [ ] 8.1 Refactor ProjectsSection component
+  - [x] 8.1 Refactor ProjectsSection component
     - Extract project type handling logic into utilities
     - Simplify component structure and reduce line count
     - Create reusable project card components
     - _Requirements: 4.1_
-  - [ ] 8.2 Simplify ContactSection component
+  - [x] 8.2 Simplify ContactSection component
     - Extract form handling logic into custom hook
     - Separate CMS data handling from component logic
     - Remove hardcoded fallbacks in favor of CMS-driven content
     - _Requirements: 4.1_
-  - [ ] 8.3 Optimize ResumeModal component
+  - [x] 8.3 Optimize ResumeModal component
     - Extract PDF handling logic into separate utility
     - Simplify error state management
     - Reduce component complexity and line count
     - _Requirements: 4.1_
 
 - [ ] 9. API Route Optimization
-  - [ ] 9.1 Create API middleware utilities
+  - [x] 9.1 Create API middleware utilities
     - Implement src/shared/lib/api/middleware/cors.ts for CORS handling
     - Implement src/shared/lib/api/middleware/security.ts for security validation
     - Implement src/shared/lib/api/middleware/error-handler.ts for error responses
     - _Requirements: 5.1_
-  - [ ] 9.2 Refactor pdf-proxy.ts
+  - [x] 9.2 Refactor pdf-proxy.ts
     - Use new middleware utilities to reduce complexity
     - Extract URL validation logic to separate utility
     - Simplify error handling and response patterns
     - _Requirements: 5.1_
-  - [ ] 9.3 Clean up API routes
+  - [x] 9.3 Clean up API routes
     - Remove unused pdf-test.ts endpoint
     - Ensure consistent error handling across all API routes
     - _Requirements: 2.3, 5.1_
 
-- [ ] 10. Configuration Simplification
-  - [ ] 10.1 Simplify next.config.mjs
-    - Extract complex CSP generation into separate utility
-    - Reduce configuration complexity and improve readability
-    - Use centralized environment utilities
-    - _Requirements: 3.1_
-  - [ ] 10.2 Consolidate security configuration
-    - Remove duplicate validation logic between env.mjs and security-check.js
-    - Ensure consistent security patterns across configuration files
-    - _Requirements: 3.2_
-
-- [ ] 11. Dead Code Removal
-  - [ ] 11.1 Remove unused exports and imports
-    - Use ts-prune results to identify unused exports
-    - Remove unused import statements throughout codebase
-    - Clean up unused interfaces and type definitions
+- [ ] 10. Aggressive UI Component Cleanup
+  - [x] 10.1 Remove unused UI components
+    - Delete 20+ unused components: checkbox, dropdown-menu, hover-card, scroll-area, separator, switch, toggle, sidebar-utils, navigation-menu-utils, etc.
+    - Keep only essential components: Button, Input, Textarea, GlassCard, Card, Badge, GradientText, Toast, ThemeToggle, ErrorBoundary, ImageCarousel
+    - Update shared/ui/index.ts to export only used components
     - _Requirements: 2.2, 2.3_
-  - [ ] 11.2 Remove orphaned components
-    - Identify and remove any unused components in src/features/
-    - Identify and remove any unused components in src/widgets/
-    - Identify and remove any unused utilities in src/shared/
-    - _Requirements: 2.2_
+  - [x] 10.2 Consolidate duplicate components
+    - Merge FeaturedProjectCard and ProjectCard into single ProjectCard with variant prop
+    - Remove redundant \*-utils.ts files that aren't being imported
+    - Simplify component APIs and remove over-engineering
+    - _Requirements: 4.1, 2.2_
 
-- [ ] 12. Import and Bundle Optimization
-  - [ ] 12.1 Optimize dynamic imports
-    - Ensure proper dynamic imports for client-side code
-    - Verify tree-shaking effectiveness
-    - _Requirements: 5.2_
-  - [ ] 12.2 Clean up import patterns
-    - Ensure consistent import ordering and grouping
+- [ ] 11. Flatten Directory Structure
+  - [x] 11.1 Simplify features and widgets structure
+    - Move src/features/ai-chat/index.tsx to src/components/AIChatWidget.tsx
+    - Move src/features/resume-modal/index.tsx to src/components/ResumeModal.tsx
+    - Move src/widgets/\* content to src/components/sections/
+    - Remove empty features/ and widgets/ directories
+    - _Requirements: 4.1, 2.2_
+  - [x] 11.2 Consolidate shared structure
+    - Move frequently used hooks to src/hooks/
+    - Keep only essential shared/lib subdirectories
+    - Flatten over-nested directory structures
+    - _Requirements: 4.1_
+
+- [ ] 12. Configuration and Dead Code Cleanup
+  - [x] 12.1 Simplify configuration files
+    - Simplify next.config.mjs by removing unnecessary complexity
+    - Remove unused configuration files and build artifacts
+    - Clean up package.json dependencies
+    - _Requirements: 3.1, 2.3_
+  - [x] 12.2 Remove unused code and imports
+    - Use ESLint to identify and remove unused imports
+    - Remove unused exports and interfaces
+    - Delete orphaned utility files
+    - Clean up unused API endpoints if any remain
+    - _Requirements: 2.2, 2.3_
+
+- [ ] 13. Import Optimization and Code Quality
+  - [x] 13.1 Clean up import patterns
+    - Ensure consistent import ordering and grouping (external, internal, relative)
     - Remove unused imports identified by ESLint
     - Optimize import paths for better bundling
+    - Standardize import aliases usage
+    - _Requirements: 5.2, 6.2_
+  - [x] 13.2 Optimize bundle and dynamic imports
+    - Ensure proper dynamic imports for client-side code
+    - Verify tree-shaking effectiveness after cleanup
+    - Remove unnecessary re-exports
     - _Requirements: 5.2_
 
-- [ ] 13. Testing and Validation
-  - [ ] 13.1 Run comprehensive type checking
+- [x] 13.3 Aggressive lib/ and server/ consolidation
+  - Eliminate massive duplication between lib/ and server/ directories
+  - Consolidate 20+ files into 3-4 simple, focused files
+  - Remove over-engineered service classes and complex abstractions
+  - Merge duplicate AI context builders (server/ai-context-builder.ts + lib/ai/\*)
+  - Merge duplicate CMS services (server/cms-server.ts + lib/cms/\*)
+  - Merge duplicate environment configs (server/env-server.ts + lib/env.ts)
+  - Remove unnecessary service directory with 6+ files
+  - Simplify to: lib/cms.ts, lib/ai.ts, lib/env.ts (server + client in same files)
+  - _Requirements: 2.2, 4.1, 4.2_
+
+- [ ] 14. Testing and Validation
+  - [x] 14.1 Run comprehensive validation
     - Execute npm run typecheck and fix any type errors
-    - Ensure all new utilities are properly typed
-    - _Requirements: 6.1_
-  - [ ] 13.2 Run linting validation
     - Execute npm run lint and fix all violations
-    - Ensure code quality standards are maintained
-    - _Requirements: 6.2_
-  - [ ] 13.3 Verify build process
     - Execute npm run build and ensure successful compilation
-    - Test all features work as expected after refactoring
+    - _Requirements: 6.1, 6.2_
+  - [x] 14.2 Verify functionality after cleanup
+    - Test all features work as expected after aggressive cleanup
+    - Verify no broken imports or missing components
+    - Ensure performance hasn't regressed
     - _Requirements: 6.2_
 
-- [ ] 14. Accessibility and Design System Audit
-  - [ ] 14.1 Audit component accessibility
-    - Verify ARIA attributes in shared components
-    - Ensure keyboard navigation works properly
-    - Test screen reader compatibility
-    - _Requirements: 7.2_
-  - [ ] 14.2 Validate design system consistency
-    - Ensure consistent use of Tailwind/shadcn components
-    - Remove any direct style overrides
-    - Verify responsive design implementation
-    - _Requirements: 7.1_
-
-- [ ] 15. Documentation Updates
-  - [ ] 15.1 Update README.md
-    - Add clear architecture diagram showing new structure
-    - Update setup instructions with new environment requirements
-    - Document new centralized patterns and utilities
+- [x] 15. Final Cleanup and Documentation
+  - [x] 15.1 Accessibility and design consistency audit
+    - Verify remaining components maintain ARIA attributes
+    - Ensure consistent Tailwind usage without style overrides
+    - Test responsive design still works properly
+    - _Requirements: 7.1, 7.2_
+  - [x] 15.2 Update documentation
+    - Update README.md with simplified architecture
+    - Remove outdated documentation references
+    - Document the new streamlined structure
+    - Add setup instructions for the cleaned codebase
     - _Requirements: 8.1, 8.3_
-  - [ ] 15.2 Document new architecture
-    - Create documentation for new CMS service structure
-    - Document shared hooks and utilities usage
-    - Explain server/client separation patterns
-    - _Requirements: 8.3_
