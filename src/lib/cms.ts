@@ -94,7 +94,7 @@ class SimpleCMSClient {
       seoTitle: attrs.seoTitle || attrs.fullName || 'Martin Nolan',
       seoDescription: attrs.seoDescription || bioText,
       skills: attrs.skills || [],
-      cvPdf: attrs.cvPdf?.url ? `${this.baseUrl}${attrs.cvPdf.url}` : null,
+      cvPdf: attrs.cvPdf?.url ? (attrs.cvPdf.url.startsWith('http') ? attrs.cvPdf.url : `${this.baseUrl}${attrs.cvPdf.url}`) : null,
     };
   }
 
@@ -159,7 +159,7 @@ class SimpleCMSClient {
               description = `No caption for ${filename} (captionMap keys: ${Object.keys(captionMap).join(', ')})`;
             }
             return {
-              src: `${this.baseUrl}${img.url}`,
+              src: img.url.startsWith('http') ? img.url : `${this.baseUrl}${img.url}`,
               description,
             };
           }) || [],

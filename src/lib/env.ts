@@ -5,7 +5,7 @@ import { z } from 'zod';
  * Handles both client and server environment variables in one place
  */
 
-// Client-side environment variables (NEXT_PUBLIC_*)
+// Client-side environment variables (NEXT_PUBLIC_*) 
 const clientEnvSchema = z.object({
   NEXT_PUBLIC_STRAPI_API_URL: z.string().url().min(1),
   NEXT_PUBLIC_EMAILJS_SERVICE_ID: z.string().optional(),
@@ -56,13 +56,13 @@ const rawEnv = parseEnv();
  */
 export const clientEnv = {
   strapi: {
-    apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL || rawEnv.NEXT_PUBLIC_STRAPI_API_URL || '',
+    apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL || '',
   },
-  emailjs: rawEnv.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+  emailjs: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
     ? {
-        serviceId: rawEnv.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        templateId: rawEnv.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '',
-        publicKey: rawEnv.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '',
+        serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '',
+        publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '',
       }
     : undefined,
   isDev: process.env.NODE_ENV === 'development',
@@ -80,7 +80,7 @@ export const serverEnv = {
     modelId: rawEnv.GITHUB_MODEL_ID || 'openai/gpt-4.1',
   },
   strapi: {
-    apiUrl: rawEnv.NEXT_PUBLIC_STRAPI_API_URL || '',
+    apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL || '',
     apiToken: rawEnv.STRAPI_API_TOKEN,
   },
   isDev: rawEnv.NODE_ENV === 'development',

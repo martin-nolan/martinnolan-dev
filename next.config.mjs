@@ -40,6 +40,7 @@ const nextConfig = {
       // Common CDN domains
       { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/**' },
       { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
+      { protocol: 'https', hostname: 'holy-belief-a4e3a87afd.media.strapiapp.com', pathname: '/**' },
     ].filter(Boolean),
   },
   async headers() {

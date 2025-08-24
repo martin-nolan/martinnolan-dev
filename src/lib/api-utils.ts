@@ -79,7 +79,8 @@ export function validateStrapiUrl(url: string): UrlValidationResult {
     }
 
     const strapiDomain = new URL(strapiUrl).hostname;
-    if (parsedUrl.hostname !== strapiDomain) {
+    const allowedMediaDomain = 'holy-belief-a4e3a87afd.media.strapiapp.com';
+    if (parsedUrl.hostname !== strapiDomain && parsedUrl.hostname !== allowedMediaDomain) {
       return { isValid: false, error: 'Invalid domain' };
     }
 
