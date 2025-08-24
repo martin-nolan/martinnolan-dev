@@ -7,16 +7,9 @@ import type {
   CMSPersonalProject,
   CMSContactMethod,
   CMSContentForAI,
-  StrapiSingle,
-  StrapiCollection,
   StrapiSingleResponse,
   StrapiCollectionResponse,
-  StrapiProfileAttributes,
-  StrapiExperienceAttributes,
-  StrapiProjectAttributes,
-  StrapiContactMethodAttributes,
   StrapiResponse,
-  StrapiMedia,
 } from '@/types';
 
 /**
@@ -30,6 +23,24 @@ class SimpleCMSClient {
   constructor(baseUrl: string, token?: string) {
     this.baseUrl = baseUrl.replace(/\/$/, '');
     this.token = token;
+  }
+
+  /**
+   * Convert Strapi blocks format to plain text
+   */
+  private blocksToText(blocks: any): string {
+    if (typeof blocks === 'string') return blocks;
+    if (!Array.isArray(blocks)) return '';
+
+    return blocks
+      .map((block: any) => {
+        if (block.type === 'paragraph' && Array.isArray(block.children)) {
+          return block.children.map((child: any) => child.text || '').join('');
+        }
+        return '';
+      })
+      .filter(Boolean)
+      .join('\n\n');
   }
 
   private async fetch<T>(endpoint: string): Promise<T> {
@@ -61,15 +72,18 @@ class SimpleCMSClient {
   }
 
   async getProfile(): Promise<CMSProfile> {
-    const response = await this.fetch<StrapiSingle<StrapiProfileAttributes>>('/profile?populate=*');
+    const response = await this.fetch<any>('/profile?populate=*');
     const data = this.extractSingleData(response);
-    const attrs = data.attributes as StrapiProfileAttributes;
+
+    // Handle both old (v4) and new (v5) Strapi formats
+    const attrs = data.attributes || (data as any);
+    const bioText = this.blocksToText(attrs.bio);
 
     return {
       name: attrs.fullName || 'Martin Nolan',
       title: attrs.title || '',
       company: attrs.company || '',
-      bio: typeof attrs.bio === 'string' ? attrs.bio : '',
+      bio: bioText,
       heroTitle: attrs.heroTitle || attrs.fullName || 'Martin Nolan',
       heroSubtitle: attrs.heroSubtitle || attrs.title || '',
       tagline: attrs.tagline || null,
@@ -78,37 +92,40 @@ class SimpleCMSClient {
       linkedin: attrs.linkedin || '',
       github: attrs.github || '',
       seoTitle: attrs.seoTitle || attrs.fullName || 'Martin Nolan',
-      seoDescription: attrs.seoDescription || (typeof attrs.bio === 'string' ? attrs.bio : ''),
+      seoDescription: attrs.seoDescription || bioText,
       skills: attrs.skills || [],
       cvPdf: attrs.cvPdf?.data?.attributes?.url || null,
     };
   }
 
   async getExperiences(): Promise<CMSExperience[]> {
-    const response = await this.fetch<StrapiCollection<StrapiExperienceAttributes>>(
-      '/experiences?sort=order:asc'
-    );
+    const response = await this.fetch<any>('/experiences?sort=order:asc');
     const data = this.extractCollectionData(response);
-    return data.map((item) => {
-      const attrs = item.attributes as StrapiExperienceAttributes;
+    return data.map((item: any) => {
+      // Handle both old (v4) and new (v5) Strapi formats
+      const attrs = item.attributes || (item as any);
+      const descriptionText = this.blocksToText(attrs.description);
+
       return {
         id: item.id,
         role: attrs.role || '',
         company: attrs.company || '',
         period: attrs.period || '',
-        description: typeof attrs.description === 'string' ? attrs.description : '',
+        description: descriptionText,
         order: attrs.order || 0,
       };
     });
   }
 
   async getFeaturedProjects(): Promise<CMSFeaturedProject[]> {
-    const response = await this.fetch<StrapiCollection<StrapiProjectAttributes>>(
+    const response = await this.fetch<any>(
       '/all-projects?populate=*&sort=order:asc&filters[featured][$eq]=true'
     );
     const data = this.extractCollectionData(response);
-    return data.map((item) => {
-      const attrs = item.attributes as StrapiProjectAttributes;
+    return data.map((item: any) => {
+      // Handle both old (v4) and new (v5) Strapi formats
+      const attrs = item.attributes || (item as any);
+
       return {
         id: item.id,
         title: attrs.title || '',
@@ -119,21 +136,22 @@ class SimpleCMSClient {
         liveUrl: attrs.liveUrl || '',
         order: attrs.order || 0,
         images:
-          attrs.image?.data?.map((img: StrapiMedia) => ({
-            src: img.attributes.url,
-            description: img.attributes.alternativeText || attrs.title,
+          attrs.image?.map((img: any) => ({
+            src: `${this.baseUrl}${img.url}`,
+            description: img.alternativeText || attrs.title,
           })) || [],
       };
     });
   }
 
   async getPersonalProjects(): Promise<CMSPersonalProject[]> {
-    const response = await this.fetch<StrapiCollection<StrapiProjectAttributes>>(
+    const response = await this.fetch<any>(
       '/all-projects?populate=*&sort=order:asc&filters[projectType][$eq]=personal&filters[featured][$eq]=false'
     );
     const data = this.extractCollectionData(response);
-    return data.map((item) => {
-      const attrs = item.attributes as StrapiProjectAttributes;
+    return data.map((item: any) => {
+      // Handle both old (v4) and new (v5) Strapi formats
+      const attrs = item.attributes || (item as any);
       return {
         id: item.id,
         title: attrs.title || '',
@@ -147,12 +165,11 @@ class SimpleCMSClient {
   }
 
   async getContactMethods(): Promise<CMSContactMethod[]> {
-    const response = await this.fetch<StrapiCollection<StrapiContactMethodAttributes>>(
-      '/contact-methods?sort=order:asc'
-    );
+    const response = await this.fetch<any>('/contact-methods?sort=order:asc');
     const data = this.extractCollectionData(response);
-    return data.map((item) => {
-      const attrs = item.attributes as StrapiContactMethodAttributes;
+    return data.map((item: any) => {
+      // Handle both old (v4) and new (v5) Strapi formats
+      const attrs = item.attributes || (item as unknown);
       return {
         id: item.id,
         title: attrs.title || '',
