@@ -1,26 +1,28 @@
 import { useCallback } from 'react';
 
 /**
- * Custom hook for smooth scrolling to sections with header offset calculation
- * Centralizes the scroll logic used across Navigation, Footer, and HeroSection components
+ * Smooth scroll to a section accounting for a fixed header.
+ * - Uses #site-header (the fixed <nav>) height for offset
+ * - Optional extraOffset for things like admin bars, banners, etc.
  */
 export const useScrollToSection = () => {
-  const scrollToSection = useCallback((sectionId: string) => {
+  const scrollToSection = useCallback((sectionId: string, extraOffset = 0) => {
     const target = document.getElementById(sectionId);
-    if (target) {
-      // Calculate header height for offset
-      const header = document.querySelector('header');
-      const headerHeight = header ? (header as HTMLElement).offsetHeight : 0;
+    if (!target) return;
 
-      // Calculate target position with header offset
-      const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+    // Measure the fixed nav, not the <header> wrapper
+    const headerEl = document.getElementById('site-header') as HTMLElement | null;
+    const headerHeight = headerEl ? Math.round(headerEl.getBoundingClientRect().height) : 0;
 
-      // Smooth scroll to target position
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth',
-      });
-    }
+    const y = target.getBoundingClientRect().top + window.scrollY - headerHeight - extraOffset;
+
+    // Respect prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    window.scrollTo({
+      top: y,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    });
   }, []);
 
   return { scrollToSection };

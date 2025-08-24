@@ -18,7 +18,10 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
 
   return (
     <header>
-      <nav className="fixed inset-x-0 top-0 z-50 border-b border-surface-border bg-surface/5 backdrop-blur-sm">
+      <nav
+        id="site-header"
+        className="fixed inset-x-0 top-0 z-50 border-b border-surface-border bg-surface/5 backdrop-blur-sm"
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="shrink-0">
