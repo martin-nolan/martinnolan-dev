@@ -191,6 +191,7 @@ export interface AboutSectionProps {
 }
 
 export interface FeaturedProject {
+  github: any;
   title: string;
   role: string;
   year: string;
@@ -200,6 +201,7 @@ export interface FeaturedProject {
   highlights: string[];
   images: Array<{ src: string; description: string }>;
   category: string;
+  liveUrl?: string;
 }
 
 export interface PersonalProject {
@@ -208,6 +210,7 @@ export interface PersonalProject {
   stack: string[];
   github: string;
   category: string;
+  liveUrl?: string;
 }
 
 export interface AdditionalProject {

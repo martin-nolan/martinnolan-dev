@@ -27,6 +27,8 @@ export function convertToUnifiedProjects(
     category: project.category,
     highlights: project.highlights,
     images: project.images,
+    github: project.github,
+    liveUrl: project.liveUrl,
   }));
 
   const personalProjectsConverted: AdditionalProject[] = (personalProjects || []).map(
@@ -37,6 +39,7 @@ export function convertToUnifiedProjects(
       type: 'personal' as const,
       category: project.category,
       github: project.github,
+      liveUrl: project.liveUrl,
     })
   );
 

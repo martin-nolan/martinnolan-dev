@@ -145,7 +145,7 @@ class SimpleCMSClient {
         description: attrs.description || '',
         stack: attrs.technologies || [],
         highlights: attrs.highlights || [],
-        githubUrl: attrs.github || '',
+        github: attrs.github || '',
         liveUrl: attrs.liveUrl || '',
         order: attrs.order || 0,
         images:
@@ -180,7 +180,7 @@ class SimpleCMSClient {
         title: attrs.title || '',
         description: attrs.description || '',
         stack: attrs.technologies || [],
-        githubUrl: attrs.github || '',
+        github: attrs.github || '',
         liveUrl: attrs.liveUrl || '',
         order: attrs.order || 0,
       };
