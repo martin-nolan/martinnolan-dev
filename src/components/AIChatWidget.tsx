@@ -4,6 +4,7 @@ import { MessageCircle, X, Send } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 import { useModal } from '@/hooks';
+import { cmsClient } from '@/lib/cms';
 import type { Message, ErrorResponse, ChatOK } from '@/types';
 import { Button, Input, GlassCard } from '@/ui';
 import { useToast } from '@/ui/use-toast';
@@ -22,6 +23,7 @@ export const AIChatWidget: React.FC = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hitTimes, setHitTimes] = useState<number[]>([]);
+  const [cvText, setCvText] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -48,6 +50,31 @@ export const AIChatWidget: React.FC = () => {
       el.removeEventListener('wheel', handleWheel);
     };
   }, [isOpen]);
+
+  // Fetch and extract CV text when component mounts
+  useEffect(() => {
+    const fetchCvText = async () => {
+      try {
+        const profile = await cmsClient.getProfile();
+        if (profile.cvPdf) {
+          const res = await fetch('/api/extract-pdf-text', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pdfUrl: profile.cvPdf }),
+          });
+          if (res.ok) {
+            const { text } = await res.json();
+            setCvText(text);
+          } else {
+            console.warn('Failed to fetch CV text');
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching CV:', error);
+      }
+    };
+    fetchCvText();
+  }, []);
 
   const withinRate = () => {
     const now = Date.now();
@@ -103,7 +130,7 @@ export const AIChatWidget: React.FC = () => {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: chatMessages, maxTokens: 256 }),
+        body: JSON.stringify({ messages: chatMessages, maxTokens: 256, cvText }),
       });
 
       const data = await safeJson(res);

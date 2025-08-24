@@ -28,10 +28,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { messages, max_tokens = 256 } = req.body;
+    const { messages, max_tokens = 256, cvText } = req.body;
 
     // Build system prompt on server-side with authenticated CMS access
-    const systemPrompt = await buildSystemPromptServer();
+    const systemPrompt = await buildSystemPromptServer(cvText);
 
     // Ensure system prompt is first message
     const chatMessages = [
