@@ -137,10 +137,11 @@ export const AIChatWidget: React.FC = () => {
       <div className="fixed bottom-6 right-6 z-50">
         <Button
           onClick={toggleModal}
-          className="glow-primary size-14 rounded-full bg-primary shadow-lg hover:bg-primary/90"
+          size="icon"
+          className="glow-primary size-14 rounded-full bg-primary shadow-lg hover:bg-primary/90 [&_svg]:size-8"
           aria-label="Open AI Chat"
         >
-          {isOpen ? <X className="size-7" /> : <MessageCircle className="size-7" />}
+          {isOpen ? <X /> : <MessageCircle />}
         </Button>
       </div>
 
