@@ -56,7 +56,7 @@ const rawEnv = parseEnv();
  */
 export const clientEnv = {
   strapi: {
-    apiUrl: rawEnv.NEXT_PUBLIC_STRAPI_API_URL || '',
+    apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL || rawEnv.NEXT_PUBLIC_STRAPI_API_URL || '',
   },
   emailjs: rawEnv.NEXT_PUBLIC_EMAILJS_SERVICE_ID
     ? {
@@ -65,8 +65,8 @@ export const clientEnv = {
         publicKey: rawEnv.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '',
       }
     : undefined,
-  isDev: rawEnv.NODE_ENV === 'development',
-  isDevelopment: rawEnv.NODE_ENV === 'development',
+  isDev: process.env.NODE_ENV === 'development',
+  isDevelopment: process.env.NODE_ENV === 'development',
 };
 
 /**

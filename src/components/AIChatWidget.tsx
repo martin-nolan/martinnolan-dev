@@ -4,7 +4,6 @@ import { MessageCircle, X, Send } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 import { useModal } from '@/hooks';
-import { buildSystemPrompt } from '@/lib/ai';
 import type { Message, ErrorResponse, ChatOK } from '@/types';
 import { Button, Input, GlassCard } from '@/ui';
 import { useToast } from '@/ui/use-toast';
@@ -92,9 +91,8 @@ export const AIChatWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const systemPrompt = await buildSystemPrompt();
+      // System prompt is now built server-side in the API route
       const chatMessages = [
-        { role: 'system', content: systemPrompt },
         ...messages.map((m) => ({
           role: m.isUser ? 'user' : 'assistant',
           content: m.content,
@@ -142,7 +140,7 @@ export const AIChatWidget: React.FC = () => {
           className="glow-primary size-14 rounded-full bg-primary shadow-lg hover:bg-primary/90"
           aria-label="Open AI Chat"
         >
-          {isOpen ? <X className="size-6" /> : <MessageCircle className="size-6" />}
+          {isOpen ? <X className="size-7" /> : <MessageCircle className="size-7" />}
         </Button>
       </div>
 

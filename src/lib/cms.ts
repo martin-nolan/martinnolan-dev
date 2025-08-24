@@ -94,7 +94,7 @@ class SimpleCMSClient {
       seoTitle: attrs.seoTitle || attrs.fullName || 'Martin Nolan',
       seoDescription: attrs.seoDescription || bioText,
       skills: attrs.skills || [],
-      cvPdf: attrs.cvPdf?.data?.attributes?.url || null,
+      cvPdf: attrs.cvPdf?.url ? `${this.baseUrl}${attrs.cvPdf.url}` : null,
     };
   }
 

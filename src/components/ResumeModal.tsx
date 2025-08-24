@@ -88,7 +88,9 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl, cvText }: ResumeModalProps) =>
 
         <div className="h-[calc(100%-88px)] p-6">
           <div className="relative flex size-full items-center justify-center rounded-lg border border-surface-border bg-surface/20">
-            {pdfUrl ? (
+            {pdfError ? (
+              <ErrorDisplay errorType={errorType} cvPdfUrl={cvPdfUrl} onRetry={handleRetry} />
+            ) : pdfUrl ? (
               <>
                 <PdfViewer pdfUrl={pdfUrl} onLoad={handlePdfLoad} onError={handlePdfError} />
                 {isLoading && <LoadingIndicator />}
@@ -97,10 +99,6 @@ const ResumeModal = ({ isOpen, onClose, cvPdfUrl, cvText }: ResumeModalProps) =>
               <TextViewer cvText={cvText} />
             ) : (
               <EmptyState />
-            )}
-
-            {pdfError && (
-              <ErrorDisplay errorType={errorType} cvPdfUrl={cvPdfUrl} onRetry={handleRetry} />
             )}
           </div>
         </div>

@@ -5,6 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { validateMethod, handleApiError } from '@/lib/api-utils';
 import { serverEnv } from '@/lib/env';
+import { buildSystemPromptServer } from '@/lib/ai';
 
 // GitHub Models configuration from centralized env utilities
 const apiKey = serverEnv.github.token;
@@ -28,9 +29,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { messages, max_tokens = 256 } = req.body;
+
+    // Build system prompt on server-side with authenticated CMS access
+    const systemPrompt = await buildSystemPromptServer();
+
+    // Ensure system prompt is first message
+    const chatMessages = [
+      { role: 'system', content: systemPrompt },
+      ...messages.filter((m: any) => m.role !== 'system'), // Remove any existing system messages
+    ];
+
     const client = createClient(ENDPOINT, new AzureKeyCredential(apiKey));
     const azureRes = await client.path('/chat/completions').post({
-      body: { model: MODEL_ID, messages, max_tokens },
+      body: { model: MODEL_ID, messages: chatMessages, max_tokens },
     });
     const statusCode = Number(azureRes.status);
 
