@@ -126,6 +126,19 @@ class SimpleCMSClient {
       // Handle both old (v4) and new (v5) Strapi formats
       const attrs = item.attributes || (item as any);
 
+      // Parse imageCaption string into a map: filename -> caption
+      const captionMap: Record<string, string> = {};
+      if (attrs.imageCaption && typeof attrs.imageCaption === 'string') {
+        attrs.imageCaption.split('\n').forEach((line: string) => {
+          const sepIdx = line.indexOf(':');
+          if (sepIdx > 0) {
+            const filename = line.slice(0, sepIdx).trim();
+            const caption = line.slice(sepIdx + 1).trim();
+            if (filename && caption) captionMap[filename] = caption;
+          }
+        });
+      }
+
       return {
         id: item.id,
         title: attrs.title || '',
@@ -136,10 +149,20 @@ class SimpleCMSClient {
         liveUrl: attrs.liveUrl || '',
         order: attrs.order || 0,
         images:
-          attrs.image?.map((img: any) => ({
-            src: `${this.baseUrl}${img.url}`,
-            description: img.alternativeText || attrs.title,
-          })) || [],
+          attrs.image?.map((img: any) => {
+            // Prefer img.name if available, fallback to filename from url
+            const filename = (img.name ? img.name : img.url?.split('/').pop() || '').trim();
+            // Try to match with captionMap, fallback to alternativeText
+            let description = captionMap[filename] || img.alternativeText || '';
+            // If no caption found, fallback to debugging info
+            if (!description && Object.keys(captionMap).length > 0) {
+              description = `No caption for ${filename} (captionMap keys: ${Object.keys(captionMap).join(', ')})`;
+            }
+            return {
+              src: `${this.baseUrl}${img.url}`,
+              description,
+            };
+          }) || [],
       };
     });
   }
