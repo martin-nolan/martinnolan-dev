@@ -5,12 +5,9 @@ import { z } from 'zod';
  * Handles both client and server environment variables in one place
  */
 
-// Client-side environment variables (NEXT_PUBLIC_*) 
+// Client-side environment variables (NEXT_PUBLIC_*)
 const clientEnvSchema = z.object({
   NEXT_PUBLIC_STRAPI_API_URL: z.string().url().min(1),
-  NEXT_PUBLIC_EMAILJS_SERVICE_ID: z.string().optional(),
-  NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: z.string().optional(),
-  NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: z.string().optional(),
 });
 
 // Server-side environment variables
@@ -18,7 +15,11 @@ const serverEnvSchema = z.object({
   GITHUB_TOKEN: z.string().min(1),
   GITHUB_MODELS_ENDPOINT: z.string().url().default('https://models.github.ai/inference'),
   GITHUB_MODEL_ID: z.string().default('openai/gpt-4.1'),
+  STRAPI_API_URL: z.string().url().min(1),
   STRAPI_API_TOKEN: z.string().optional(),
+  EMAILJS_SERVICE_ID: z.string().optional(),
+  EMAILJS_TEMPLATE_ID: z.string().optional(),
+  EMAILJS_PUBLIC_KEY: z.string().optional(),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 });
 
@@ -58,13 +59,6 @@ export const clientEnv = {
   strapi: {
     apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL || '',
   },
-  emailjs: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
-    ? {
-        serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '',
-        publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '',
-      }
-    : undefined,
   isDev: process.env.NODE_ENV === 'development',
   isDevelopment: process.env.NODE_ENV === 'development',
 };
@@ -80,8 +74,13 @@ export const serverEnv = {
     modelId: rawEnv.GITHUB_MODEL_ID || 'openai/gpt-4.1',
   },
   strapi: {
-    apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL || '',
+    apiUrl: rawEnv.STRAPI_API_URL || '',
     apiToken: rawEnv.STRAPI_API_TOKEN,
+  },
+  emailjs: {
+    serviceId: rawEnv.EMAILJS_SERVICE_ID,
+    templateId: rawEnv.EMAILJS_TEMPLATE_ID,
+    publicKey: rawEnv.EMAILJS_PUBLIC_KEY,
   },
   isDev: rawEnv.NODE_ENV === 'development',
 };

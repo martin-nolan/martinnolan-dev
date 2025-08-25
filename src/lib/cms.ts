@@ -10,6 +10,11 @@ import type {
   StrapiSingleResponse,
   StrapiCollectionResponse,
   StrapiResponse,
+  ProfileResponse,
+  BioBlock,
+  ExperienceResponse,
+  ProjectResponse,
+  ContactMethodResponse,
 } from '@/types';
 
 /**
@@ -28,14 +33,14 @@ class SimpleCMSClient {
   /**
    * Convert Strapi blocks format to plain text
    */
-  private blocksToText(blocks: any): string {
+  private blocksToText(blocks: BioBlock[] | string): string {
     if (typeof blocks === 'string') return blocks;
     if (!Array.isArray(blocks)) return '';
 
     return blocks
-      .map((block: any) => {
+      .map((block: BioBlock) => {
         if (block.type === 'paragraph' && Array.isArray(block.children)) {
-          return block.children.map((child: any) => child.text || '').join('');
+          return block.children.map((child: { text?: string }) => child.text || '').join('');
         }
         return '';
       })
@@ -72,11 +77,11 @@ class SimpleCMSClient {
   }
 
   async getProfile(): Promise<CMSProfile> {
-    const response = await this.fetch<any>('/profile?populate=*');
+    const response = await this.fetch<ProfileResponse>('/profile?populate=*');
     const data = this.extractSingleData(response);
 
     // Handle both old (v4) and new (v5) Strapi formats
-    const attrs = data.attributes || (data as any);
+    const attrs = data.attributes;
     const bioText = this.blocksToText(attrs.bio);
 
     return {
@@ -94,16 +99,20 @@ class SimpleCMSClient {
       seoTitle: attrs.seoTitle || attrs.fullName || 'Martin Nolan',
       seoDescription: attrs.seoDescription || bioText,
       skills: attrs.skills || [],
-      cvPdf: attrs.cvPdf?.url ? (attrs.cvPdf.url.startsWith('http') ? attrs.cvPdf.url : `${this.baseUrl}${attrs.cvPdf.url}`) : null,
+      cvPdf: attrs.cvPdf?.data?.attributes.url
+        ? attrs.cvPdf.data.attributes.url.startsWith('http')
+          ? attrs.cvPdf.data.attributes.url
+          : `${this.baseUrl}${attrs.cvPdf.data.attributes.url}`
+        : null,
     };
   }
 
   async getExperiences(): Promise<CMSExperience[]> {
-    const response = await this.fetch<any>('/experiences?sort=order:asc');
+    const response = await this.fetch<ExperienceResponse>('/experiences?sort=order:asc');
     const data = this.extractCollectionData(response);
-    return data.map((item: any) => {
+    return data.map((item) => {
       // Handle both old (v4) and new (v5) Strapi formats
-      const attrs = item.attributes || (item as any);
+      const attrs = item.attributes;
       const descriptionText = this.blocksToText(attrs.description);
 
       return {
@@ -118,13 +127,13 @@ class SimpleCMSClient {
   }
 
   async getFeaturedProjects(): Promise<CMSFeaturedProject[]> {
-    const response = await this.fetch<any>(
+    const response = await this.fetch<ProjectResponse>(
       '/all-projects?populate=*&sort=order:asc&filters[featured][$eq]=true'
     );
     const data = this.extractCollectionData(response);
-    return data.map((item: any) => {
+    return data.map((item) => {
       // Handle both old (v4) and new (v5) Strapi formats
-      const attrs = item.attributes || (item as any);
+      const attrs = item.attributes;
 
       // Parse imageCaption string into a map: filename -> caption
       const captionMap: Record<string, string> = {};
@@ -149,17 +158,18 @@ class SimpleCMSClient {
         liveUrl: attrs.liveUrl || '',
         order: attrs.order || 0,
         images:
-          attrs.image?.map((img: any) => {
+          attrs.image?.data?.map((img) => {
+            const imgAttr = img.attributes;
             // Prefer img.name if available, fallback to filename from url
-            const filename = (img.name ? img.name : img.url?.split('/').pop() || '').trim();
+            const filename = (imgAttr.name ? imgAttr.name : imgAttr.url?.split('/').pop() || '').trim();
             // Try to match with captionMap, fallback to alternativeText
-            let description = captionMap[filename] || img.alternativeText || '';
+            let description = captionMap[filename] || imgAttr.alternativeText || '';
             // If no caption found, fallback to debugging info
             if (!description && Object.keys(captionMap).length > 0) {
               description = `No caption for ${filename} (captionMap keys: ${Object.keys(captionMap).join(', ')})`;
             }
             return {
-              src: img.url.startsWith('http') ? img.url : `${this.baseUrl}${img.url}`,
+              src: imgAttr.url.startsWith('http') ? imgAttr.url : `${this.baseUrl}${imgAttr.url}`,
               description,
             };
           }) || [],
@@ -168,13 +178,13 @@ class SimpleCMSClient {
   }
 
   async getPersonalProjects(): Promise<CMSPersonalProject[]> {
-    const response = await this.fetch<any>(
+    const response = await this.fetch<ProjectResponse>(
       '/all-projects?populate=*&sort=order:asc&filters[projectType][$eq]=personal&filters[featured][$eq]=false'
     );
     const data = this.extractCollectionData(response);
-    return data.map((item: any) => {
+    return data.map((item) => {
       // Handle both old (v4) and new (v5) Strapi formats
-      const attrs = item.attributes || (item as any);
+      const attrs = item.attributes;
       return {
         id: item.id,
         title: attrs.title || '',
@@ -188,11 +198,11 @@ class SimpleCMSClient {
   }
 
   async getContactMethods(): Promise<CMSContactMethod[]> {
-    const response = await this.fetch<any>('/contact-methods?sort=order:asc');
+    const response = await this.fetch<ContactMethodResponse>('/contact-methods?sort=order:asc');
     const data = this.extractCollectionData(response);
-    return data.map((item: any) => {
+    return data.map((item) => {
       // Handle both old (v4) and new (v5) Strapi formats
-      const attrs = item.attributes || (item as unknown);
+      const attrs = item.attributes;
       return {
         id: item.id,
         title: attrs.title || '',

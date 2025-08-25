@@ -32,46 +32,108 @@ export type StrapiCollection<T> = StrapiCollectionResponse<T>;
 export type StrapiSingle<T> = StrapiSingleResponse<T>;
 
 // Strapi content type attributes
+export interface BioBlock {
+  type: string;
+  children: {
+    text: string;
+    type: string;
+  }[];
+}
+
+export interface CvPdf {
+  id: number;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number | null;
+  height: number | null;
+  formats: object | null; // This can be further defined if needed
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: object | null; // This can be further defined if needed
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface StrapiProfileAttributes {
   fullName: string;
   title: string;
   company: string;
-  bio: unknown; // blocks type
+  bio: BioBlock[];
   heroTitle: string;
   heroSubtitle: string;
-  tagline?: string | null;
+  tagline: string | null;
   email: string;
-  website?: string | null;
-  linkedin?: string | null;
-  github?: string | null;
-  seoTitle?: string | null;
-  seoDescription?: string | null;
-  skills: string[]; // json type
-  cvPdf?: { data: StrapiMedia | null };
+  website: string | null;
+  linkedin: string;
+  github: string;
+  seoTitle: string;
+  seoDescription: string;
+  skills: string[];
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  cvPdf: { data: { id: number, attributes: CvPdf } };
+}
+
+export interface ProfileData {
+  id: number;
+  attributes: StrapiProfileAttributes;
+}
+
+export interface ProfileResponse {
+  data: ProfileData;
+  meta: object;
 }
 
 export interface StrapiExperienceAttributes {
   role: string;
   company: string;
   period: string;
-  description: unknown; // blocks type
-  achievements?: unknown; // component type
+  description: BioBlock[];
   order: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface ExperienceResponse {
+  data: {
+    id: number;
+    attributes: StrapiExperienceAttributes;
+  }[];
+  meta: object;
 }
 
 export interface StrapiProjectAttributes {
   title: string;
   description: string;
-  image?: { data: StrapiMedia[] | null };
-  imageCaption?: string | null;
+  imageCaption: string | null;
   projectType: 'work' | 'personal';
   featured: boolean;
   order: number;
-  github?: string | null;
-  liveUrl?: string | null;
-  technologies: string[]; // json type
-  highlights: string[]; // json type
+  github: string | null;
+  liveUrl: string | null;
+  technologies: string[];
+  highlights: string[];
   hasImages: boolean;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  image: { data: StrapiMedia[] | null };
+}
+
+export interface ProjectResponse {
+  data: {
+    id: number;
+    attributes: StrapiProjectAttributes;
+  }[];
+  meta: object;
 }
 
 export interface StrapiContactMethodAttributes {
@@ -79,9 +141,20 @@ export interface StrapiContactMethodAttributes {
   description: string;
   value: string;
   href: string;
-  icon?: string | null;
-  primary: boolean;
+  icon: string | null;
+  primary: boolean | null;
   order: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface ContactMethodResponse {
+  data: {
+    id: number;
+    attributes: StrapiContactMethodAttributes;
+  }[];
+  meta: object;
 }
 
 // CMS-related types
@@ -191,7 +264,7 @@ export interface AboutSectionProps {
 }
 
 export interface FeaturedProject {
-  github: any;
+  github: string | null;
   title: string;
   role: string;
   year: string;

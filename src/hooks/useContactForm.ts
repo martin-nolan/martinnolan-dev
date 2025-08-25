@@ -1,7 +1,5 @@
-import emailjs from '@emailjs/browser';
 import { useState, useRef } from 'react';
 
-import { clientEnv, envUtils } from '@/lib/env';
 import { useToast } from '@/ui/use-toast';
 
 export const useContactForm = () => {
@@ -15,18 +13,21 @@ export const useContactForm = () => {
 
     setIsSubmitting(true);
 
-    try {
-      // Check if EmailJS is configured
-      if (!envUtils.isEmailJSConfigured()) {
-        throw new Error('EmailJS is not configured. Please check your environment variables.');
-      }
+    const formData = new FormData(formRef.current);
+    const data = Object.fromEntries(formData.entries());
 
-      await emailjs.sendForm(
-        clientEnv.emailjs!.serviceId,
-        clientEnv.emailjs!.templateId,
-        formRef.current,
-        clientEnv.emailjs!.publicKey
-      );
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
 
       toast({
         title: 'Message sent successfully!',
