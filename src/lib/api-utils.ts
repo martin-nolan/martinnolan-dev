@@ -74,7 +74,7 @@ export function handleCorsPreflightRequest(req: NextApiRequest, res: NextApiResp
 export function validateStrapiUrl(url: string): UrlValidationResult {
   try {
     const parsedUrl = new URL(url);
-    const strapiUrl = clientEnv.strapi.apiUrl;
+    const strapiUrl = clientEnv.strapi?.apiUrl;
 
     if (!strapiUrl) {
       return { isValid: false, error: 'Strapi configuration missing' };
@@ -150,7 +150,7 @@ export type PDFErrorType = 'load' | 'config' | 'network';
 export function constructPdfUrl(cvPdfUrl?: string | null): string | null {
   if (!cvPdfUrl) return null;
 
-  const strapiApiUrl = clientEnv.strapi.apiUrl;
+  const strapiApiUrl = clientEnv.strapi?.apiUrl;
   if (!strapiApiUrl) return null;
 
   const strapiBaseUrl = strapiApiUrl.replace('/api', '');
@@ -175,7 +175,7 @@ export function constructPdfUrl(cvPdfUrl?: string | null): string | null {
 }
 
 export function hasConfigError(cvPdfUrl?: string | null): boolean {
-  return !!(cvPdfUrl && !clientEnv.strapi.apiUrl);
+  return !!(cvPdfUrl && !clientEnv.strapi?.apiUrl);
 }
 
 export function reloadPdfIframe(pdfUrl: string): void {

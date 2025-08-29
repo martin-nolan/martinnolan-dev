@@ -181,25 +181,26 @@ class SimpleCMSClient {
 /**
  * Client-side CMS instance (public access only)
  */
-export const cmsClient = new SimpleCMSClient(clientEnv.strapi.apiUrl);
+export const cmsClient = clientEnv.strapi?.apiUrl
+  ? new SimpleCMSClient(clientEnv.strapi.apiUrl)
+  : null;
 
 /**
  * Server-side CMS instance (authenticated access)
  * ⚠️ Only use in server-side code!
  */
-export const serverCmsClient = new SimpleCMSClient(
-  serverEnv.strapi.apiUrl,
-  serverEnv.strapi.apiToken
-);
+export const serverCmsClient = serverEnv.strapi?.apiUrl
+  ? new SimpleCMSClient(serverEnv.strapi.apiUrl, serverEnv.strapi.apiToken)
+  : null;
 
 /**
  * Simple server-side CMS functions
  */
 export const serverCms = {
-  getProfile: () => serverCmsClient.getProfile(),
-  getExperiences: () => serverCmsClient.getExperiences(),
-  getFeaturedProjects: () => serverCmsClient.getFeaturedProjects(),
-  getPersonalProjects: () => serverCmsClient.getPersonalProjects(),
-  getContactMethods: () => serverCmsClient.getContactMethods(),
-  getAllContentForAI: () => serverCmsClient.getAllContentForAI(),
+  getProfile: () => serverCmsClient?.getProfile() || Promise.resolve(null),
+  getExperiences: () => serverCmsClient?.getExperiences() || Promise.resolve([]),
+  getFeaturedProjects: () => serverCmsClient?.getFeaturedProjects() || Promise.resolve([]),
+  getPersonalProjects: () => serverCmsClient?.getPersonalProjects() || Promise.resolve([]),
+  getContactMethods: () => serverCmsClient?.getContactMethods() || Promise.resolve([]),
+  getAllContentForAI: () => serverCmsClient?.getAllContentForAI() || Promise.resolve(null),
 };

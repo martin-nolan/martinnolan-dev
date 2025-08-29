@@ -5,9 +5,9 @@ import { z } from 'zod';
  * Handles both client and server environment variables in one place
  */
 
-// Client-side environment variables (NEXT_PUBLIC_*) 
+// Client-side environment variables (NEXT_PUBLIC_*)
 const clientEnvSchema = z.object({
-  NEXT_PUBLIC_STRAPI_API_URL: z.string().url().min(1),
+  NEXT_PUBLIC_STRAPI_API_URL: z.string().url().optional(), // Make optional to handle deployments without Strapi
   NEXT_PUBLIC_EMAILJS_SERVICE_ID: z.string().optional(),
   NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: z.string().optional(),
   NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: z.string().optional(),
@@ -55,9 +55,11 @@ const rawEnv = parseEnv();
  * Client-safe environment (only NEXT_PUBLIC_* variables)
  */
 export const clientEnv = {
-  strapi: {
-    apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL || '',
-  },
+  strapi: process.env.NEXT_PUBLIC_STRAPI_API_URL
+    ? {
+        apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL,
+      }
+    : undefined, // Make strapi config optional when URL is not provided
   emailjs: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
     ? {
         serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
@@ -79,10 +81,12 @@ export const serverEnv = {
     modelsEndpoint: rawEnv.GITHUB_MODELS_ENDPOINT || 'https://models.github.ai/inference',
     modelId: rawEnv.GITHUB_MODEL_ID || 'openai/gpt-4.1',
   },
-  strapi: {
-    apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL || '',
-    apiToken: rawEnv.STRAPI_API_TOKEN,
-  },
+  strapi: process.env.NEXT_PUBLIC_STRAPI_API_URL
+    ? {
+        apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL,
+        apiToken: rawEnv.STRAPI_API_TOKEN,
+      }
+    : undefined, // Make strapi config optional when URL is not provided
   isDev: rawEnv.NODE_ENV === 'development',
 };
 
@@ -98,5 +102,6 @@ export const env = {
 export const envUtils = {
   isEmailJSConfigured: () => !!clientEnv.emailjs?.serviceId,
   hasGithubToken: () => !!serverEnv.github.token,
-  hasStrapiToken: () => !!serverEnv.strapi.apiToken,
+  hasStrapiToken: () => !!serverEnv.strapi?.apiToken,
+  isStrapiConfigured: () => !!clientEnv.strapi?.apiUrl,
 };

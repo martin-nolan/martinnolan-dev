@@ -119,6 +119,10 @@ const AIChatWidget: React.FC = () => {
   useEffect(() => {
     const fetchCvText = async () => {
       try {
+        if (!cmsClient) {
+          silentWarn('CMS client not available - Strapi not configured');
+          return;
+        }
         const profile = await cmsClient.getProfile();
         if (profile.cvPdf) {
           const res = await fetch('/api/extract-pdf-text', {
