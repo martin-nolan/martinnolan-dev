@@ -17,6 +17,7 @@ const strapiDomain = getStrapiDomain();
 
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: false, // Disable SWC minification to fix Netlify getInitialProps error
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
