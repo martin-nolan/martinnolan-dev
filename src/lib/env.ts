@@ -15,7 +15,7 @@ const clientEnvSchema = z.object({
 
 // Server-side environment variables
 const serverEnvSchema = z.object({
-  GITHUB_TOKEN: z.string().min(1),
+  GITHUB_TOKEN: z.string().optional(), // Make optional to allow deployment without AI features
   GITHUB_MODELS_ENDPOINT: z.string().url().default('https://models.github.ai/inference'),
   GITHUB_MODEL_ID: z.string().default('openai/gpt-4.1'),
   STRAPI_API_TOKEN: z.string().optional(),
@@ -27,13 +27,20 @@ const serverEnvSchema = z.object({
  */
 function parseEnv() {
   const isProduction = process.env.NODE_ENV === 'production';
+  const isServer = typeof window === 'undefined';
 
   if (isProduction) {
     // Validate in production
     try {
       const client = clientEnvSchema.parse(process.env);
-      const server = serverEnvSchema.parse(process.env);
-      return { ...client, ...server };
+
+      // Only validate server environment on server-side
+      if (isServer) {
+        const server = serverEnvSchema.parse(process.env);
+        return { ...client, ...server };
+      }
+
+      return client;
     } catch (error) {
       if (error instanceof z.ZodError) {
         const errors = error.errors
@@ -77,17 +84,20 @@ export const clientEnv = {
  */
 export const serverEnv = {
   github: {
-    token: rawEnv.GITHUB_TOKEN || '',
-    modelsEndpoint: rawEnv.GITHUB_MODELS_ENDPOINT || 'https://models.github.ai/inference',
-    modelId: rawEnv.GITHUB_MODEL_ID || 'openai/gpt-4.1',
+    token: (rawEnv as any).GITHUB_TOKEN || process.env.GITHUB_TOKEN || '',
+    modelsEndpoint:
+      (rawEnv as any).GITHUB_MODELS_ENDPOINT ||
+      process.env.GITHUB_MODELS_ENDPOINT ||
+      'https://models.github.ai/inference',
+    modelId: (rawEnv as any).GITHUB_MODEL_ID || process.env.GITHUB_MODEL_ID || 'openai/gpt-4.1',
   },
   strapi: process.env.NEXT_PUBLIC_STRAPI_API_URL
     ? {
         apiUrl: process.env.NEXT_PUBLIC_STRAPI_API_URL,
-        apiToken: rawEnv.STRAPI_API_TOKEN,
+        apiToken: (rawEnv as any).STRAPI_API_TOKEN || process.env.STRAPI_API_TOKEN,
       }
     : undefined, // Make strapi config optional when URL is not provided
-  isDev: rawEnv.NODE_ENV === 'development',
+  isDev: (rawEnv as any).NODE_ENV === 'development' || process.env.NODE_ENV === 'development',
 };
 
 /**
@@ -95,8 +105,8 @@ export const serverEnv = {
  */
 // Legacy export for compatibility
 export const env = {
-  isDevelopment: rawEnv.NODE_ENV === 'development',
-  isProduction: rawEnv.NODE_ENV === 'production',
+  isDevelopment: process.env.NODE_ENV === 'development',
+  isProduction: process.env.NODE_ENV === 'production',
 };
 
 export const envUtils = {

@@ -28,6 +28,37 @@ const nextConfig = {
   // Enable source maps for better error tracking
   productionBrowserSourceMaps: true,
 
+  // Disable webpack optimizations that might cause bundling issues
+  webpack: (config, { isServer }) => {
+    // Disable webpack optimizations that might interfere with Next.js internals
+    if (!isServer) {
+      config.optimization = {
+        ...config.optimization,
+        // Disable aggressive optimizations that might break getInitialProps
+        usedExports: false,
+        sideEffects: false,
+        // Disable module concatenation which can cause issues
+        concatenateModules: false,
+      };
+    }
+
+    // Ensure proper module resolution
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+    };
+
+    return config;
+  },
+
+  // Experimental features to help with bundling issues
+  experimental: {
+    // Disable optimizations that might cause issues
+    optimizePackageImports: [],
+  },
+
   // Enhanced error handling
   onDemandEntries: {
     // Period (in ms) where the server will keep pages in the buffer
