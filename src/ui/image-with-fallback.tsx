@@ -1,13 +1,11 @@
-"use client";
-
-import { RefreshCw } from "lucide-react";
-import Image, { ImageProps } from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { RefreshCw } from 'lucide-react';
+import Image, { ImageProps } from 'next/image';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 // If you don't have a cn util, replace cn(...) with a simple template string
-import { cn } from "@/lib";
+import { cn } from '@/lib';
 
-type Props = Omit<ImageProps, "alt" | "quality" | "onLoadingComplete"> & {
+type Props = Omit<ImageProps, 'alt' | 'quality' | 'onLoadingComplete'> & {
   alt: string;
   /** ms before we consider it “too slow” and show a fallback */
   timeoutMs?: number;
@@ -18,13 +16,13 @@ type Props = Omit<ImageProps, "alt" | "quality" | "onLoadingComplete"> & {
 };
 
 const DEFAULT_BLUR =
-  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjUwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyMjIyMjIiLz48L3N2Zz4=";
+  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjUwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyMjIyMjIiLz48L3N2Zz4=';
 
 export function ImageWithFallback({
   timeoutMs = 8000,
   fallback,
   skeletonClassName,
-  placeholder = "blur",
+  placeholder = 'blur',
   blurDataURL = DEFAULT_BLUR,
   fetchPriority,
   priority,
@@ -78,18 +76,14 @@ export function ImageWithFallback({
   );
 
   return (
-    <div
-      className={cn("relative", className)}
-      aria-busy={!loaded}
-      aria-live="polite"
-    >
+    <div className={cn('relative', className)} aria-busy={!loaded} aria-live="polite">
       {!showFallback && (
         <>
           {/* Skeleton while loading */}
           {!loaded && (
             <div
               className={cn(
-                "absolute inset-0 animate-pulse rounded-lg bg-muted/30",
+                'absolute inset-0 animate-pulse rounded-lg bg-muted/30',
                 skeletonClassName
               )}
             />
@@ -106,7 +100,7 @@ export function ImageWithFallback({
             onLoad={() => setLoaded(true)} // <- use onLoad (no deprecation)
             onError={() => setErrored(true)}
             // Hide until loaded to avoid flash/jank
-            style={{ visibility: loaded ? "visible" : "hidden", ...style }}
+            style={{ visibility: loaded ? 'visible' : 'hidden', ...style }}
           />
         </>
       )}

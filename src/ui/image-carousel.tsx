@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 
 import ImageModal from '@/ui/image-modal';
