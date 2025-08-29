@@ -17,60 +17,81 @@ const strapiDomain = getStrapiDomain();
 
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: false, // Disable SWC minification to fix Netlify getInitialProps error
+  swcMinify: false, // Keep disabled - this was the root cause of the getInitialProps error
 
-  // Enhanced production debugging configuration
+  // Production optimizations
   compiler: {
-    // Temporarily disable console removal for production debugging
-    removeConsole: false, // Keep console logs for debugging getInitialProps issues
+    // Remove console logs in production for better performance and security
+    removeConsole: isDev
+      ? false
+      : {
+          exclude: ['error', 'warn'], // Keep error and warning logs for monitoring
+        },
   },
 
-  // Enable source maps for better error tracking
-  productionBrowserSourceMaps: true,
+  // Enable source maps only in development for better debugging
+  productionBrowserSourceMaps: false,
 
-  // Disable webpack optimizations that might cause bundling issues
-  webpack: (config, { isServer }) => {
-    // Disable webpack optimizations that might interfere with Next.js internals
-    if (!isServer) {
+  // Performance optimizations
+  experimental: {
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-tooltip', '@radix-ui/react-toast'],
+  },
+
+  // Optimized webpack configuration
+  webpack: (config, { isServer, dev }) => {
+    // Production optimizations
+    if (!dev) {
+      // Enable webpack optimizations for production
       config.optimization = {
         ...config.optimization,
-        // Disable aggressive optimizations that might break getInitialProps
-        usedExports: false,
+        minimize: true,
         sideEffects: false,
-        // Disable module concatenation which can cause issues
-        concatenateModules: false,
+        splitChunks: {
+          ...config.optimization.splitChunks,
+          cacheGroups: {
+            ...config.optimization.splitChunks?.cacheGroups,
+            // Separate vendor chunks for better caching
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              chunks: 'all',
+              priority: 10,
+            },
+            // Separate UI components chunk
+            ui: {
+              test: /[\\/]src[\\/]ui[\\/]/,
+              name: 'ui',
+              chunks: 'all',
+              priority: 5,
+            },
+          },
+        },
       };
     }
 
-    // Ensure proper module resolution
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-      net: false,
-      tls: false,
-    };
+    // Client-side optimizations
+    if (!isServer) {
+      // Keep the fallbacks that prevent Node.js module issues
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+
+      // Tree shaking optimizations
+      config.optimization.usedExports = true;
+    }
 
     return config;
-  },
-
-  // Experimental features to help with bundling issues
-  experimental: {
-    // Disable optimizations that might cause issues
-    optimizePackageImports: [],
-  },
-
-  // Enhanced error handling
-  onDemandEntries: {
-    // Period (in ms) where the server will keep pages in the buffer
-    maxInactiveAge: 25 * 1000,
-    // Number of pages that should be kept simultaneously without being disposed
-    pagesBufferLength: 2,
   },
   images: {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 3600, // 1 hour cache for better performance
+    dangerouslyAllowSVG: false, // Security: disable SVG processing
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
       // Local dev Strapi uploads
       {
@@ -97,7 +118,7 @@ const nextConfig = {
     ].filter(Boolean),
   },
   async headers() {
-    // Simplified CSP configuration
+    // Enhanced security headers with strict CSP
     const strapiUrl = strapiDomain ? ` https://${strapiDomain}` : '';
     const devUrls = isDev ? ' http://localhost:1337' : '';
 
@@ -116,11 +137,20 @@ const nextConfig = {
               `media-src 'self' https:${strapiUrl}${devUrls}`,
               `script-src 'self'${isDev ? " 'unsafe-eval'" : ''}`,
               `frame-src 'self' data:${strapiUrl}${devUrls}`,
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              'upgrade-insecure-requests',
             ].join('; '),
           },
           { key: 'X-Frame-Options', value: 'DENY' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          ...(isDev
+            ? []
+            : [{ key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' }]),
         ],
       },
     ];

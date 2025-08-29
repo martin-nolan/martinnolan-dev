@@ -26,26 +26,21 @@ const queryClient = new QueryClient({
 
 // Bulletproof _app.tsx pattern - no global getInitialProps
 export default function MyApp({ Component, pageProps }: AppProps) {
-  // Enhanced production debugging with comprehensive diagnostics
+  // Initialize error monitoring and diagnostics
   useEffect(() => {
-    // Initialize comprehensive error monitoring
-    const errorMonitorCleanup = initializeErrorMonitoring({
-      enableConsoleLogging: true,
-      enableLocalStorage: true,
-      enableGetInitialPropsTracking: true,
-      maxStoredErrors: 100,
-    });
+    // Initialize error monitoring with production-optimized settings
+    const errorMonitorCleanup = initializeErrorMonitoring();
 
-    // Log comprehensive framework initialization diagnostics
+    // Log diagnostics (only in development)
     logDiagnostics('App Bootstrap', {
       pagePropsKeys: pageProps ? Object.keys(pageProps) : 'No pageProps',
       hasPageProps: !!pageProps,
     });
 
-    // Analyze the current component for potential issues
+    // Analyze the current component (only in development)
     logComponentDiagnostics(Component, 'Current Page Component');
 
-    // Set up specialized getInitialProps error monitoring
+    // Set up getInitialProps error monitoring (always enabled for critical errors)
     const diagnosticsCleanup = monitorGetInitialPropsErrors();
 
     return () => {

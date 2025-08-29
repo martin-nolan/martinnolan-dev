@@ -108,9 +108,14 @@ export function analyzeComponent(Component: any): ComponentDiagnostic {
 }
 
 /**
- * Logs comprehensive diagnostics with structured formatting
+ * Logs diagnostics (only in development)
  */
 export function logDiagnostics(label: string, additionalData?: Record<string, any>): void {
+  // Only log in development to reduce production overhead
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
+
   const diagnostics = captureFrameworkDiagnostics();
 
   console.group(`🔍 ${label} - Framework Diagnostics`);
@@ -119,21 +124,12 @@ export function logDiagnostics(label: string, additionalData?: Record<string, an
     buildId: diagnostics.buildId,
     environment: diagnostics.environment,
     netlifyContext: diagnostics.netlifyContext,
-    nodeVersion: diagnostics.nodeVersion,
   });
 
   console.log('🌐 Runtime State:', {
     renderMode: diagnostics.renderMode,
-    hasWindow: diagnostics.hasWindow,
-    hasDocument: diagnostics.hasDocument,
     isHydrated: diagnostics.isHydrated,
     routerReady: diagnostics.routerReady,
-  });
-
-  console.log('🌍 Environment:', {
-    userAgent: diagnostics.userAgent,
-    url: diagnostics.url,
-    timestamp: diagnostics.timestamp,
   });
 
   if (additionalData) {
@@ -144,9 +140,14 @@ export function logDiagnostics(label: string, additionalData?: Record<string, an
 }
 
 /**
- * Logs component analysis with detailed breakdown
+ * Logs component analysis (only in development)
  */
 export function logComponentDiagnostics(Component: any, label = 'Component Analysis'): void {
+  // Only log in development to reduce production overhead
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
+
   const analysis = analyzeComponent(Component);
 
   console.group(`🧩 ${label}`);
@@ -156,10 +157,6 @@ export function logComponentDiagnostics(Component: any, label = 'Component Analy
     console.warn('⚠️ Component Validation Issues:', {
       isUndefined: !Component,
       wrongType: analysis.componentType !== 'function',
-      missingReactMethods:
-        analysis.componentType === 'function' &&
-        !Component.prototype?.isReactComponent &&
-        typeof Component !== 'function',
     });
   }
 

@@ -80,12 +80,16 @@ class ImagePreloader {
 
       img.onload = () => {
         this.preloadedUrls.add(key);
-        console.log(`✓ Preloaded: ${src} (${size}px)`);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`✓ Preloaded: ${src} (${size}px)`);
+        }
         resolve();
       };
 
       img.onerror = () => {
-        console.warn(`✗ Failed to preload image: ${src}`);
+        if (process.env.NODE_ENV === 'development') {
+          console.warn(`✗ Failed to preload image: ${src}`);
+        }
         resolve(); // Don't block other images
       };
 
@@ -133,7 +137,9 @@ export function preloadProjectImages(projects: any[]) {
   });
 
   if (allImageSrcs.length > 0) {
-    console.log(`Preloading ${allImageSrcs.length} project images:`, allImageSrcs.slice(0, 3));
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Preloading ${allImageSrcs.length} project images:`, allImageSrcs.slice(0, 3));
+    }
 
     // Preload first few images with priority
     const priorityImages = allImageSrcs.slice(0, 6);
@@ -152,7 +158,7 @@ export function preloadProjectImages(projects: any[]) {
         priority: false,
       });
     }
-  } else {
+  } else if (process.env.NODE_ENV === 'development') {
     console.log('No project images found to preload');
   }
 }

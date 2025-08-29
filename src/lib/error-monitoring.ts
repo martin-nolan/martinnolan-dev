@@ -31,11 +31,13 @@ class ErrorMonitor {
   private isInitialized = false;
 
   constructor(config: Partial<ErrorMonitorConfig> = {}) {
+    const isDev = process.env.NODE_ENV === 'development';
+
     this.config = {
-      enableConsoleLogging: true,
-      enableLocalStorage: true,
-      maxStoredErrors: 50,
-      enableGetInitialPropsTracking: true,
+      enableConsoleLogging: isDev, // Only log in development
+      enableLocalStorage: isDev, // Only store in development
+      maxStoredErrors: isDev ? 50 : 5, // Minimal storage in production
+      enableGetInitialPropsTracking: true, // Keep this for critical error detection
       ...config,
     };
   }
@@ -56,11 +58,13 @@ class ErrorMonitor {
     // Set up error listeners
     const cleanup = this.setupErrorListeners();
 
-    // Log initialization
-    this.logInfo('Error monitoring initialized', {
-      config: this.config,
-      existingErrors: this.errors.length,
-    });
+    // Log initialization only in development
+    if (process.env.NODE_ENV === 'development') {
+      this.logInfo('Error monitoring initialized', {
+        config: this.config,
+        existingErrors: this.errors.length,
+      });
+    }
 
     return cleanup;
   }
@@ -175,27 +179,33 @@ class ErrorMonitor {
    * Handle getInitialProps specific errors
    */
   private handleGetInitialPropsError(error: ErrorReport): void {
-    console.group('🚨 getInitialProps Error Detected');
-    console.error('Error Details:', error);
+    // Only log detailed info in development, but always mark as critical
+    if (process.env.NODE_ENV === 'development') {
+      console.group('🚨 getInitialProps Error Detected');
+      console.error('Error Details:', error);
 
-    // Try to analyze current component state
-    if (typeof window !== 'undefined' && (window as any).__NEXT_DATA__) {
-      const nextData = (window as any).__NEXT_DATA__;
-      console.log('Next.js Data:', {
-        page: nextData.page,
-        buildId: nextData.buildId,
-        props: nextData.props,
-        query: nextData.query,
-      });
+      // Try to analyze current component state
+      if (typeof window !== 'undefined' && (window as any).__NEXT_DATA__) {
+        const nextData = (window as any).__NEXT_DATA__;
+        console.log('Next.js Data:', {
+          page: nextData.page,
+          buildId: nextData.buildId,
+          props: nextData.props,
+          query: nextData.query,
+        });
+      }
+
+      // Log component analysis if available
+      if (error.context && error.context.component) {
+        const componentAnalysis = analyzeComponent(error.context.component);
+        console.log('Component Analysis:', componentAnalysis);
+      }
+
+      console.groupEnd();
+    } else {
+      // In production, only log critical errors to console.error
+      console.error('Critical getInitialProps error:', error.message);
     }
-
-    // Log component analysis if available
-    if (error.context && error.context.component) {
-      const componentAnalysis = analyzeComponent(error.context.component);
-      console.log('Component Analysis:', componentAnalysis);
-    }
-
-    console.groupEnd();
 
     // Mark as critical severity
     error.severity = 'critical';
@@ -402,7 +412,7 @@ export function reportError(
 export function reportComponentError(
   component: any,
   message: string,
-  context?: Record<string, any>
+  context?: Record<string, unknown>
 ): void {
   if (globalErrorMonitor) {
     const componentAnalysis = analyzeComponent(component);

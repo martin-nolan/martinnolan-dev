@@ -33,7 +33,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
-    const errorId = `error_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const errorId = `error_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
     return { hasError: true, error, errorId };
   }
 
@@ -48,7 +48,8 @@ export class ErrorBoundary extends React.Component<Props, State> {
 
     // Capture Next.js build ID if available
     if (typeof window !== 'undefined' && (window as any).__NEXT_DATA__) {
-      context.buildId = (window as any).__NEXT_DATA__.buildId;
+      const nextData = (window as any).__NEXT_DATA__;
+      context.buildId = nextData.buildId;
     }
 
     // Capture Netlify context if available
@@ -72,22 +73,15 @@ export class ErrorBoundary extends React.Component<Props, State> {
       props: this.props,
     };
 
-    // Log to console in production for debugging (temporarily enabled)
-    console.error('🚨 Enhanced ErrorBoundary - Full Error Context:', enhancedErrorData);
-
-    // Also log through our standard logger
-    logError('Enhanced ErrorBoundary caught an error', enhancedErrorData);
+    // Log through our standard logger (handles dev/prod appropriately)
+    logError('ErrorBoundary caught an error', enhancedErrorData);
 
     // Store error info in state for display
     this.setState({ errorInfo });
 
-    // Check for specific getInitialProps-related errors
+    // Check for specific getInitialProps-related errors (always log critical errors)
     if (error.message.includes('getInitialProps') || error.stack?.includes('getInitialProps')) {
-      console.error('🔍 getInitialProps Error Detected:', {
-        message: error.message,
-        stack: error.stack,
-        context: errorContext,
-      });
+      console.error('Critical getInitialProps error:', error.message);
     }
   }
 
@@ -116,11 +110,11 @@ export class ErrorBoundary extends React.Component<Props, State> {
               Refresh Page
             </Button>
 
-            {/* Enhanced error details - show in production for debugging */}
-            {this.state.error && (
+            {/* Error details - only show in development */}
+            {this.state.error && clientEnv.isDevelopment && (
               <details className="mt-4 text-left">
                 <summary className="cursor-pointer text-sm text-muted-foreground">
-                  Error Details {!clientEnv.isDevelopment && '(Production Debug Mode)'}
+                  Error Details (Development Mode)
                 </summary>
                 <div className="mt-2 space-y-2 text-xs">
                   <div>

@@ -36,7 +36,10 @@ export async function extractPdfTextServer(pdfUrl: string): Promise<string> {
   } catch (error) {
     logError('PDF extraction error', {
       error: error instanceof Error ? error.message : String(error),
-      pdfUrl: pdfUrl.substring(0, 100), // Log first 100 chars of URL for debugging
+      pdfUrl:
+        process.env.NODE_ENV === 'development'
+          ? pdfUrl.substring(0, 100)
+          : '[URL hidden in production]',
     });
     return `[Failed to extract: ${error instanceof Error ? error.message : 'Unknown error'}]`;
   }

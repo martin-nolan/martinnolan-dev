@@ -109,8 +109,12 @@ class SimpleCMSClient {
           const filename = (img.name ? img.name : img.url?.split('/').pop() || '').trim();
           // Try to match with captionMap, fallback to alternativeText
           let description = captionMap[filename] || img.alternativeText || '';
-          // If no caption found, fallback to debugging info
-          if (!description && Object.keys(captionMap).length > 0) {
+          // If no caption found in development, show debugging info
+          if (
+            !description &&
+            process.env.NODE_ENV === 'development' &&
+            Object.keys(captionMap).length > 0
+          ) {
             description = `No caption for ${filename} (captionMap keys: ${Object.keys(captionMap).join(', ')})`;
           }
           return {
