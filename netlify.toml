@@ -15,12 +15,6 @@
 # Next.js specific configuration with enhanced settings
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  
-  [plugins.inputs]
-    # Enhanced configuration for Next.js 14.2.32 compatibility
-    distDir = ".next"
-    # Ensure proper handling of getInitialProps
-    target = "server"
 
 # Cache optimization
 [[headers]]
