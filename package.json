@@ -17,6 +17,9 @@
     "url": "https://github.com/martin-nolan/martinnolan-dev/issues"
   },
   "homepage": "https://martinnolan.dev",
+  "engines": {
+    "node": "20.x"
+  },
   "keywords": [
     "portfolio",
     "nextjs",

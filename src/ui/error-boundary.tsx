@@ -12,6 +12,18 @@ interface Props {
 interface State {
   hasError: boolean;
   error?: Error;
+  errorInfo?: React.ErrorInfo;
+  errorId?: string;
+}
+
+interface ErrorContext {
+  timestamp: string;
+  userAgent: string;
+  url: string;
+  nextVersion: string;
+  buildId?: string;
+  environment: string;
+  netlifyContext?: string;
 }
 
 export class ErrorBoundary extends React.Component<Props, State> {
@@ -21,15 +33,62 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
+    const errorId = `error_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return { hasError: true, error, errorId };
+  }
+
+  private captureErrorContext(): ErrorContext {
+    const context: ErrorContext = {
+      timestamp: new Date().toISOString(),
+      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown',
+      url: typeof window !== 'undefined' ? window.location.href : 'unknown',
+      nextVersion: process.env.NEXT_PUBLIC_NEXT_VERSION || 'unknown',
+      environment: process.env.NODE_ENV || 'unknown',
+    };
+
+    // Capture Next.js build ID if available
+    if (typeof window !== 'undefined' && (window as any).__NEXT_DATA__) {
+      context.buildId = (window as any).__NEXT_DATA__.buildId;
+    }
+
+    // Capture Netlify context if available
+    if (process.env.NEXT_PUBLIC_NETLIFY_CONTEXT) {
+      context.netlifyContext = process.env.NEXT_PUBLIC_NETLIFY_CONTEXT;
+    }
+
+    return context;
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    logError('ErrorBoundary caught an error', {
+    const errorContext = this.captureErrorContext();
+
+    // Enhanced error logging with full context
+    const enhancedErrorData = {
+      errorId: this.state.errorId,
       error: error.message,
       stack: error.stack,
       componentStack: errorInfo.componentStack,
-    });
+      context: errorContext,
+      props: this.props,
+    };
+
+    // Log to console in production for debugging (temporarily enabled)
+    console.error('🚨 Enhanced ErrorBoundary - Full Error Context:', enhancedErrorData);
+
+    // Also log through our standard logger
+    logError('Enhanced ErrorBoundary caught an error', enhancedErrorData);
+
+    // Store error info in state for display
+    this.setState({ errorInfo });
+
+    // Check for specific getInitialProps-related errors
+    if (error.message.includes('getInitialProps') || error.stack?.includes('getInitialProps')) {
+      console.error('🔍 getInitialProps Error Detected:', {
+        message: error.message,
+        stack: error.stack,
+        context: errorContext,
+      });
+    }
   }
 
   render() {
@@ -47,15 +106,55 @@ export class ErrorBoundary extends React.Component<Props, State> {
             <p className="mb-6 text-muted-foreground">
               We've encountered an unexpected error. Please try refreshing the page.
             </p>
-            <Button onClick={() => window.location.reload()} className="w-full">
+
+            {/* Error ID for tracking */}
+            {this.state.errorId && (
+              <p className="mb-4 text-xs text-muted-foreground">Error ID: {this.state.errorId}</p>
+            )}
+
+            <Button onClick={() => window.location.reload()} className="mb-4 w-full">
               Refresh Page
             </Button>
-            {clientEnv.isDevelopment && this.state.error && (
+
+            {/* Enhanced error details - show in production for debugging */}
+            {this.state.error && (
               <details className="mt-4 text-left">
                 <summary className="cursor-pointer text-sm text-muted-foreground">
-                  Error Details
+                  Error Details {!clientEnv.isDevelopment && '(Production Debug Mode)'}
                 </summary>
-                <pre className="mt-2 text-xs text-red-400">{this.state.error.toString()}</pre>
+                <div className="mt-2 space-y-2 text-xs">
+                  <div>
+                    <strong>Error:</strong>
+                    <pre className="mt-1 whitespace-pre-wrap text-red-400">
+                      {this.state.error.toString()}
+                    </pre>
+                  </div>
+
+                  {this.state.error.stack && (
+                    <div>
+                      <strong>Stack Trace:</strong>
+                      <pre className="mt-1 max-h-32 overflow-y-auto whitespace-pre-wrap text-[10px] text-red-400">
+                        {this.state.error.stack}
+                      </pre>
+                    </div>
+                  )}
+
+                  {this.state.errorInfo?.componentStack && (
+                    <div>
+                      <strong>Component Stack:</strong>
+                      <pre className="mt-1 max-h-32 overflow-y-auto whitespace-pre-wrap text-[10px] text-orange-400">
+                        {this.state.errorInfo.componentStack}
+                      </pre>
+                    </div>
+                  )}
+
+                  <div>
+                    <strong>Environment:</strong>
+                    <pre className="mt-1 whitespace-pre-wrap text-[10px] text-blue-400">
+                      {JSON.stringify(this.captureErrorContext(), null, 2)}
+                    </pre>
+                  </div>
+                </div>
               </details>
             )}
           </GlassCard>
