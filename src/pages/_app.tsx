@@ -35,14 +35,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       url: typeof window !== 'undefined' ? window.location.href : 'unknown',
     };
 
-    // Log app initialization for production debugging
+    // Log app initialization for production dbugging
     console.log('🚀 App Initialized - Context:', appContext);
 
     // Debug Component to ensure it's not undefined
     console.log('🔍 Component Debug:', {
       componentName: Component?.name || 'Unknown',
       componentType: typeof Component,
-      hasGetInitialProps: !!(Component as unknown)?.getInitialProps,
+      hasGetInitialProps: !!(Component as any)?.getInitialProps,
       componentKeys: Component ? Object.keys(Component) : 'Component is undefined',
     });
 
