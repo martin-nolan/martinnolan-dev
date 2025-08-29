@@ -11,6 +11,15 @@ import ContactSection from '@/components/sections/ContactSection';
 import HeroSection from '@/components/sections/HeroSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import WorkSection from '@/components/sections/WorkSection';
+import { logError } from '@/lib/logger';
+import type {
+  ProcessedProfile,
+  ProcessedExperience,
+  ProcessedFeaturedProject,
+  ProcessedPersonalProject,
+  ProcessedContactMethod,
+  AdditionalProject,
+} from '@/types';
 
 const AIChatWidget = dynamic(
   () => import('@/components/AIChatWidget').then((mod) => mod.AIChatWidget),
@@ -19,14 +28,13 @@ const AIChatWidget = dynamic(
   }
 );
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 interface Props {
-  profile?: any;
-  experiences?: any[];
-  featuredProjects?: any[];
-  personalProjects?: any[];
-  projects?: any[]; // New unified projects
-  contactMethods?: any[];
+  profile?: ProcessedProfile;
+  experiences?: ProcessedExperience[];
+  featuredProjects?: ProcessedFeaturedProject[];
+  personalProjects?: ProcessedPersonalProject[];
+  projects?: AdditionalProject[]; // New unified projects
+  contactMethods?: ProcessedContactMethod[];
   error?: boolean;
   errorMessage?: string;
   cvText?: string | null;
@@ -72,7 +80,7 @@ const Index = ({
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: profile?.fullName || 'Martin Nolan',
+    name: profile?.name || 'Martin Nolan',
     url: profile?.website || 'https://martinnolan.dev',
     sameAs: ['https://github.com/martin-nolan', 'https://www.linkedin.com/in/martinnolan0110'],
     jobTitle: profile?.title || 'Associate Gen AI Software Engineer',
@@ -182,7 +190,9 @@ export const getStaticProps: GetStaticProps = async () => {
       try {
         cvText = await extractPdfTextServer(profile.cvPdf);
       } catch (err) {
-        console.error('Error extracting CV text:', err);
+        logError('Error extracting CV text', {
+          error: err instanceof Error ? err.message : String(err),
+        });
         cvText = null;
       }
     }
@@ -200,7 +210,9 @@ export const getStaticProps: GetStaticProps = async () => {
       revalidate: 60, // Revalidate every minute in production
     };
   } catch (error) {
-    console.error('Error fetching content from CMS:', error);
+    logError('Error fetching content from CMS', {
+      error: error instanceof Error ? error.message : String(error),
+    });
 
     return {
       props: {

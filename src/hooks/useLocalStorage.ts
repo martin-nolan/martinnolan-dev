@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { silentWarn } from '@/lib/logger';
+
 /**
  * Custom hook for managing localStorage with SSR safety
  * Provides type-safe localStorage access with automatic JSON serialization
@@ -26,7 +28,9 @@ export const useLocalStorage = <T>(
         return item as T;
       }
     } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
+      silentWarn(`Error reading localStorage key "${key}"`, {
+        error: error instanceof Error ? error.message : String(error),
+      });
       return initialValue;
     }
   });
@@ -45,7 +49,9 @@ export const useLocalStorage = <T>(
           window.localStorage.setItem(key, JSON.stringify(valueToStore));
         }
       } catch (error) {
-        console.warn(`Error setting localStorage key "${key}":`, error);
+        silentWarn(`Error setting localStorage key "${key}"`, {
+          error: error instanceof Error ? error.message : String(error),
+        });
       }
     },
     [key, storedValue]
@@ -59,7 +65,9 @@ export const useLocalStorage = <T>(
         window.localStorage.removeItem(key);
       }
     } catch (error) {
-      console.warn(`Error removing localStorage key "${key}":`, error);
+      silentWarn(`Error removing localStorage key "${key}"`, {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   }, [key, initialValue]);
 
@@ -78,7 +86,9 @@ export const useLocalStorage = <T>(
             setStoredValue(e.newValue as T);
           }
         } catch (error) {
-          console.warn(`Error parsing localStorage value for key "${key}":`, error);
+          silentWarn(`Error parsing localStorage value for key "${key}"`, {
+            error: error instanceof Error ? error.message : String(error),
+          });
         }
       }
     };

@@ -1,7 +1,11 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import type { FeaturedProject, PersonalProject, AdditionalProject } from '@/types';
+import type {
+  ProcessedFeaturedProject,
+  ProcessedPersonalProject,
+  AdditionalProject,
+} from '@/types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -13,18 +17,18 @@ export function cn(...inputs: ClassValue[]) {
  * Converts legacy project types to unified AdditionalProject format
  */
 export function convertToUnifiedProjects(
-  featuredProjects?: FeaturedProject[] | null,
-  personalProjects?: PersonalProject[] | null
+  featuredProjects?: ProcessedFeaturedProject[] | null,
+  personalProjects?: ProcessedPersonalProject[] | null
 ): AdditionalProject[] {
   const workProjects: AdditionalProject[] = (featuredProjects || []).map((project) => ({
     title: project.title,
     description: project.description,
     stack: project.stack,
     type: 'work' as const,
-    year: project.year,
-    company: project.company,
-    role: project.role,
-    category: project.category,
+    year: '2024', // Default year for work projects
+    company: 'Sky UK', // Default company for work projects
+    role: 'Gen AI Engineer', // Default role
+    category: 'AI/ML', // Default category
     highlights: project.highlights,
     images: project.images,
     github: project.github,
@@ -37,7 +41,7 @@ export function convertToUnifiedProjects(
       description: project.description,
       stack: project.stack,
       type: 'personal' as const,
-      category: project.category,
+      category: 'Personal', // Default category for personal projects
       github: project.github,
       liveUrl: project.liveUrl,
     })

@@ -1,4 +1,5 @@
 import { serverCms } from './cms';
+import { logError } from './logger';
 
 import type { CMSProfile, CMSExperience, CMSFeaturedProject, CMSPersonalProject } from '@/types';
 
@@ -9,22 +10,6 @@ import type { CMSProfile, CMSExperience, CMSFeaturedProject, CMSPersonalProject 
 
 const safeJoin = (arr?: string[] | null, sep = ', ') =>
   Array.isArray(arr) ? arr.filter(Boolean).join(sep) : '';
-
-/**
- * Client-side AI context builder (uses CMS client)
- */
-export async function buildSystemPrompt(): Promise<string> {
-  try {
-    const { cmsClient } = await import('./cms');
-    const content = await cmsClient.getAllContentForAI();
-    const { profile, experiences, featuredProjects, personalProjects } = content;
-
-    return buildPromptFromData(profile, experiences, featuredProjects, personalProjects);
-  } catch (error) {
-    console.error('Failed to build AI prompt:', error);
-    return getFallbackPrompt();
-  }
-}
 
 /**
  * Server-side AI context builder (direct CMS access)
@@ -45,7 +30,9 @@ export async function buildSystemPromptServer(cvText?: string): Promise<string> 
 
     return buildPromptFromData(profile, experiences, featuredProjects, personalProjects, cvDetails);
   } catch (error) {
-    console.error('Failed to build server AI prompt:', error);
+    logError('Failed to build server AI prompt', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     return getFallbackPrompt();
   }
 }

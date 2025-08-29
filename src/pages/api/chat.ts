@@ -3,9 +3,15 @@ import createClient from '@azure-rest/ai-inference';
 import { isUnexpected } from '@azure-rest/ai-inference';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { buildSystemPromptServer } from '@/lib/ai';
 import { validateMethod, handleApiError } from '@/lib/api-utils';
 import { serverEnv } from '@/lib/env';
-import { buildSystemPromptServer } from '@/lib/ai';
+import { logError } from '@/lib/logger';
+
+interface ChatMessage {
+  role: string;
+  content: string;
+}
 
 // GitHub Models configuration from centralized env utilities
 const apiKey = serverEnv.github.token;
@@ -36,7 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Ensure system prompt is first message
     const chatMessages = [
       { role: 'system', content: systemPrompt },
-      ...messages.filter((m: any) => m.role !== 'system'), // Remove any existing system messages
+      ...messages.filter((m: ChatMessage) => m.role !== 'system'), // Remove any existing system messages
     ];
 
     const client = createClient(ENDPOINT, new AzureKeyCredential(apiKey));
@@ -54,7 +60,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(statusCode).json(azureRes.body);
   } catch (error) {
-    console.error('Azure inference error:', error);
+    logError('Azure inference error', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     handleApiError(res, error);
   }
 }
