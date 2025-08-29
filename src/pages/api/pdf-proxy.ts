@@ -69,7 +69,7 @@ async function fetchPdfFromStrapi(url: string): Promise<Response> {
   };
 
   // Add authorization if available for private media files
-  if (serverEnv.strapi.apiToken) {
+  if (serverEnv.strapi?.apiToken) {
     fetchHeaders.Authorization = `Bearer ${serverEnv.strapi.apiToken}`;
   }
 

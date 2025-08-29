@@ -18,6 +18,12 @@ const safeJoin = (arr?: string[] | null, sep = ', ') =>
 export async function buildSystemPromptServer(cvText?: string): Promise<string> {
   try {
     const content = await serverCms.getAllContentForAI();
+
+    // Handle case where Strapi is not configured
+    if (!content) {
+      return buildFallbackSystemPrompt(cvText);
+    }
+
     const { profile, experiences, featuredProjects, personalProjects } = content;
 
     // Use provided CV text if available
@@ -117,6 +123,25 @@ ${featuredBlock}
 Personal Projects:
 ${personalBlock}
 ${cvDetails}
+Write in clear, concise UK English.
+  `.trim();
+}
+
+/**
+ * Fallback prompt when Strapi is not configured
+ */
+function buildFallbackSystemPrompt(cvText?: string): string {
+  const cvDetails =
+    cvText && !cvText.startsWith('[Failed') ? `\n=== CV DETAILS ===\n${cvText}\n` : '';
+
+  return `
+You are the personal AI assistant for **Martin Nolan**.  
+I'm an Associate Gen AI Software Engineer at Sky UK, specialising in building human-centred AI tools.
+
+${cvDetails}
+
+If you don't have specific information, please let the user know politely and suggest they can reach out via email at martinnolan_1@hotmail.co.uk.
+
 Write in clear, concise UK English.
   `.trim();
 }
