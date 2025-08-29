@@ -6,9 +6,7 @@ import type { ImageObj } from '@/ui/image-modal';
 import { ImageWithFallback } from '@/ui/image-with-fallback';
 
 // Dynamically import ImageModal to reduce initial bundle size
-const ImageModal = lazy(() =>
-  import('@/ui/image-modal').then((mod) => ({ default: mod.ImageModal }))
-);
+const ImageModal = lazy(() => import('@/ui/image-modal'));
 
 export interface ImageCarouselProps {
   images: ImageObj[];

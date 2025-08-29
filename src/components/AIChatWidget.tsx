@@ -10,7 +10,7 @@ import type { Message, ErrorResponse, ChatOK } from '@/types';
 import { Button, Input, GlassCard } from '@/ui';
 import { useToast } from '@/ui/use-toast';
 
-export const AIChatWidget: React.FC = () => {
+const AIChatWidget: React.FC = () => {
   const { isOpen, toggleModal } = useChatWidget();
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -325,3 +325,5 @@ export const AIChatWidget: React.FC = () => {
     </>
   );
 };
+
+export default AIChatWidget;

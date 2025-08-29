@@ -21,12 +21,10 @@ import type {
   AdditionalProject,
 } from '@/types';
 
-const AIChatWidget = dynamic(
-  () => import('@/components/AIChatWidget').then((mod) => mod.AIChatWidget),
-  {
-    ssr: false,
-  }
-);
+const AIChatWidget = dynamic(() => import('@/components/AIChatWidget'), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface Props {
   profile?: ProcessedProfile;
