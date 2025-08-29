@@ -1,5 +1,3 @@
-'use client';
-
 import { MessageCircle, X, Send } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
