@@ -1,7 +1,8 @@
 import { GetStaticProps } from 'next';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useState } from 'react';
+
+import dynamic from 'next/dynamic';
 
 import Footer from '@/components/Footer';
 import Navigation from '@/components/Navigation';
@@ -21,10 +22,13 @@ import type {
   AdditionalProject,
 } from '@/types';
 
-const AIChatWidget = dynamic(() => import('@/components/AIChatWidget'), {
-  ssr: false,
-  loading: () => null,
-});
+const AIChatWidget = dynamic(
+  () => import('@/components/AIChatWidget').catch(() => ({ default: () => null })),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 interface Props {
   profile?: ProcessedProfile;

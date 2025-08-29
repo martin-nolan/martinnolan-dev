@@ -1,12 +1,10 @@
 'use client';
 
-import { useState, lazy, Suspense } from 'react';
+import { useState } from 'react';
 
+import ImageModal from '@/ui/image-modal';
 import type { ImageObj } from '@/ui/image-modal';
 import { ImageWithFallback } from '@/ui/image-with-fallback';
-
-// Dynamically import ImageModal to reduce initial bundle size
-const ImageModal = lazy(() => import('@/ui/image-modal'));
 
 export interface ImageCarouselProps {
   images: ImageObj[];
@@ -75,16 +73,14 @@ export const ImageCarousel = ({ images, alt, projectTitle, className }: ImageCar
       </div>
 
       {isModalOpen && (
-        <Suspense fallback={null}>
-          <ImageModal
-            images={images}
-            currentIndex={selectedIndex}
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            alt={alt}
-            projectTitle={projectTitle}
-          />
-        </Suspense>
+        <ImageModal
+          images={images}
+          currentIndex={selectedIndex}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          alt={alt}
+          projectTitle={projectTitle}
+        />
       )}
     </>
   );
