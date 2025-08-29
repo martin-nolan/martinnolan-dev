@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { clientEnv } from '@/lib/env';
+import { logError } from '@/lib/logger';
 import { Button, GlassCard, GradientText } from '@/ui';
 
 interface Props {
@@ -26,7 +27,11 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    logError('ErrorBoundary caught an error', {
+      error: error.message,
+      stack: error.stack,
+      componentStack: errorInfo.componentStack,
+    });
   }
 
   render() {

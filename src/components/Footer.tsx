@@ -2,13 +2,11 @@ import { Github, Linkedin, Mail } from 'lucide-react';
 
 import ResumeModal from '@/components/ResumeModal';
 import { useModal, useScrollToSection } from '@/hooks';
+import type { ProcessedProfile } from '@/types';
 import { GradientText } from '@/ui';
 
 interface FooterProps {
-  profile?: {
-    cvPdf?: string | null;
-    [key: string]: unknown;
-  } | null;
+  profile?: ProcessedProfile | null;
 }
 
 const Footer = ({ profile }: FooterProps) => {

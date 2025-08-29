@@ -1,13 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ContactMethod } from '@/types';
+import type { ProcessedContactMethod, ProcessedProfile } from '@/types';
 import { GradientText, ContactMethodCard, ContactForm } from '@/ui';
 
 interface ContactSectionProps {
-  contactMethods?: ContactMethod[] | null;
-  profile?: {
-    email?: string;
-    [key: string]: any;
-  } | null;
+  contactMethods?: ProcessedContactMethod[] | null;
+  profile?: ProcessedProfile | null;
 }
 
 const ContactSection = ({ contactMethods: externalContactMethods }: ContactSectionProps) => {

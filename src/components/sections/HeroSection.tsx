@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 
 import { useScrollToSection } from '@/hooks/useScrollToSection';
+import type { ProcessedProfile } from '@/types';
 import { Button } from '@/ui';
 
+
 interface HeroSectionProps {
-  profile?: any;
+  profile?: ProcessedProfile;
 }
 
 const HeroSection = ({ profile }: HeroSectionProps) => {

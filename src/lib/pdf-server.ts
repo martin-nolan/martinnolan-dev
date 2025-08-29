@@ -3,6 +3,8 @@
  * This file should only be imported in server-side code (API routes, getStaticProps, etc.)
  */
 
+import { logError } from './logger';
+
 /**
  * Extract text from PDF URL (server-side only)
  */
@@ -32,7 +34,10 @@ export async function extractPdfTextServer(pdfUrl: string): Promise<string> {
 
     return data.text || '[Failed to extract: No text found]';
   } catch (error) {
-    console.error('PDF extraction error:', error);
+    logError('PDF extraction error', {
+      error: error instanceof Error ? error.message : String(error),
+      pdfUrl: pdfUrl.substring(0, 100), // Log first 100 chars of URL for debugging
+    });
     return `[Failed to extract: ${error instanceof Error ? error.message : 'Unknown error'}]`;
   }
 }

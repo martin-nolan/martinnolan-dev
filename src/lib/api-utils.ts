@@ -1,6 +1,8 @@
 // Consolidated API utilities - flattened from complex nested structure
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { logError } from './logger';
+
 import { clientEnv } from '@/lib/env';
 
 // Types
@@ -133,12 +135,12 @@ export function handleApiError(res: NextApiResponse, error: unknown): void {
   }
 
   if (error instanceof Error) {
-    console.error('API Error:', error.message);
+    logError('API Error', { message: error.message, stack: error.stack });
     res.status(500).json({ error: 'Internal server error' });
     return;
   }
 
-  console.error('Unknown API Error:', error);
+  logError('Unknown API Error', { error: String(error) });
   res.status(500).json({ error: 'Internal server error' });
 }
 

@@ -1,9 +1,9 @@
 import { getIconComponent } from '@/lib/icon-mapping';
-import type { ContactMethod } from '@/types';
+import type { ProcessedContactMethod } from '@/types';
 import { GlassCard, CardContent } from '@/ui';
 
 interface ContactMethodCardProps {
-  method: ContactMethod;
+  method: ProcessedContactMethod;
 }
 
 export const ContactMethodCard = ({ method }: ContactMethodCardProps) => {

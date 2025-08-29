@@ -3,14 +3,15 @@
 import { MessageCircle, X, Send } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
-import { useModal } from '@/hooks';
+import { useChatWidget } from '@/hooks/useChatWidget';
 import { cmsClient } from '@/lib/cms';
+import { silentWarn, silentError } from '@/lib/logger';
 import type { Message, ErrorResponse, ChatOK } from '@/types';
 import { Button, Input, GlassCard } from '@/ui';
 import { useToast } from '@/ui/use-toast';
 
 export const AIChatWidget: React.FC = () => {
-  const { isOpen, toggleModal } = useModal();
+  const { isOpen, toggleModal } = useChatWidget();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
@@ -32,22 +33,87 @@ export const AIChatWidget: React.FC = () => {
 
   useEffect(scrollToBottom, [messages]);
 
-  // Prevent background scroll when reaching top/bottom of chat
+  // Improved scroll behavior: prevent background scroll when interacting with chat
   useEffect(() => {
+    if (!isOpen) return;
+
     const el = chatScrollRef.current;
     if (!el) return;
+
     const handleWheel = (e: WheelEvent) => {
+      // Always prevent background scroll when scrolling within the chat area
+      // This provides better scroll isolation and prevents accidental background scrolling
+      e.stopPropagation();
+
       const { scrollTop, scrollHeight, clientHeight } = el;
-      const atTop = scrollTop === 0;
+      const isScrollable = scrollHeight > clientHeight;
+
+      // If chat content doesn't need scrolling, we still prevent background scroll
+      // to avoid confusion when users interact with the chat area
+      if (!isScrollable) {
+        e.preventDefault();
+        return;
+      }
+
+      const atTop = scrollTop <= 1;
       const atBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+      // Prevent default scroll behavior when at boundaries to avoid double-scrolling
       if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
         e.preventDefault();
-        e.stopPropagation();
       }
     };
+
     el.addEventListener('wheel', handleWheel, { passive: false });
+
     return () => {
       el.removeEventListener('wheel', handleWheel);
+    };
+  }, [isOpen]);
+
+  // Improved mobile touch scroll behavior: prevent background scroll when interacting with chat
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const el = chatScrollRef.current;
+    if (!el) return;
+
+    let touchStartY = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      // Always prevent background scroll when touching within the chat area
+      e.stopPropagation();
+
+      const { scrollTop, scrollHeight, clientHeight } = el;
+      const isScrollable = scrollHeight > clientHeight;
+
+      // If chat content doesn't need scrolling, prevent background scroll
+      if (!isScrollable) {
+        e.preventDefault();
+        return;
+      }
+
+      const touchY = e.touches[0].clientY;
+      const deltaY = touchStartY - touchY;
+      const atTop = scrollTop <= 1;
+      const atBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+      // Prevent default behavior when at boundaries to avoid double-scrolling
+      if ((atTop && deltaY < 0) || (atBottom && deltaY > 0)) {
+        e.preventDefault();
+      }
+    };
+
+    el.addEventListener('touchstart', handleTouchStart, { passive: true });
+    el.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    return () => {
+      el.removeEventListener('touchstart', handleTouchStart);
+      el.removeEventListener('touchmove', handleTouchMove);
     };
   }, [isOpen]);
 
@@ -66,11 +132,13 @@ export const AIChatWidget: React.FC = () => {
             const { text } = await res.json();
             setCvText(text);
           } else {
-            console.warn('Failed to fetch CV text');
+            silentWarn('Failed to fetch CV text', { status: res.status });
           }
         }
       } catch (error) {
-        console.error('Error fetching CV:', error);
+        silentError('Error fetching CV', {
+          error: error instanceof Error ? error.message : String(error),
+        });
       }
     };
     fetchCvText();

@@ -1,10 +1,14 @@
 import { convertToUnifiedProjects, separateProjectsByImages } from '@/lib/utils';
-import type { FeaturedProject, PersonalProject, AdditionalProject } from '@/types';
+import type {
+  ProcessedFeaturedProject,
+  ProcessedPersonalProject,
+  AdditionalProject,
+} from '@/types';
 import { GradientText, ProjectCard } from '@/ui';
 
 interface ProjectsSectionProps {
-  featuredProjects?: FeaturedProject[] | null;
-  personalProjects?: PersonalProject[] | null;
+  featuredProjects?: ProcessedFeaturedProject[] | null;
+  personalProjects?: ProcessedPersonalProject[] | null;
   projects?: AdditionalProject[] | null; // New unified projects prop
 }
 
