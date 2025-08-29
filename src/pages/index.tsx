@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import AIChatWidget from '@/components/AIChatWidget';
 import Footer from '@/components/Footer';
@@ -11,6 +11,7 @@ import ContactSection from '@/components/sections/ContactSection';
 import HeroSection from '@/components/sections/HeroSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
 import WorkSection from '@/components/sections/WorkSection';
+import { preloadProjectImages } from '@/lib/image-preloader';
 import { logError } from '@/lib/logger';
 import type {
   ProcessedProfile,
@@ -45,6 +46,19 @@ const Index = ({
   cvText,
 }: Props) => {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
+
+  // Preload all project images immediately when component mounts
+  useEffect(() => {
+    const allProjects = [
+      ...(featuredProjects || []),
+      ...(personalProjects || []),
+      ...(projects || []),
+    ];
+
+    if (allProjects.length > 0) {
+      preloadProjectImages(allProjects);
+    }
+  }, [featuredProjects, personalProjects, projects]);
 
   // If there's an error, show error page
   if (error) {

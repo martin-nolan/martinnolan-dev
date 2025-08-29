@@ -72,16 +72,7 @@ export const ImageModal = ({
     return () => window.removeEventListener('keydown', onKey);
   }, [isOpen, images.length, onClose]);
 
-  // Preload neighbour images
-  useEffect(() => {
-    if (!isOpen || images.length < 2) return;
-    const next = (activeIndex + 1) % images.length;
-    const prev = (activeIndex - 1 + images.length) % images.length;
-    [next, prev].forEach((i) => {
-      const img = new window.Image();
-      img.src = images[i].src;
-    });
-  }, [isOpen, activeIndex, images]);
+  // Images are preloaded globally, no need for additional preloading here
 
   if (!isOpen || !images.length) return null;
 
@@ -163,12 +154,13 @@ export const ImageModal = ({
                   <ImageWithFallback
                     src={currentImage.src}
                     alt={`${alt} - Image ${activeIndex + 1}`}
-                    width={1200}
-                    height={800}
+                    width={900}
+                    height={600}
                     className="max-h-[75vh] w-auto max-w-full rounded-lg object-contain"
-                    timeoutMs={10000}
+                    timeoutMs={15000}
                     sizes="(min-width: 1024px) 75vw, 100vw"
                     fetchPriority="high"
+                    loading="eager"
                     draggable={false}
                   />
                 </div>

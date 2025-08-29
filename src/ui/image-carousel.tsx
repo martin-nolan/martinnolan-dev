@@ -53,13 +53,14 @@ export const ImageCarousel = ({ images, alt, projectTitle, className }: ImageCar
           <ImageWithFallback
             src={images[0].src}
             alt={alt}
-            width={800}
-            height={450}
+            width={600}
+            height={400}
             className="size-full object-contain object-center transition-transform duration-300 group-hover:scale-105"
-            sizes="(max-width: 1024px) 100vw, 50vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             priority
             fetchPriority="high"
-            timeoutMs={8000}
+            timeoutMs={12000}
+            loading="eager"
           />
 
           {images.length > 1 && (
