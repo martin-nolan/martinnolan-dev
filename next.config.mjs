@@ -22,6 +22,9 @@ const nextConfig = {
   },
   images: {
     formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60,
     remotePatterns: [
       // Local dev Strapi uploads
       {
@@ -40,7 +43,11 @@ const nextConfig = {
       // Common CDN domains
       { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/**' },
       { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
-      { protocol: 'https', hostname: 'holy-belief-a4e3a87afd.media.strapiapp.com', pathname: '/**' },
+      {
+        protocol: 'https',
+        hostname: 'holy-belief-a4e3a87afd.media.strapiapp.com',
+        pathname: '/**',
+      },
     ].filter(Boolean),
   },
   async headers() {

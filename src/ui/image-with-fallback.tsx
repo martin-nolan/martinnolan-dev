@@ -19,7 +19,7 @@ const DEFAULT_BLUR =
   'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjUwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyMjIyMjIiLz48L3N2Zz4=';
 
 export function ImageWithFallback({
-  timeoutMs = 8000,
+  timeoutMs = 15000, // Increased timeout for slower connections
   fallback,
   skeletonClassName,
   placeholder = 'blur',
@@ -97,10 +97,14 @@ export function ImageWithFallback({
             blurDataURL={blurDataURL}
             priority={priority}
             fetchPriority={fetchPriority}
-            onLoad={() => setLoaded(true)} // <- use onLoad (no deprecation)
+            onLoad={() => setLoaded(true)}
             onError={() => setErrored(true)}
-            // Hide until loaded to avoid flash/jank
-            style={{ visibility: loaded ? 'visible' : 'hidden', ...style }}
+            // Show with opacity transition instead of visibility hidden
+            style={{
+              opacity: loaded ? 1 : 0,
+              transition: 'opacity 0.3s ease-in-out',
+              ...style,
+            }}
           />
         </>
       )}
