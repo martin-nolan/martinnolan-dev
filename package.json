@@ -40,6 +40,8 @@
     "typecheck": "tsc --noEmit",
     "analyze": "ANALYZE=true npm run build",
     "test:build": "npm run typecheck && npm run lint:check && npm run build",
+    "validate:build": "node scripts/validate-build.js",
+    "validate:netlify": "npm run validate:build",
     "ci:check": "npm run typecheck && npm run lint:check",
     "precommit": "npm run ci:check"
   },

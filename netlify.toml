@@ -7,10 +7,20 @@
   NODE_VERSION = "20"
   # Disable secrets scanning for expected NEXT_PUBLIC_ variables
   SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_STRAPI_API_URL,NEXT_PUBLIC_EMAILJS_SERVICE_ID,NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,NEXT_PUBLIC_EMAILJS_PUBLIC_KEY"
+  # Add Next.js version for debugging
+  NEXT_PUBLIC_NEXT_VERSION = "14.2.32"
+  # Add Netlify context for diagnostics
+  NEXT_PUBLIC_NETLIFY_CONTEXT = "$CONTEXT"
 
-# Next.js specific configuration
+# Next.js specific configuration with enhanced settings
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+  
+  [plugins.inputs]
+    # Enhanced configuration for Next.js 14.2.32 compatibility
+    distDir = ".next"
+    # Ensure proper handling of getInitialProps
+    target = "server"
 
 # Cache optimization
 [[headers]]

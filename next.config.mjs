@@ -18,8 +18,22 @@ const strapiDomain = getStrapiDomain();
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: false, // Disable SWC minification to fix Netlify getInitialProps error
+
+  // Enhanced production debugging configuration
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    // Temporarily disable console removal for production debugging
+    removeConsole: false, // Keep console logs for debugging getInitialProps issues
+  },
+
+  // Enable source maps for better error tracking
+  productionBrowserSourceMaps: true,
+
+  // Enhanced error handling
+  onDemandEntries: {
+    // Period (in ms) where the server will keep pages in the buffer
+    maxInactiveAge: 25 * 1000,
+    // Number of pages that should be kept simultaneously without being disposed
+    pagesBufferLength: 2,
   },
   images: {
     formats: ['image/webp', 'image/avif'],
