@@ -124,7 +124,7 @@ export const ImageModal = ({
               variant="ghost"
               size="sm"
               onClick={onClose}
-              className="ml-4 text-muted-foreground hover:text-foreground max-sm:h-10 max-sm:w-10"
+              className="ml-4 text-muted-foreground hover:text-foreground max-sm:size-10"
               aria-label="Close"
             >
               <X className="size-6 max-sm:size-5" />

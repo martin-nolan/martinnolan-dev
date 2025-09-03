@@ -44,7 +44,7 @@ export const ErrorDisplay = ({ errorType, cvPdfUrl, onRetry }: ErrorDisplayProps
           alt="Error robot"
           width={60}
           height={60}
-          className="opacity-80 drop-shadow-lg max-sm:h-12 max-sm:w-12"
+          className="opacity-80 drop-shadow-lg max-sm:size-12"
         />
 
         <div className="space-y-2">
