@@ -79,8 +79,10 @@ const nextConfig = {
         tls: false,
       };
 
-      // Tree shaking optimizations
-      config.optimization.usedExports = true;
+      // Tree shaking optimizations - only in production to avoid conflicts
+      if (!dev) {
+        config.optimization.usedExports = true;
+      }
     }
 
     return config;

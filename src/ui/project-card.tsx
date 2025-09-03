@@ -23,7 +23,7 @@ export const ProjectCard = ({ project, variant = 'default' }: ProjectCardProps) 
             projectTitle={project.title}
             className="size-full object-cover object-center"
           />
-          <div className="absolute left-4 top-4 z-10 flex gap-2">
+          <div className="absolute left-2 top-2 z-10 flex gap-2 sm:left-4 sm:top-4">
             <Badge variant="secondary" className={getProjectTypeBadgeStyle(project.type)}>
               {project.type === 'work' ? 'Work' : 'Personal'}
             </Badge>
@@ -31,22 +31,22 @@ export const ProjectCard = ({ project, variant = 'default' }: ProjectCardProps) 
         </div>
       )}
 
-      <div className="flex flex-1 flex-col p-6">
+      <div className="flex flex-1 flex-col p-4 sm:p-6">
         {/* Header info - only show badge for default variant (featured shows it on image) */}
-        <div className="mb-4">
+        <div className="mb-3 sm:mb-4">
           {!showImages && (
-            <div className="mb-3 flex flex-wrap gap-2">
+            <div className="mb-2 flex flex-wrap gap-2 sm:mb-3">
               <Badge variant="secondary" className={getProjectTypeBadgeStyle(project.type)}>
                 {project.type === 'work' ? 'Work' : 'Personal'}
               </Badge>
             </div>
           )}
 
-          <h3 className="mb-2 text-xl font-bold">{project.title}</h3>
+          <h3 className="mb-2 text-lg font-bold sm:text-xl">{project.title}</h3>
 
           {/* Work project additional info */}
           {project.type === 'work' && (
-            <div className="mb-2 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+            <div className="mb-2 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground sm:gap-2 sm:text-sm">
               {project.year && (
                 <div className="flex items-center gap-1">
                   <Calendar className="size-3" />
@@ -62,15 +62,19 @@ export const ProjectCard = ({ project, variant = 'default' }: ProjectCardProps) 
         </div>
 
         {/* Description */}
-        <p className="mb-4 flex-1 leading-relaxed text-muted-foreground">{project.description}</p>
+        <p className="mb-3 flex-1 text-sm leading-relaxed text-muted-foreground sm:mb-4 sm:text-base">
+          {project.description}
+        </p>
 
         {/* Highlights for work projects */}
         {project.type === 'work' && project.highlights && project.highlights.length > 0 && (
-          <div className="mb-4">
-            <h4 className="mb-2 text-sm font-semibold text-primary">Key Achievements</h4>
+          <div className="mb-3 sm:mb-4">
+            <h4 className="mb-1.5 text-xs font-semibold text-primary sm:mb-2 sm:text-sm">
+              Key Achievements
+            </h4>
             <ul className="space-y-1">
               {project.highlights.map((highlight, highlightIndex) => (
-                <li key={highlightIndex} className="flex items-start text-sm">
+                <li key={highlightIndex} className="flex items-start text-xs sm:text-sm">
                   <div className="mr-2 mt-1.5 size-1.5 shrink-0 rounded-full bg-accent"></div>
                   <span className="text-muted-foreground">{highlight}</span>
                 </li>
@@ -80,8 +84,8 @@ export const ProjectCard = ({ project, variant = 'default' }: ProjectCardProps) 
         )}
 
         {/* Technology stack */}
-        <div className="mb-4">
-          <div className="flex flex-wrap gap-2">
+        <div className="mb-3 sm:mb-4">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {project.stack.map((tech) => (
               <Badge key={tech} variant="outline" className="border-surface-border text-xs">
                 {tech}
@@ -92,14 +96,14 @@ export const ProjectCard = ({ project, variant = 'default' }: ProjectCardProps) 
 
         {/* Links for personal projects only */}
         {project.type === 'personal' && project.github && (
-          <div className="mt-auto flex gap-4 pt-2">
+          <div className="mt-auto flex flex-col gap-2 pt-2 sm:flex-row sm:gap-4">
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground transition-colors hover:text-primary sm:text-sm"
             >
-              <Github className="size-4" />
+              <Github className="size-3 sm:size-4" />
               View Source
             </a>
             {project.liveUrl && (
@@ -107,9 +111,9 @@ export const ProjectCard = ({ project, variant = 'default' }: ProjectCardProps) 
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground transition-colors hover:text-primary sm:text-sm"
               >
-                <Globe2 className="size-4" aria-label="Live Site" />
+                <Globe2 className="size-3 sm:size-4" aria-label="Live Site" />
                 <span>Live Site</span>
               </a>
             )}

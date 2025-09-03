@@ -27,13 +27,13 @@ const ProjectsSection = ({
   const { projectsWithImages, projectsWithoutImages } = separateProjectsByImages(allProjects);
 
   return (
-    <section id="projects" className="px-4 py-12 sm:px-6 lg:px-8">
+    <section id="projects" className="px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-16 text-center">
-          <h2 className="mb-6 text-4xl font-bold sm:text-5xl">
+        <div className="mb-12 text-center sm:mb-16">
+          <h2 className="mb-4 text-2xl font-bold sm:mb-6 sm:text-3xl lg:text-4xl xl:text-5xl">
             <GradientText>Projects</GradientText>
           </h2>
-          <p className="mx-auto max-w-3xl text-xl text-muted-foreground">
+          <p className="mx-auto max-w-3xl text-base text-muted-foreground sm:text-lg lg:text-xl">
             A mix of professional work and personal projects showcasing different technologies and
             approaches
           </p>
@@ -41,9 +41,11 @@ const ProjectsSection = ({
 
         {/* Projects with Images */}
         {projectsWithImages.length > 0 && (
-          <div className="mb-12">
-            <h3 className="mb-8 text-center text-2xl font-semibold">Featured Work</h3>
-            <div className="grid gap-8 lg:grid-cols-2">
+          <div className="mb-8 sm:mb-12">
+            <h3 className="mb-6 text-center text-lg font-semibold sm:mb-8 sm:text-xl lg:text-2xl">
+              Featured Work
+            </h3>
+            <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
               {projectsWithImages.map((project) => (
                 <ProjectCard
                   key={`${project.type}-${project.title}`}
@@ -57,9 +59,11 @@ const ProjectsSection = ({
 
         {/* Projects without Images */}
         {projectsWithoutImages.length > 0 && (
-          <div className="mb-12">
-            <h3 className="mb-8 text-center text-2xl font-semibold">Additional Projects</h3>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mb-8 sm:mb-12">
+            <h3 className="mb-6 text-center text-lg font-semibold sm:mb-8 sm:text-xl lg:text-2xl">
+              Additional Projects
+            </h3>
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
               {projectsWithoutImages.map((project) => (
                 <ProjectCard key={`${project.type}-${project.title}`} project={project} />
               ))}
