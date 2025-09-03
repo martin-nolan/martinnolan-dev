@@ -2,6 +2,8 @@
 
 Modern personal portfolio with AI-powered chat assistant and cloud-hosted content management.
 
+🚀 [Live Site](https://martinnolan-dev.netlify.app/)
+
 ## Features
 
 - 🎨 Responsive design with dark/light theme support
