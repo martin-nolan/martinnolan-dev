@@ -115,6 +115,27 @@ const AIChatWidget: React.FC = () => {
     };
   }, [isOpen]);
 
+  // Handle mobile viewport changes (keyboard appearance)
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleViewportChange = () => {
+      // Force a small delay to ensure proper viewport calculation after keyboard appears
+      setTimeout(() => {
+        if (messagesEndRef.current) {
+          messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    };
+
+    // Listen for viewport changes on mobile devices
+    window.addEventListener('resize', handleViewportChange);
+
+    return () => {
+      window.removeEventListener('resize', handleViewportChange);
+    };
+  }, [isOpen]);
+
   // Fetch and extract CV text when component mounts
   useEffect(() => {
     const fetchCvText = async () => {
@@ -231,11 +252,11 @@ const AIChatWidget: React.FC = () => {
 
   return (
     <>
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-6 right-6 z-50 max-sm:bottom-12 max-sm:right-4">
         <Button
           onClick={toggleModal}
           size="icon"
-          className="glow-primary size-14 rounded-full bg-primary shadow-lg hover:bg-primary/90 [&_svg]:size-8"
+          className="glow-primary size-14 rounded-full bg-primary shadow-lg hover:bg-primary/90 max-sm:size-12 [&_svg]:size-8 max-sm:[&_svg]:size-6"
           aria-label="Open AI Chat"
         >
           {isOpen ? <X /> : <MessageCircle />}
@@ -243,20 +264,23 @@ const AIChatWidget: React.FC = () => {
       </div>
 
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 h-[32rem] w-[26rem] animate-scale-in">
+        <div className="fixed bottom-24 right-6 z-50 h-[32rem] w-[26rem] animate-scale-in max-md:h-[28rem] max-md:w-[22rem] max-sm:inset-x-4 max-sm:bottom-24 max-sm:top-16 max-sm:size-auto">
           <GlassCard className="flex h-full flex-col border-surface-border">
-            <div className="border-b border-surface-border p-4">
-              <h3 className="font-semibold">Chat with Marty</h3>
-              <p className="text-xs text-muted-foreground">
+            <div className="border-b border-surface-border p-4 max-sm:p-3">
+              <h3 className="font-semibold max-sm:text-base">Chat with Marty</h3>
+              <p className="text-xs text-muted-foreground max-sm:text-xs">
                 Ask about experience, projects &amp; more
               </p>
             </div>
 
-            <div ref={chatScrollRef} className="flex-1 space-y-3 overflow-y-auto p-4">
+            <div
+              ref={chatScrollRef}
+              className="flex-1 space-y-3 overflow-y-auto p-4 max-sm:space-y-2 max-sm:p-3"
+            >
               {messages.map((m) => (
                 <div key={m.id} className={`flex ${m.isUser ? 'justify-end' : 'justify-start'}`}>
                   <div
-                    className={`max-w-[80%] rounded-lg p-3 text-sm ${
+                    className={`max-w-[80%] rounded-lg p-3 text-sm max-sm:max-w-[85%] max-sm:p-2 max-sm:text-sm ${
                       m.isUser ? 'bg-primary text-white' : 'border border-surface-border bg-surface'
                     }`}
                   >
@@ -267,7 +291,7 @@ const AIChatWidget: React.FC = () => {
 
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="rounded-lg border border-surface-border bg-surface p-3 text-sm">
+                  <div className="rounded-lg border border-surface-border bg-surface p-3 text-sm max-sm:p-2">
                     <div className="flex space-x-1">
                       <div className="size-2 animate-pulse rounded-full bg-muted-foreground" />
                       <div
@@ -285,37 +309,40 @@ const AIChatWidget: React.FC = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            <div className="border-t border-surface-border p-4">
-              <div className="flex space-x-2">
+            <div className="border-t border-surface-border p-4 max-sm:p-3">
+              <div className="flex space-x-2 max-sm:space-x-1">
                 <Input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder="Ask about Martin…"
-                  className="flex-1 border-surface-border bg-surface"
+                  className="flex-1 border-surface-border bg-surface max-sm:text-base"
                   disabled={isLoading}
                 />
                 <Button
                   onClick={handleSend}
                   disabled={!input.trim() || isLoading}
                   size="sm"
-                  className="px-3"
+                  className="px-3 max-sm:min-h-[44px] max-sm:min-w-[44px] max-sm:px-2"
                 >
-                  <Send className="size-4" />
+                  <Send className="size-4 max-sm:size-5" />
                 </Button>
               </div>
-              <p className="mt-2 text-[11px] text-muted-foreground">
+              <p className="mt-2 text-[11px] text-muted-foreground max-sm:text-[10px] max-sm:leading-tight">
                 Note: AI responses may not always be accurate. For verified info, please refer to my{' '}
                 <a
                   href="https://www.linkedin.com/in/martinnolan/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline"
+                  className="underline max-sm:touch-manipulation"
                 >
                   LinkedIn
                 </a>
                 , Resume, or{' '}
-                <a href="mailto:martinnolan_1@hotmail.co.uk" className="underline">
+                <a
+                  href="mailto:martinnolan_1@hotmail.co.uk"
+                  className="underline max-sm:touch-manipulation"
+                >
                   contact me
                 </a>{' '}
                 directly.

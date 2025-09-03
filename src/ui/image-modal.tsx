@@ -107,13 +107,15 @@ export const ImageModal = ({
       <div
         ref={containerRef}
         tabIndex={-1}
-        className="relative mx-4 flex h-[90vh] w-full max-w-6xl items-center justify-center outline-none"
+        className="relative mx-4 flex h-[90vh] w-full max-w-6xl items-center justify-center outline-none max-sm:mx-2 max-sm:h-[95vh]"
       >
         <GlassCard className="flex size-full flex-col overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-surface-border p-6">
-            <div>
-              {projectTitle && <h2 className="text-2xl font-bold">{projectTitle}</h2>}
+          <div className="flex items-center justify-between border-b border-surface-border p-6 max-sm:p-4">
+            <div className="min-w-0 flex-1">
+              {projectTitle && (
+                <h2 className="truncate text-2xl font-bold max-sm:text-xl">{projectTitle}</h2>
+              )}
               <div className="mt-1 text-sm text-muted-foreground">
                 {activeIndex + 1} / {images.length}
               </div>
@@ -122,16 +124,17 @@ export const ImageModal = ({
               variant="ghost"
               size="sm"
               onClick={onClose}
-              className="text-muted-foreground hover:text-foreground"
+              className="ml-4 text-muted-foreground hover:text-foreground max-sm:size-10"
               aria-label="Close"
             >
-              <X className="size-6" />
+              <X className="size-6 max-sm:size-5" />
             </Button>
           </div>
 
           {/* Body */}
-          <div className="relative flex flex-1 flex-col p-6">
-            <div className="grid size-full grid-cols-[2.5rem_1fr_2.5rem] items-center gap-3">
+          <div className="relative flex flex-1 flex-col p-6 max-sm:p-4">
+            {/* Desktop: 3-column grid layout */}
+            <div className="hidden size-full grid-cols-[2.5rem_1fr_2.5rem] items-center gap-3 sm:grid">
               {/* Left rail */}
               {images.length > 1 ? (
                 <div className="flex items-center justify-center">
@@ -180,6 +183,58 @@ export const ImageModal = ({
                 </div>
               ) : (
                 <div />
+              )}
+            </div>
+
+            {/* Mobile: Overlay navigation with centered image */}
+            <div className="relative flex size-full flex-col items-center justify-center sm:hidden">
+              <div className="relative flex size-full items-center justify-center overflow-hidden">
+                <ImageWithFallback
+                  src={currentImage.src}
+                  alt={`${alt} - Image ${activeIndex + 1}`}
+                  width={900}
+                  height={600}
+                  className="max-h-[70vh] w-auto max-w-full rounded-lg object-contain"
+                  timeoutMs={15000}
+                  sizes="100vw"
+                  fetchPriority="high"
+                  loading="eager"
+                  draggable={false}
+                />
+
+                {/* Mobile navigation overlays */}
+                {images.length > 1 && (
+                  <>
+                    {/* Left navigation */}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={prevImage}
+                      aria-label="Previous image"
+                      className="absolute left-2 top-1/2 size-12 -translate-y-1/2 bg-black/50 text-white hover:bg-black/70"
+                    >
+                      <ChevronLeft className="size-8" />
+                    </Button>
+
+                    {/* Right navigation */}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={nextImage}
+                      aria-label="Next image"
+                      className="absolute right-2 top-1/2 size-12 -translate-y-1/2 bg-black/50 text-white hover:bg-black/70"
+                    >
+                      <ChevronRight className="size-8" />
+                    </Button>
+                  </>
+                )}
+              </div>
+
+              {/* Mobile description */}
+              {currentImage.description && (
+                <div className="mt-4 w-full max-w-xl rounded-lg border border-surface-border bg-black/60 px-4 py-2 text-center text-sm text-muted-foreground shadow-lg backdrop-blur-md">
+                  {currentImage.description}
+                </div>
               )}
             </div>
           </div>

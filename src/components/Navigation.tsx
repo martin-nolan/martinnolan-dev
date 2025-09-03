@@ -22,10 +22,10 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
         id="site-header"
         className="fixed inset-x-0 top-0 z-50 border-b border-surface-border bg-surface/5 backdrop-blur-sm"
       >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
+        <div className="mx-auto max-w-7xl px-4 max-sm:px-3 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between max-sm:h-14">
             <div className="shrink-0">
-              <Link href="/" className="gradient-text text-xl font-bold">
+              <Link href="/" className="gradient-text text-xl font-bold max-sm:text-lg">
                 Martin Nolan
               </Link>
             </div>
@@ -49,7 +49,7 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
               <ThemeToggle />
               <Button
                 variant="outline"
-                className="border-primary text-primary hover:bg-primary hover:text-white"
+                className="min-h-[44px] border-primary px-4 text-primary hover:bg-primary hover:text-white"
                 onClick={() => setIsResumeOpen(true)}
               >
                 Resume
@@ -57,7 +57,12 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
             </div>
             <div className="flex items-center gap-2 md:hidden">
               <ThemeToggle />
-              <Button variant="ghost" size="sm" onClick={toggleModal} className="text-foreground">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleModal}
+                className="min-h-[44px] min-w-[44px] p-2 text-foreground"
+              >
                 {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
               </Button>
             </div>
@@ -66,7 +71,7 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
 
         {isOpen && (
           <div className="md:hidden">
-            <div className="space-y-1 border-t border-surface-border bg-surface/5 px-2 pb-3 pt-2 backdrop-blur-sm">
+            <div className="space-y-1 border-t border-surface-border bg-surface/5 px-3 pb-4 pt-3 backdrop-blur-sm">
               {navItems.map((item) => (
                 <button
                   key={item.href}
@@ -74,7 +79,7 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
                     scrollToSection(item.href);
                     closeModal();
                   }}
-                  className="block w-full px-3 py-2 text-left text-base font-medium text-foreground transition-colors duration-200 hover:text-primary"
+                  className="block min-h-[48px] w-full rounded-md px-4 py-3 text-left text-base font-medium text-foreground transition-colors duration-200 hover:bg-surface/20 hover:text-primary"
                 >
                   {item.label}
                 </button>
@@ -82,7 +87,7 @@ const Navigation = ({ setIsResumeOpen }: NavigationProps) => {
               <div className="pb-2 pt-4">
                 <Button
                   variant="outline"
-                  className="w-full border-primary text-primary hover:bg-primary hover:text-white"
+                  className="min-h-[48px] w-full border-primary text-primary hover:bg-primary hover:text-white"
                   onClick={() => {
                     setIsResumeOpen(true);
                     closeModal();

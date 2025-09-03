@@ -41,9 +41,9 @@ export const ImageCarousel = ({ images, alt, projectTitle, className }: ImageCar
 
   return (
     <>
-      <div className={`relative overflow-hidden ${className ?? ''}`}>
+      <div className={`relative overflow-hidden rounded-lg ${className ?? ''}`}>
         <div
-          className="group size-full cursor-pointer"
+          className="group aspect-video w-full cursor-pointer"
           onClick={() => handleImageClick(0)}
           role="button"
           tabIndex={0}
@@ -55,7 +55,7 @@ export const ImageCarousel = ({ images, alt, projectTitle, className }: ImageCar
             alt={alt}
             width={600}
             height={400}
-            className="size-full object-contain object-center transition-transform duration-300 group-hover:scale-105"
+            className="size-full object-cover object-center transition-transform duration-300 group-hover:scale-105 max-sm:object-contain"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             priority
             fetchPriority="high"
@@ -64,7 +64,7 @@ export const ImageCarousel = ({ images, alt, projectTitle, className }: ImageCar
           />
 
           {images.length > 1 && (
-            <div className="absolute right-4 top-4 rounded bg-black/50 px-2 py-1 text-sm text-white">
+            <div className="absolute right-2 top-2 rounded bg-black/70 px-2 py-1 text-xs text-white max-sm:right-3 max-sm:top-3 max-sm:px-3 max-sm:py-2 max-sm:text-sm">
               +{images.length - 1} more
             </div>
           )}
