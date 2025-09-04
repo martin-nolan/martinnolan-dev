@@ -74,10 +74,7 @@ const Index = ({
             {errorMessage || 'The content management system is temporarily unavailable.'}
           </p>
           <p className="text-muted-foreground">
-            Please check back soon, or contact me directly at{' '}
-            <a href="mailto:martinnolan_1@hotmail.co.uk" className="text-primary hover:underline">
-              martinnolan_1@hotmail.co.uk
-            </a>
+            Please check back soon, or use the contact form below to reach out directly.
           </p>
         </div>
       </div>
