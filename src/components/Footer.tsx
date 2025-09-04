@@ -43,12 +43,16 @@ const Footer = ({ profile }: FooterProps) => {
                 >
                   <Linkedin className="size-4 text-muted-foreground group-hover:text-primary sm:size-5" />
                 </a>
-                <a
-                  href="mailto:martinnolan_1@hotmail.co.uk"
+                <button
+                  type="button"
+                  onClick={() => {
+                    const contactSection = document.getElementById('contact');
+                    contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
                   className="group flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-surface-border bg-surface p-2 transition-all duration-200 hover:bg-surface-hover sm:p-3"
                 >
                   <Mail className="size-4 text-muted-foreground group-hover:text-primary sm:size-5" />
-                </a>
+                </button>
               </div>
             </div>
 
@@ -112,12 +116,16 @@ const Footer = ({ profile }: FooterProps) => {
                 >
                   GitHub Repositories
                 </a>
-                <a
-                  href="mailto:martinnolan_1@hotmail.co.uk?subject=Collaboration Inquiry"
+                <button
+                  type="button"
+                  onClick={() => {
+                    const contactSection = document.getElementById('contact');
+                    contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
                   className="min-h-[44px] py-2 text-center text-sm text-muted-foreground transition-colors duration-200 hover:text-primary sm:text-base md:text-left"
                 >
-                  Collaborate
-                </a>
+                  Get in Touch
+                </button>
               </nav>
             </div>
           </div>

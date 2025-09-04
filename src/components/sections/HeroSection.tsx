@@ -67,12 +67,16 @@ const HeroSection = ({ profile }: HeroSectionProps) => {
             >
               <Linkedin className="size-6 text-muted-foreground group-hover:text-primary max-sm:size-5" />
             </a>
-            <a
-              href="mailto:martinnolan_1@hotmail.co.uk"
+            <button
+              type="button"
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
               className="group flex min-h-[52px] min-w-[52px] items-center justify-center rounded-full border border-surface-border bg-surface p-3 transition-all duration-200 hover:bg-surface-hover"
             >
               <Mail className="size-6 text-muted-foreground group-hover:text-primary max-sm:size-5" />
-            </a>
+            </button>
           </div>
         </div>
       </div>
