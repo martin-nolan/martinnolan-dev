@@ -1,10 +1,3 @@
-/**
- * Production-safe logging utility
- * Provides structured logging with environment-aware behavior
- */
-
-import { clientEnv, serverEnv } from './env';
-
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 interface LogContext {
@@ -12,17 +5,17 @@ interface LogContext {
 }
 
 class Logger {
-  private isDevelopment: boolean;
   private isServer: boolean;
 
   constructor() {
     this.isServer = typeof window === 'undefined';
-    this.isDevelopment = this.isServer ? serverEnv.isDev : clientEnv.isDevelopment;
   }
 
   private log(level: LogLevel, message: string, context?: LogContext): void {
+    const isDevelopment = process.env.NODE_ENV !== 'production';
+
     // In production, only log errors and warnings
-    if (!this.isDevelopment && level === 'debug') {
+    if (!isDevelopment && level === 'debug') {
       return;
     }
 
@@ -32,12 +25,12 @@ class Logger {
       level,
       message,
       ...(context && { context }),
-      environment: this.isDevelopment ? 'development' : 'production',
+      environment: isDevelopment ? 'development' : 'production',
       side: this.isServer ? 'server' : 'client',
     };
 
     // In development, use console for better DX
-    if (this.isDevelopment) {
+    if (isDevelopment) {
       const consoleMethod = level === 'error' ? 'error' : level === 'warn' ? 'warn' : 'log';
       console[consoleMethod](`[${level.toUpperCase()}]`, message, context || '');
       return;
@@ -75,7 +68,7 @@ class Logger {
    * Silent error handling - logs in development, silent in production
    */
   silentError(message: string, context?: LogContext): void {
-    if (this.isDevelopment) {
+    if (process.env.NODE_ENV !== 'production') {
       this.error(message, context);
     }
     // Silent in production
@@ -85,7 +78,7 @@ class Logger {
    * Silent warning - logs in development, silent in production
    */
   silentWarn(message: string, context?: LogContext): void {
-    if (this.isDevelopment) {
+    if (process.env.NODE_ENV !== 'production') {
       this.warn(message, context);
     }
     // Silent in production

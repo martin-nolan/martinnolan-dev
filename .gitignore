@@ -70,3 +70,6 @@ tsconfig.tsbuildinfo
 dist/
 build/
 out/
+
+# Private reference captures used for redesign; rebuild as public-safe UI instead.
+/Screenshot *.png

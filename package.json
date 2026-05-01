@@ -1,12 +1,12 @@
 {
   "name": "martin-nolan-portfolio",
-  "description": "Modern, CMS-driven portfolio with AI chat assistant for Martin Nolan - Associate Gen AI Software Engineer at Sky UK",
+  "description": "Static proof-of-work portfolio for Martin Nolan focused on product-minded GenAI engineering, public-safe case studies, and workflow demos",
   "version": "2.0.0",
   "private": true,
   "type": "module",
   "author": {
     "name": "Martin Nolan",
-    "url": "https://martinnolan.dev"
+    "url": "https://martinnolan.dev.netlify.app"
   },
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/martin-nolan/martinnolan-dev/issues"
   },
-  "homepage": "https://martinnolan.dev",
+  "homepage": "https://martinnolan.dev.netlify.app",
   "engines": {
     "node": "20.x"
   },
@@ -23,10 +23,9 @@
     "portfolio",
     "nextjs",
     "typescript",
-    "ai-assistant",
     "personal-website",
-    "cms",
-    "strapi",
+    "genai",
+    "ai-product-engineering",
     "tailwindcss",
     "react"
   ],
@@ -45,35 +44,19 @@
     "precommit": "npm run ci:check"
   },
   "dependencies": {
-    "@azure-rest/ai-inference": "^1.0.0-beta.6",
-    "@azure/core-auth": "^1.10.0",
-    "@emailjs/browser": "^4.4.1",
-    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
-    "@radix-ui/react-toast": "^1.2.1",
-    "@radix-ui/react-tooltip": "^1.1.4",
-    "@tanstack/react-query": "^5.56.2",
-    "caniuse-lite": "^1.0.30001731",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "embla-carousel-react": "^8.3.0",
     "lucide-react": "^0.462.0",
-    "next-themes": "^0.3.0",
-    "pdf-parse": "^1.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.62.0",
-    "sonner": "^1.5.0",
-    "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.23.8"
+    "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@next/eslint-plugin-next": "^15.4.5",
     "@types/next": "^8.0.7",
     "@types/node": "^22.5.5",
-    "@types/pdf-parse": "^1.1.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.38.0",

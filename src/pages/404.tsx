@@ -1,59 +1,32 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
-import { GradientText, Button, GlassCard } from '@/ui';
-import { useTheme } from '@/ui/theme-context';
-
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import { Button } from '@/ui/button';
 
 const NotFound = () => {
-  const { isDark } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return <div className="min-h-screen bg-background" />;
-  }
   return (
-    <div
-      className={
-        `relative flex min-h-screen items-center justify-center bg-gradient-to-br ` +
-        (isDark
-          ? 'from-background via-background/80 to-primary/10'
-          : 'from-white via-gray-100 to-primary/10')
-      }
-    >
+    <div className="flex min-h-screen items-center justify-center bg-[color:var(--paper-strong)] px-4 py-12">
       <Head>
         <title>Page Not Found</title>
         <meta name="robots" content="noindex" />
       </Head>
-      <GlassCard className="flex w-full max-w-md flex-col items-center gap-6 bg-white/80 p-10 shadow-2xl dark:bg-background/80">
-        <Image
-          src="/robot.png"
-          alt="Lost robot"
-          width={80}
-          height={80}
-          className="mb-2 drop-shadow-lg"
-          priority
-        />
-        <h1 className="mb-2 text-4xl font-extrabold sm:text-5xl md:text-6xl">
-          <GradientText>Lost?</GradientText>
-        </h1>
-        <p className="mb-4 text-center text-lg text-gray-700 dark:text-muted-foreground">
-          Oops! The page you’re looking for doesn’t exist. Maybe you took a wrong turn?
+      <div className="w-full max-w-xl rounded-[2rem] border border-[color:var(--border-soft)] bg-[color:var(--paper)] p-10 text-center shadow-[0_24px_70px_rgba(78,65,52,0.08)]">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--ink-soft)]">
+          404
         </p>
-        <Link href="/" passHref legacyBehavior>
-          <Button asChild variant="default" className="w-full">
-            <a>Return to Home</a>
-          </Button>
-        </Link>
-      </GlassCard>
-      {/* Subtle glow effect */}
-      <div className="pointer-events-none absolute inset-0 z-[-1] flex items-center justify-center">
-        <div className="size-80 rounded-full bg-primary/10 opacity-60 blur-3xl dark:bg-primary/20" />
+        <h1 className="mt-4 text-4xl font-semibold -tracking-wider text-[color:var(--ink-strong)] sm:text-5xl">
+          This page does not exist.
+        </h1>
+        <p className="mx-auto mt-4 max-w-md text-base leading-7 text-[color:var(--ink-muted)]">
+          Try the homepage or use the footer links for GitHub, LinkedIn, and email.
+        </p>
+        <div className="mt-8">
+          <Link href="/" className="inline-flex">
+            <Button className="rounded-full bg-[color:var(--ink-strong)] px-5 text-[color:var(--paper)] hover:bg-[color:var(--ink-strong)]">
+              Return to home
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

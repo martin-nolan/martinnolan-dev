@@ -1,9 +1,6 @@
 User-agent: *
 Allow: /
 
-# Important pages
-Sitemap: https://martinnolan.dev/sitemap.xml
-
 # Block sensitive areas (if any in future)
 Disallow: /api/
 Disallow: /.env*
