@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { clientEnv } from '@/lib/env';
 import { logError } from '@/lib/logger';
-import { Button, GlassCard, GradientText } from '@/ui';
+import { Button } from '@/ui/button';
 
 interface Props {
   children: React.ReactNode;
@@ -47,9 +46,12 @@ export class ErrorBoundary extends React.Component<Props, State> {
     };
 
     // Capture Next.js build ID if available
-    if (typeof window !== 'undefined' && (window as any).__NEXT_DATA__) {
-      const nextData = (window as any).__NEXT_DATA__;
+    if (typeof window !== 'undefined') {
+      const nextWindow = window as Window & { __NEXT_DATA__?: { buildId?: string } };
+      const nextData = nextWindow.__NEXT_DATA__;
+      if (nextData) {
       context.buildId = nextData.buildId;
+      }
     }
 
     // Capture Netlify context if available
@@ -92,28 +94,31 @@ export class ErrorBoundary extends React.Component<Props, State> {
       }
 
       return (
-        <div className="flex min-h-[400px] items-center justify-center p-4">
-          <GlassCard className="max-w-md p-8 text-center">
-            <h2 className="mb-4 text-2xl font-bold">
-              <GradientText>Oops! Something went wrong</GradientText>
+        <div className="flex min-h-[400px] items-center justify-center px-4 py-12">
+          <div className="w-full max-w-xl rounded-[2rem] border border-[color:var(--border-soft)] bg-[color:var(--paper)] p-8 text-center shadow-[0_24px_70px_rgba(78,65,52,0.08)]">
+            <h2 className="mb-4 text-2xl font-semibold tracking-[-0.04em] text-[color:var(--ink-strong)]">
+              Something went wrong
             </h2>
-            <p className="mb-6 text-muted-foreground">
+            <p className="mb-6 text-[color:var(--ink-muted)]">
               We've encountered an unexpected error. Please try refreshing the page.
             </p>
 
             {/* Error ID for tracking */}
             {this.state.errorId && (
-              <p className="mb-4 text-xs text-muted-foreground">Error ID: {this.state.errorId}</p>
+              <p className="mb-4 text-xs text-[color:var(--ink-soft)]">Error ID: {this.state.errorId}</p>
             )}
 
-            <Button onClick={() => window.location.reload()} className="mb-4 w-full">
+            <Button
+              onClick={() => window.location.reload()}
+              className="mb-4 w-full rounded-full bg-[color:var(--ink-strong)] text-[color:var(--paper)] hover:bg-[color:var(--ink-strong)]"
+            >
               Refresh Page
             </Button>
 
             {/* Error details - only show in development */}
-            {this.state.error && clientEnv.isDevelopment && (
+            {this.state.error && process.env.NODE_ENV !== 'production' && (
               <details className="mt-4 text-left">
-                <summary className="cursor-pointer text-sm text-muted-foreground">
+                <summary className="cursor-pointer text-sm text-[color:var(--ink-soft)]">
                   Error Details (Development Mode)
                 </summary>
                 <div className="mt-2 space-y-2 text-xs">
@@ -151,7 +156,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
                 </div>
               </details>
             )}
-          </GlassCard>
+          </div>
         </div>
       );
     }

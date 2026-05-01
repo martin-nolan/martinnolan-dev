@@ -6,7 +6,7 @@
  */
 
 import { execSync } from 'child_process';
-import { existsSync, readFileSync, readdirSync, statSync } from 'fs';
+import { existsSync, readFileSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -99,23 +99,23 @@ function validateConfiguration() {
 
     // Check SWC minification is disabled
     if (configContent.includes('swcMinify: false')) {
-      logSuccess('SWC minification is disabled (fixes getInitialProps error)');
+      logSuccess('SWC minification is disabled');
     } else {
-      logError('SWC minification should be disabled for Netlify compatibility');
+      logError('SWC minification should be disabled');
     }
 
-    // Check console removal is disabled
-    if (configContent.includes('removeConsole: false')) {
-      logSuccess('Console removal is disabled (enables production debugging)');
+    // Check console removal strategy exists
+    if (configContent.includes('removeConsole')) {
+      logSuccess('Console removal strategy configured');
     } else {
-      logWarning('Console removal might be enabled, could hide debugging logs');
+      logWarning('Console removal strategy not found');
     }
 
-    // Check source maps
-    if (configContent.includes('productionBrowserSourceMaps: true')) {
-      logSuccess('Production source maps enabled for better error tracking');
+    // Check source maps setting
+    if (configContent.includes('productionBrowserSourceMaps: false')) {
+      logSuccess('Production browser source maps disabled');
     } else {
-      logWarning('Production source maps not enabled');
+      logWarning('Production browser source maps setting not found');
     }
   } else {
     logError('next.config.mjs not found');
@@ -183,7 +183,7 @@ function validatePages() {
   // Check API routes
   const apiDir = join(pagesDir, 'api');
   if (existsSync(apiDir)) {
-    logSuccess('API routes directory exists');
+    logWarning('API routes directory exists');
 
     const apiFiles = readdirSync(apiDir).filter(
       (file) => file.endsWith('.ts') || file.endsWith('.js')
@@ -198,6 +198,8 @@ function validatePages() {
         logError(`${apiFile} missing default export`);
       }
     }
+  } else {
+    logSuccess('No API routes directory present');
   }
 }
 
@@ -296,7 +298,7 @@ function validateDependencies() {
     });
 
     logSuccess('All dependencies are installed');
-  } catch (error) {
+  } catch (_error) {
     logWarning('Some dependencies might be missing or have version conflicts');
     logInfo('Run "npm install" to fix dependency issues');
   }

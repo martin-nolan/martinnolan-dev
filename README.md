@@ -1,98 +1,101 @@
-# Martin Nolan Portfolio
+# Martin Nolan — Portfolio
 
-Modern personal portfolio with AI-powered chat assistant and cloud-hosted content management.
+A static, proof-of-work portfolio showcasing how GenAI systems are designed, built, and shipped into real-world workflows.
 
-🚀 [Live Site](https://martinnolan-dev.netlify.app/)
+This portfolio is intentionally opinionated: it focuses on product-minded engineering, clear system thinking, and tangible delivery over generic demos or abstract experimentation.
 
-## Features
+---
 
-- 🎨 Responsive design with dark/light theme support
-- 🤖 AI chat assistant powered by GitHub Models
-- 📄 Secure PDF resume viewer with proxy protection
-- ☁️ Cloud CMS integration via **Strapi Cloud**
+## What This Portfolio Demonstrates
 
-## Architecture
+* **Product-minded GenAI engineering** — systems built to fit real user workflows, not isolated prototypes
+* **Grounded case studies** — based on real problems, constraints, and decisions
+* **Workflow-driven interfaces** — synthetic surfaces that reflect how systems are actually used
+* **Agent-assisted engineering** — harness thinking, evaluation loops, and controlled iteration
+* **Low-maintenance architecture** — static, durable, and easy to evolve
 
-- **Frontend**: Next.js 15 with TypeScript and Tailwind CSS
-- **CMS**: Strapi Cloud hosted at `https://your-instance.strapiapp.com`
-- **AI**: GitHub Models integration for chat assistant
+---
 
-## Tech Stack
+## Current Architecture
 
-Next.js 15 · React · TypeScript · Tailwind CSS · shadcn/ui · Strapi Cloud
+* **Framework:** Next.js (Pages Router)
+* **Language:** TypeScript
+* **Styling:** Tailwind CSS
+* **Content:** Static modules (`src/content/*`)
+* **Structure:** Single-page homepage (`src/pages/index.tsx`)
 
-## Quick Start
+The architecture prioritises simplicity, speed, and long-term maintainability over unnecessary complexity.
+
+---
+
+## Development
 
 ### Prerequisites
 
-- Node.js 18+
-- GitHub Models API access
-- Environment variables configured
+* Node.js 20.x
 
-### Installation
+### Run locally
 
 ```bash
-git clone https://github.com/martin-nolan/martinnolan-dev.git
-cd martinnolan-dev
 npm install
-cp .env.example .env.local
-```
-
-### Environment Configuration
-
-Add your API keys to `.env.local`:
-
-```bash
-# Required for AI chat functionality
-GITHUB_TOKEN=your_github_models_token
-
-# Required for CMS content (uses cloud instance)
-NEXT_PUBLIC_STRAPI_API_URL=https://your-strapi-instance.strapiapp.com/api
-
-# Optional: Enhanced CMS features
-STRAPI_API_TOKEN=your_strapi_token
-
-# Optional: Contact form integration
-NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
-NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
-NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
-```
-
-### Development
-
-```bash
 npm run dev
 ```
 
-Visit `http://localhost:3000` to see your portfolio.
-
-### Build Commands
+### Verification
 
 ```bash
-# Development
-npm run dev
-
-# Production build
+npm run typecheck
+npm run lint:check
 npm run build
-
-# Type checking and linting
-npm run test:build
 ```
 
-## CMS Content Management
+---
 
-Content is managed through **Strapi Cloud**:
+## Content Model
 
-- **Admin Panel**: `https://your-strapi-instance-url/admin`
-- **API Endpoint**: `https://your-instance.strapiapp.com/api`
-- **Media CDN**: `https://your-instance.media.strapiapp.com`
+All homepage content is defined in structured modules:
 
-The portfolio automatically syncs with cloud content updates.
+```txt
+src/content/
+  profile.ts
+  harness.ts
+  case-studies.ts
+  demo-surfaces.ts
+  writing.ts
+```
 
-## Contact
+This keeps content explicit, version-controlled, and easy to iterate on without CMS overhead.
 
-[LinkedIn](https://linkedin.com/in/martinnolan0110) · [Email](mailto:martinnolan_1@hotmail.co.uk)
+---
 
-## License
+## Design Principles
 
-MIT — Fork/adapt for your own use.
+The visual and interaction system is intentionally:
+
+* **Editorial over SaaS** — warm, readable, and narrative-driven
+* **Product-led** — focused on systems and workflows, not CV formatting
+* **Structured and dense (when needed)** — optimised for signal over aesthetics
+* **Honest about abstraction** — demo surfaces clearly use synthetic data
+
+---
+
+## Philosophy
+
+This portfolio is built around a simple idea:
+
+> AI work should be understandable, evaluable, and reviewable — not just impressive.
+
+It emphasises:
+
+* visibility into system behaviour
+* evaluation as a first-class concern
+* interfaces that reflect real usage
+* delivery that can be reasoned about and critiqued
+
+---
+
+## Links
+
+* [Live Site](https://martinnolan-dev.netlify.app/)
+* [LinkedIn](https://linkedin.com/in/martinnolan0110)
+* [GitHub](https://github.com/martin-nolan)
