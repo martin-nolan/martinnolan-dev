@@ -64,7 +64,7 @@ export default function Hero({ profile }: HeroProps) {
                   Products built around real AI systems.
                 </p>
               </div>
-              <span className="inline-flex rounded-full border border-[color:rgba(11,122,132,0.22)] bg-[color:rgba(11,122,132,0.08)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-teal)]">
+              <span className="inline-flex rounded-full border border-[color:rgba(11,122,132,0.22)] bg-[color:rgba(11,122,132,0.08)] px-2.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--accent-teal)]">
                 Proof areas
               </span>
             </div>
@@ -75,7 +75,7 @@ export default function Hero({ profile }: HeroProps) {
                   key={area.title}
                   className="rounded-[1.4rem] border border-[color:var(--border-soft)] bg-[color:var(--paper)] p-4"
                 >
-                  <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ink-soft)]">
+                  <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--ink-soft)]">
                     {area.title}
                   </span>
                   <span className="mt-2 block text-sm leading-6 text-[color:var(--ink-muted)]">

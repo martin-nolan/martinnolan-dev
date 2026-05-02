@@ -12,12 +12,17 @@ export default function HarnessSummary({ harness }: HarnessSummaryProps) {
     <section id="harness" aria-labelledby="harness-title" className="border-b border-[color:var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,0.58),rgba(243,237,227,0.55))]">
       <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
       <Reveal>
-        <div className="mb-10 max-w-3xl">
-          <p className="section-kicker">How I work</p>
-          <h2 id="harness-title" className="section-title">
-            {harness.plainEnglish}
-          </h2>
-          <p className="mt-4 text-base leading-8 text-[color:var(--ink-muted)]">{harness.summary}</p>
+        <div className="mb-10">
+          <div>
+            <p className="section-kicker">How I work</p>
+            <h2 id="harness-title" className="section-title max-w-5xl">
+              {harness.plainEnglish}
+            </h2>
+            <p className="mt-4 max-w-5xl text-base leading-8 text-[color:var(--ink-muted)]">{harness.summary}</p>
+          </div>
+          <p className="mt-6 rounded-[1.6rem] border border-[color:var(--border-soft)] bg-[color:rgba(255,255,255,0.46)] px-5 py-4 text-sm leading-7 text-[color:var(--ink-muted)] shadow-[0_18px_48px_rgba(78,65,52,0.045)]">
+            {harness.repoEvidence}
+          </p>
         </div>
       </Reveal>
 
@@ -30,13 +35,13 @@ export default function HarnessSummary({ harness }: HarnessSummaryProps) {
             <p className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-[color:var(--ink-strong)]">
               {harness.principle}
             </p>
-              <ul className="mt-6 mb-6 grid grid-cols-2 gap-3 text-sm leading-7 text-[color:var(--ink-muted)]">
-                {harness.reviewReadiness.map((item) => (
-                  <li key={item}>• {item}</li>
-                ))}
-              </ul>
-              <OperatingModelDiagram flow={harness.flow} />
-            </div>
+            <ul className="my-6 grid grid-cols-2 gap-3 text-sm leading-7 text-[color:var(--ink-muted)]">
+              {harness.reviewReadiness.map((item) => (
+                <li key={item}>• {item}</li>
+              ))}
+            </ul>
+            <OperatingModelDiagram flow={harness.flow} />
+          </div>
         </Reveal>
       </div>
 

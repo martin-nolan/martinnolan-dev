@@ -6,7 +6,7 @@
   "type": "module",
   "author": {
     "name": "Martin Nolan",
-    "url": "https://martinnolan.dev.netlify.app"
+    "url": "https://martinnolan-dev.netlify.app"
   },
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/martin-nolan/martinnolan-dev/issues"
   },
-  "homepage": "https://martinnolan.dev.netlify.app",
+  "homepage": "https://martinnolan-dev.netlify.app",
   "engines": {
     "node": "20.x"
   },

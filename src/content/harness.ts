@@ -6,6 +6,8 @@ export const harness: Harness = {
   principle: 'Agent-assisted work is still engineer-owned work.',
   summary:
     'The harness is not a framework for making agents look clever. It is a set of repo habits: clear context, small scopes, runnable checks, review evidence, and feedback when something in the workflow is stale.',
+  repoEvidence:
+    'Reusable harness materials live in this repo as a public-safe template: guidance, skills, review checks, scratchpad patterns, and workflow prompts.',
   flow: ['Set context', 'Plan the change', 'Build and verify', 'Review evidence', 'Feed back learning'],
   guidanceLayers: [
     'Team standards and review expectations',

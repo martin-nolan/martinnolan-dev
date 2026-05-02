@@ -5,7 +5,7 @@ const navItems = [
   { href: '#harness', label: 'How I work' },
   { href: '#case-studies', label: 'Case studies' },
   { href: '#interfaces', label: 'Interfaces' },
-  { href: '#writing', label: 'Principles' },
+  { href: '#principles', label: 'Principles' },
 ];
 
 export default function SiteHeader() {

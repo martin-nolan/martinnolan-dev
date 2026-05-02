@@ -9,9 +9,9 @@ export default function CapabilityPillars({ items }: CapabilityPillarsProps) {
   return (
     <section aria-labelledby="capabilities" className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24">
       <Reveal>
-        <div className="mb-10 max-w-2xl">
+        <div className="mb-10">
           <p className="section-kicker">Capability pillars</p>
-          <h2 id="capabilities" className="section-title">
+          <h2 id="capabilities" className="section-title max-w-5xl">
             Most of the value is in the workflow around the model.
           </h2>
         </div>

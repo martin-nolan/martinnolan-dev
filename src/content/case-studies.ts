@@ -31,7 +31,7 @@ export const caseStudies: CaseStudy[] = [
     featured: true,
   },
   {
-    id: 'ai-consumer-panel',
+    id: 'ai-research-hub',
     title: 'AI Research Hub',
     label: 'Research workflows',
     summary:

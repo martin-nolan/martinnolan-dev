@@ -72,7 +72,7 @@ const nextConfig = {
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
-      { protocol: 'https', hostname: 'martinnolan.dev.netlify.app', pathname: '/**' },
+      { protocol: 'https', hostname: 'martinnolan-dev.netlify.app', pathname: '/**' },
       { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/**' },
       { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
     ].filter(Boolean),
