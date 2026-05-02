@@ -3,7 +3,7 @@ import type { CaseStudy } from './types';
 export const caseStudies: CaseStudy[] = [
   {
     id: 'synthetic-call-testing',
-    title: 'Agent Dispatch',
+    title: 'Synthetic testing / orchestration system for conversational AI',
     label: 'Voice-agent testing',
     summary:
       'A platform for configuring voice agents, building scenario and behaviour test matrices, running calls, and reviewing results.',
@@ -31,8 +31,8 @@ export const caseStudies: CaseStudy[] = [
     featured: true,
   },
   {
-    id: 'ai-research-hub',
-    title: 'AI Research Hub',
+    id: 'research-platform',
+    title: 'AI research platform for conversational workflows and insights',
     label: 'Research workflows',
     summary:
       'An authenticated research workspace for audience exploration, conversational studies, video testing, jobs, prompts, traces, and support workflows, used for internal research and stakeholder workflows.',

@@ -61,7 +61,7 @@ export default function Hero({ profile }: HeroProps) {
                   What I build
                 </p>
                 <p className="mt-3 text-lg font-medium leading-7 text-[color:var(--ink-strong)]">
-                  Products built around real AI systems.
+                  Systems built for real AI workflows.
                 </p>
               </div>
               <span className="inline-flex rounded-full border border-[color:rgba(11,122,132,0.22)] bg-[color:rgba(11,122,132,0.08)] px-2.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--accent-teal)]">
