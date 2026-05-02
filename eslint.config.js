@@ -17,7 +17,7 @@ const compat = new FlatCompat({
 
 export default [
   // Ignore generated/build artefacts
-  { ignores: ['node_modules/**', '.next/**', 'dist/**', 'build/**'] },
+  { ignores: ['node_modules/**', '.next/**', 'dist/**', 'build/**', 'harness/**'] },
 
   // Base configs
   js.configs.recommended,

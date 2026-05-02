@@ -18,7 +18,7 @@ export default function ResearchWorkspaceSurface() {
                   Ask a structured question of research audiences
                 </h4>
               </div>
-              <span className="rounded-full border border-[color:rgba(11,122,132,0.18)] bg-[color:rgba(11,122,132,0.08)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[color:var(--accent-teal)]">
+              <span className="rounded-full border border-[color:rgba(11,122,132,0.18)] bg-[color:rgba(11,122,132,0.08)] px-2.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-widest text-[color:var(--accent-teal)]">
                 Ask mode
               </span>
             </div>
@@ -38,7 +38,7 @@ export default function ResearchWorkspaceSurface() {
                 <button
                   key={chip}
                   type="button"
-                  className="rounded-full border border-[color:var(--border-soft)] bg-white px-3 py-2 text-xs font-medium text-[color:var(--ink-muted)] transition-colors duration-200 hover:border-[color:var(--accent-teal)] hover:text-[color:var(--accent-teal)]"
+                  className="rounded-full border border-[color:var(--border-soft)] bg-white px-2.5 py-1.5 text-xs font-medium text-[color:var(--ink-muted)] transition-colors duration-200 hover:border-[color:var(--accent-teal)] hover:text-[color:var(--accent-teal)]"
                 >
                   {chip}
                 </button>
@@ -93,7 +93,7 @@ export default function ResearchWorkspaceSurface() {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:rgba(227,239,239,0.58)]">
                 Starting state
               </p>
-              <span className="rounded-full border border-[color:rgba(255,255,255,0.1)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[color:rgba(227,239,239,0.7)]">
+              <span className="rounded-full border border-[color:rgba(255,255,255,0.1)] px-2.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-widest text-[color:rgba(227,239,239,0.7)]">
                 Ready to run
               </span>
             </div>

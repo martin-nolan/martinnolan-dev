@@ -38,10 +38,18 @@ export type CaseStudy = {
   featured?: boolean;
 };
 
+export type SupportingSystem = {
+  title: string;
+  label: string;
+  summary: string;
+  signals: string[];
+};
+
 export type Harness = {
   plainEnglish: string;
   principle: string;
   summary: string;
+  repoEvidence: string;
   flow: string[];
   guidanceLayers: string[];
   selfHealTriggers: string[];
