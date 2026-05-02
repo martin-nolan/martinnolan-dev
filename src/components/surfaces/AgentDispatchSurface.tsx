@@ -29,7 +29,7 @@ export default function AgentDispatchSurface() {
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:rgba(227,239,239,0.58)]">
-              Agent Dispatch Console
+              Voice Agent Orchestration Console
             </p>
             <h4 className="mt-2 text-lg font-semibold text-white">Billing Support Voice Agent</h4>
           </div>

@@ -65,8 +65,8 @@ Keep new content in the content modules first. Only add component complexity whe
 
 The current v1 should stay focused on:
 
-- Agent Dispatch as the voice-agent testing case study.
-- AI Research Hub as the research and video-testing case study.
+- Synthetic testing / orchestration system for conversational AI as the voice-agent testing case study.
+- AI research platform for conversational workflows and insights as the research and video-testing case study.
 - Two synthetic product surfaces that show the interaction model without exposing internal material.
 - A compact harness section that explains engineer-owned agent-assisted delivery.
 

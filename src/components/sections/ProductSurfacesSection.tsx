@@ -8,8 +8,8 @@ type ProductSurfacesSectionProps = {
 };
 
 export default function ProductSurfacesSection({ items }: ProductSurfacesSectionProps) {
-  const dispatch = items.find((item) => item.id === 'agent-dispatch-console');
-  const research = items.find((item) => item.id === 'research-workspace');
+  const dispatch = items.find((item) => item.id === 'voice-agent-orchestration-console');
+  const research = items.find((item) => item.id === 'research-platform');
 
   return (
     <section id="interfaces" aria-labelledby="interfaces-title" className="border-y border-[color:var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,0.45),rgba(235,229,220,0.35))]">
