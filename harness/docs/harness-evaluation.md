@@ -37,9 +37,7 @@ Do not run this evaluation for:
 
 Run:
 
-```bash
-python3 scripts/validate_docs.py
-```
+Run the target repo's documentation validation command when one exists.
 
 Then, if the threshold above is met, walk the benchmark set below and score the changed harness against it.
 
@@ -47,7 +45,7 @@ Then, if the threshold above is met, walk the benchmark set below and score the 
 
 Use these prompts as the fixed comparison set when the harness or repo guidance changes:
 
-1. Implement a small frontend-only behavior fix.
+1. Implement a small UI-only behavior fix.
 2. Plan a new cross-module workstream.
 3. Debug a failing UI test before implementing a fix.
 4. Review a completed branch against done criteria.
@@ -64,12 +62,12 @@ Use this table as the grounding reference when deciding whether a harness change
 
 | Task | Prompt summary | Expected path | Verification anchor |
 | --- | --- | --- | --- |
-| 1 | Small frontend-only behavior fix | `delivery-loop` | frontend verification guidance in `docs/testing.md` |
+| 1 | Small UI-only behavior fix | `delivery-loop` | UI verification guidance in `docs/testing.md` |
 | 2 | New cross-module plan | `workstream-planner` | plan created or selected from `docs/workstreams/` |
 | 3 | Debug failing UI test first | `debug-triage`, then implementation | repro path and UI checks |
 | 4 | Review completed branch | `pr-reviewer` | done/blocked review verdict |
 | 5 | Draft PR metadata | `pr-authoring` | PR title/description output |
-| 6 | Update docs after route/command change | `doc-and-skill-sync` | `python3 scripts/validate_docs.py` |
+| 6 | Update docs after route/command change | `doc-and-skill-sync` | target repo docs validation command, when one exists |
 | 7 | No matching repo skill | `Skill: none` fallback | fallback procedure in `docs/skills-routing.md` |
 | 8 | Stale guidance or missing command | `self-heal-loop`, then `doc-and-skill-sync` if drift exists | remediation artifact plus docs validation |
 

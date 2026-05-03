@@ -57,7 +57,7 @@ When no skill matches, do not improvise freely. Follow this fixed fallback:
 - Narrow implementation slice inside an existing plan/ticket -> `skills/implementation-execution/SKILL.md`
 - UI/UX behaviour, layout, interaction polish, visual consistency -> `skills/ui-ux/SKILL.md`
 - Bug reproduction, triage, failure classification, root-cause narrowing -> `skills/debug-triage/SKILL.md`
-- API/BFF contract changes across layers (types/routes/callers/docs) -> `skills/contract-change/SKILL.md`
+- API/proxy contract changes across layers (types/routes/callers/docs) -> `skills/contract-change/SKILL.md`
 - Schema/data migration design and safety checks -> `skills/migration-change/SKILL.md`
 - Decide what tests to add/update AND execute verification -> `skills/testing/SKILL.md`
 - Release/tag/readiness validation -> `skills/release-readiness/SKILL.md`

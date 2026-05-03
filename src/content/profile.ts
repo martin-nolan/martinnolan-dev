@@ -5,7 +5,7 @@ export const profile: Profile = {
   role: 'GenAI Software Engineer',
   headline: 'I build AI systems that fit real workflows.',
   summary:
-    'I work across full-stack product engineering, workflow design, evaluation, and delivery standards. The useful work is usually around the model: clear setup, visible runs, inspectable evidence, and interfaces people can trust.',
+    'I work across product engineering, workflow design, and delivery on LLM-backed systems. Most of the engineering work is around the model call: clear setup, visible runs, inspectable evaluation, and interfaces people can trust.',
   links: {
     github: {
       label: 'GitHub',
@@ -25,13 +25,13 @@ export const profile: Profile = {
       value: 'Configurable runs',
       label: 'Voice-agent testing',
       detail:
-        'Built a workflow for agents, scenarios, behaviours, call history, and runtime evaluation so teams could test more than the happy path.',
+        'Built a system for configuring voice agents, injecting scenarios and behaviours, tracking call history, and running runtime evaluation — so teams could test more than the happy path.',
     },
     {
       value: 'Research workflows',
       label: 'Research and video testing',
       detail:
-        'Shaped tools for asking questions of research audiences, comparing responses, and turning study outputs into usable evidence.',
+        'Shaped tools for running conversational studies, comparing responses, and turning study outputs into usable evidence.',
     },
     {
       value: 'Reviewable delivery',
@@ -54,7 +54,7 @@ export const profile: Profile = {
     {
       title: 'Evaluation and evidence',
       description:
-        'I make outputs easier to judge by exposing context, run history, scores, transcripts, metadata, and review evidence.',
+        'I make outputs easier to judge: context, run history, scores, transcripts, and review evidence surfaced where needed.'
     },
     {
       title: 'Delivery discipline',

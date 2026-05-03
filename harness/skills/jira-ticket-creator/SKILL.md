@@ -85,7 +85,7 @@ Verification:
 ## Repo-specific constraints to encode in tickets
 
 - Name exact module(s) using the module names that exist in the repo.
-- If route contracts change, require docs sync for the affected API, frontend, and backend docs.
+- If route contracts change, require docs sync for the affected API, UI, and service docs.
 - If deployable modules change, include release or version expectation in acceptance criteria when relevant.
 - Keep each ticket slice mergeable within one PR unless explicitly marked as a multi-PR workstream.
 

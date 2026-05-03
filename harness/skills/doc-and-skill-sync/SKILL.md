@@ -35,7 +35,7 @@ If these disagree, fix the docs in the same change.
 Inspect recent commits on `main` (HEAD) and identify changes to:
 
 - modules or directory structure
-- backend or UI route groups
+- service or UI route groups
 - command surfaces and local workflows
 - deployment or infrastructure paths
 
@@ -95,7 +95,7 @@ Rules:
 Run:
 
 ```bash
-python3 scripts/validate_docs.py
+<target repo docs validation command>
 ```
 
 Validation must pass before finishing.

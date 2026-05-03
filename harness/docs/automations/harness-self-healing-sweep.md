@@ -31,7 +31,7 @@ Keep this task focused on harness quality only.
 - If any guidance or skill files are edited, rerun:
 
 ```bash
-python3 scripts/validate_docs.py
+<target repo docs validation command>
 ```
 
 ## Output Expectations

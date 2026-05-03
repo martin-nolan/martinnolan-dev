@@ -11,7 +11,7 @@ const buildAreas = [
   },
   {
     title: 'Research workflows',
-    detail: 'Audience-led studies, video testing, jobs, outputs, and evidence review.',
+    detail: 'Audience-led studies, video testing, jobs, generated outputs, and evidence review.',
   },
   {
     title: 'Reviewable delivery',
@@ -22,13 +22,13 @@ const buildAreas = [
 export default function Hero({ profile }: HeroProps) {
   return (
     <section className="relative overflow-hidden border-b border-[color:var(--border-soft)] bg-[radial-gradient(circle_at_top_left,_rgba(11,122,132,0.1),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.48),_rgba(255,255,255,0))]">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+      <div className="mx-auto grid max-w-6xl gap-16 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
         <div className="space-y-8">
           <div className="space-y-5">
             <p className="hero-enter text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--ink-soft)]">
               {profile.role}
             </p>
-            <h1 className="hero-enter hero-enter-delay-1 max-w-4xl text-5xl font-semibold leading-[1.02] -tracking-wider text-[color:var(--ink-strong)] sm:text-6xl lg:text-7xl">
+            <h1 className="hero-enter hero-enter-delay-1 max-w-4xl text-4xl font-semibold leading-[1.02] -tracking-wider text-[color:var(--ink-strong)] sm:text-6xl lg:text-7xl">
               {profile.headline}
             </h1>
             <p className="hero-enter hero-enter-delay-2 max-w-2xl text-lg leading-8 text-[color:var(--ink-muted)]">
@@ -55,30 +55,13 @@ export default function Hero({ profile }: HeroProps) {
 
         <div className="hero-enter hero-enter-delay-4 rounded-[2rem] border border-[color:var(--border-soft)] bg-[color:rgb(255_255_255_/_0.58)] p-6 shadow-[0_28px_80px_rgba(78,65,52,0.09)] backdrop-blur-sm">
           <div className="space-y-6">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[color:var(--ink-soft)]">
-                  What I build
-                </p>
-                <p className="mt-3 text-lg font-medium leading-7 text-[color:var(--ink-strong)]">
-                  Systems built for real AI workflows.
-                </p>
-              </div>
-              <span className="inline-flex rounded-full border border-[color:rgba(11,122,132,0.22)] bg-[color:rgba(11,122,132,0.08)] px-2.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--accent-teal)]">
-                Proof areas
-              </span>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            <div className="divide-y divide-[color:var(--border-soft)]">
               {buildAreas.map((area) => (
-                <div
-                  key={area.title}
-                  className="rounded-[1.4rem] border border-[color:var(--border-soft)] bg-[color:var(--paper)] p-4"
-                >
+                <div key={area.title} className="py-3 first:pt-0 last:pb-0">
                   <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--ink-soft)]">
                     {area.title}
                   </span>
-                  <span className="mt-2 block text-sm leading-6 text-[color:var(--ink-muted)]">
+                  <span className="mt-1.5 block text-sm leading-6 text-[color:var(--ink-muted)]">
                     {area.detail}
                   </span>
                 </div>

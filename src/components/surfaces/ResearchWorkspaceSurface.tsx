@@ -44,30 +44,25 @@ export default function ResearchWorkspaceSurface() {
                 </button>
               ))}
             </div>
-          </div>
 
-          <div className="rounded-[1.8rem] border border-[color:var(--border-soft)] bg-white p-5">
-            <div className="flex items-center justify-between">
+            <div className="mt-5 border-t border-[color:var(--border-soft)] pt-5">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ink-soft)]">
                 Audiences
               </p>
-            </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {audiences.map((audience, index) => (
-                <div
-                  key={audience}
-                  className={`rounded-[1.3rem] border p-4 transition-transform duration-200 hover:-translate-y-1 ${
-                    index === 1
-                      ? 'border-[color:rgba(11,122,132,0.22)] bg-[color:rgba(11,122,132,0.08)]'
-                      : 'border-[color:var(--border-soft)] bg-[color:var(--paper)]'
-                  }`}
-                >
-                  <p className="text-sm font-medium text-[color:var(--ink-strong)]">{audience}</p>
-                  <p className="mt-2 text-xs leading-6 text-[color:var(--ink-muted)]">
-                    Audience-led selection keeps the workflow specific without overwhelming the user.
-                  </p>
-                </div>
-              ))}
+              <div className="mt-3 flex flex-wrap gap-2">
+                {audiences.map((audience, index) => (
+                  <span
+                    key={audience}
+                    className={`inline-flex rounded-full border px-3 py-1 text-sm font-medium ${
+                      index === 1
+                        ? 'border-[color:rgba(11,122,132,0.22)] bg-[color:rgba(11,122,132,0.08)] text-[color:var(--accent-teal)]'
+                        : 'border-[color:var(--border-soft)] bg-[color:var(--paper)] text-[color:var(--ink-strong)]'
+                    }`}
+                  >
+                    {audience}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>

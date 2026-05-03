@@ -13,23 +13,23 @@ Make schema and model changes safe across producers and consumers by enforcing m
 
 - editing database models or shared data contracts
 - adding or modifying Alembic migrations
-- changing fields consumed by backend, worker, or observability flows
+- changing fields consumed by service, background job, or observability flows
 
 ## Repo schema surfaces
 
-- backend migration directories
-- backend models, types, and service modules
+- service migration directories
+- service models, types, and service modules
 - shared database models and utilities when present
 - background jobs, analytics, or observability consumers of shared contracts
 
 ## Required sequence
 
-1. Identify contract impact across backend, worker, shared, and any observability consumer modules.
-2. Add or update a migration in the owning backend module as needed.
+1. Identify contract impact across service, background job, shared, and any observability consumer modules.
+2. Add or update a migration in the owning service module as needed.
 3. Validate migration state locally:
-   - run the backend module’s database setup command
-   - run the backend module’s migration upgrade command
-   - run the backend module’s migration status command
+   - run the service module’s database setup command
+   - run the service module’s migration upgrade command
+   - run the service module’s migration status command
 4. Validate consumer compatibility:
    - run impacted module lint/type checks
    - run impacted MVP tests

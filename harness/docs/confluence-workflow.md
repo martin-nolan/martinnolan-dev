@@ -50,9 +50,9 @@ Use `skills/confluence-reconciler/SKILL.md` when the task is documentation recon
 - `README.md`
 - `AGENTS.md`
 - `docs/architecture.md`
-- `docs/backend-architecture.md`
-- `docs/frontend-architecture.md`
-- `docs/api.md`
+- `docs/architecture.md`
+- `docs/architecture.md`
+- `docs/architecture.md`
 - `docs/troubleshooting.md`
 
 ## Not A Source Of Truth

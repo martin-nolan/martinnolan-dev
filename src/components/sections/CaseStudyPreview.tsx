@@ -7,16 +7,20 @@ type CaseStudyPreviewProps = {
 
 export default function CaseStudyPreview({ items }: CaseStudyPreviewProps) {
   return (
-    <section id="case-studies" aria-labelledby="case-studies-title" className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+    <section
+      id="case-studies"
+      aria-labelledby="case-studies-title"
+      className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-12"
+    >
       <Reveal>
         <div className="mb-10">
           <p className="section-kicker">Case studies</p>
           <h2 id="case-studies-title" className="section-title max-w-5xl">
-            Two product builds that show the same pattern in practice.
+            Two product builds. Different problem spaces, same underlying pattern.
           </h2>
           <p className="mt-4 max-w-5xl text-base leading-8 text-[color:var(--ink-muted)]">
-            Both are less about a model call and more about making a workflow usable: setup,
-            state, evidence, and review.
+            The model does the work — both are about making it repeatable and reviewable: setup,
+            state, evidence, and clear next actions.
           </p>
         </div>
       </Reveal>
@@ -47,13 +51,17 @@ export default function CaseStudyPreview({ items }: CaseStudyPreviewProps) {
                       <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ink-soft)]">
                         Problem
                       </dt>
-                      <dd className="mt-2 text-sm leading-7 text-[color:var(--ink-muted)]">{item.problem}</dd>
+                      <dd className="mt-2 text-sm leading-7 text-[color:var(--ink-muted)]">
+                        {item.problem}
+                      </dd>
                     </div>
                     <div>
                       <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--ink-soft)]">
                         What I owned
                       </dt>
-                      <dd className="mt-2 text-sm leading-7 text-[color:var(--ink-muted)]">{item.ownership}</dd>
+                      <dd className="mt-2 text-sm leading-7 text-[color:var(--ink-muted)]">
+                        {item.ownership}
+                      </dd>
                     </div>
                   </dl>
 
