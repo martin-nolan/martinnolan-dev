@@ -53,7 +53,7 @@ A slice **must** cross module boundaries only when one of these is true:
 |---|---|
 | A shared type or model in a shared contract module changes | All modules that import that type |
 | An API route contract changes | contract owner module + direct caller/proxy modules |
-| A proxy route or BFF mapping changes | frontend module + downstream service |
+| A proxy route or proxy mapping changes | UI module + downstream service |
 | A background job payload or async schema changes | producer and consumer surfaces |
 | A release version bump is required | All deployable modules with changed behaviour |
 

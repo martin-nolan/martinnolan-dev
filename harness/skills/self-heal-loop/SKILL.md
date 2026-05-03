@@ -73,7 +73,7 @@ If the same misconception, drift pattern, or command mismatch appears three time
 
 When fix target is docs, select by failure type:
 
-- route/contract drift -> `docs/api.md`, `docs/frontend-architecture.md`, `docs/backend-architecture.md`
+- route/contract drift -> `docs/architecture.md`, `docs/architecture.md`, `docs/architecture.md`
 - command/setup drift -> `docs/local-development.md`, `docs/contributing.md`
 - recurring runtime/debug issue -> `docs/troubleshooting.md`
 - repeated agent misconception -> `docs/agent-feedback-log.md`

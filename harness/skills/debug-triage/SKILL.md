@@ -25,18 +25,18 @@ Prevent premature fixes by forcing deterministic reproduction and evidence-led r
 
 ## Repo evidence map
 
-- Frontend or BFF:
-  - run the frontend module locally
-  - verify the failing route, page, or proxy handler in the owning frontend path
-  - run the frontend test command or a targeted suite
-- Backend:
-  - run the backend module locally
+- UI or proxy:
+  - run the UI module locally
+  - verify the failing route, page, or proxy handler in the owning UI path
+  - run the UI test command or a targeted suite
+- Service:
+  - run the service module locally
   - check the owning router, service, or schema path
   - run the documented service test command for the affected area
-- Worker:
-  - run the worker module locally
-  - verify queue, config, and task handling in the owning worker path
-- Observability or telemetry backend:
+- Background job:
+  - run the background job module locally
+  - verify queue, config, and task handling in the owning background job path
+- Observability or telemetry service:
   - run that module locally and verify the affected ingest, trace, or API flow
 - DB or migrations:
   - use the impacted Python service module’s migration status/history commands
@@ -45,8 +45,8 @@ Prevent premature fixes by forcing deterministic reproduction and evidence-led r
 
 - `auth-session-boundary`: auth/session propagation or role checks
 - `bff-contract-mapping`: proxy param/status/shape mismatch
-- `backend-router-service`: backend route/service mismatch or schema drift
-- `worker-queue-runtime`: queue config, message parsing, or processing-state failures
+- `service-router-service`: service route/service mismatch or schema drift
+- `background job-queue-runtime`: queue config, message parsing, or processing-state failures
 - `migration-schema-drift`: migration/order/ownership/extension issues
 - `non-functional-default`: timeout/cancellation/status-check/error-mapping gap
 

@@ -1,40 +1,40 @@
 ---
 name: contract-change
-description: Apply a deterministic update path for API/BFF contract changes across code, docs, and tests.
+description: Apply a deterministic update path for API/proxy contract changes across code, docs, and tests.
 ---
 
 # contract-change
 
 ## Purpose
 
-Eliminate contract drift by enforcing a consistent change path when API/BFF behavior changes.
+Eliminate contract drift by enforcing a consistent change path when API/proxy behavior changes.
 
 ## Use this skill when
 
-- backend route inputs/outputs/status codes change
-- frontend proxy or BFF mapping changes
+- service route inputs/outputs/status codes change
+- UI proxy or proxy mapping changes
 - auth, header, or query parameter contracts change
 
 ## Contract surfaces in this repo
 
-- backend route handlers and service modules
+- service route handlers and service modules
 - observability or telemetry routes when that module exists
-- frontend proxy or BFF handlers when that module exists
+- UI proxy or proxy handlers when that module exists
 - shared types, models, and DTOs used across modules
 
 ## Required update path
 
 1. Update implementation at contract owner surface.
 2. Update dependent proxy/mapping surface:
-   - backend <-> frontend proxy/BFF
+   - service <-> UI proxy/proxy
    - service <-> service consumer or mapper
 3. Update tests:
-   - frontend route or proxy tests in the owning frontend test layout
-   - Python service tests in the owning module test layout
+   - UI route or proxy tests in the owning UI test layout
+   - service tests in the owning test layout
 4. Update docs:
-   - `docs/api.md`
-   - `docs/frontend-architecture.md`
-   - `docs/backend-architecture.md` (when backend route groups/behavior shift)
+   - `docs/architecture.md`
+   - `docs/testing.md` when verification expectations change
+   - nearest feature or contract doc when the target repo has one
 5. Run verification commands for impacted modules.
 
 ## Guardrail checks

@@ -7,12 +7,12 @@ type SupportingSystemsSectionProps = {
 
 export default function SupportingSystemsSection({ items }: SupportingSystemsSectionProps) {
   return (
-    <section aria-labelledby="supporting-systems-title" className="mx-auto max-w-6xl px-5 pb-10 sm:px-8">
+    <section aria-labelledby="supporting-systems-title" className="mx-auto max-w-6xl px-5 py-6 sm:px-8 sm:py-8">
       <Reveal>
         <div className="rounded-[1.8rem] border border-[color:var(--border-soft)] bg-[color:rgba(8,43,46,0.045)] p-6 sm:p-8">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
-              <p className="section-kicker">Additional systems work</p>
+              <p className="section-kicker">Additional work</p>
               <h2 id="supporting-systems-title" className="section-title">
                 Real-world assistant work behind the same pattern.
               </h2>

@@ -42,14 +42,14 @@ Run a repeatable, self-correcting delivery loop for this repo without manual pro
 
 At each stage, invoke additional skills based on change surface:
 
-- Contract/API/BFF change:
+- Contract/API/proxy change:
   - `skills/contract-change/SKILL.md`
-  - docs: `docs/api.md`, `docs/frontend-architecture.md`, `docs/backend-architecture.md`
+  - docs: `docs/architecture.md` plus the nearest target-repo contract doc when one exists
 - UI/UX flow or visual behavior change:
   - `skills/ui-ux/SKILL.md`
 - Schema/migration/model change:
   - `skills/migration-change/SKILL.md`
-  - docs: `docs/backend-architecture.md`, `docs/data-model.md`, `docs/troubleshooting.md` (if new gotcha)
+  - docs: `docs/architecture.md`, `docs/troubleshooting.md` when a durable gotcha is found
 - Failure with unclear root cause:
   - `skills/debug-triage/SKILL.md`
 - Release/version/deploy surface touched:

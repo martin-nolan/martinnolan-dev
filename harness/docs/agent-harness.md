@@ -1,6 +1,6 @@
 # Agent Harness
 
-This document describes the end-to-end delivery loop for this repository and for repositories generated from it. It shows how intent turns into a bounded change, verification, review, and durable harness correction when guidance drifts.
+This document describes the end-to-end delivery loop for a repository using this harness. It shows how intent turns into a bounded change, verification, review, and durable harness correction when guidance drifts.
 
 Skills are reusable workflow helpers inside the harness. `delivery-loop` is the normal execution entry point for implementation work; the harness is the broader control flow that decides when planning, testing, review, release checks, and self-heal apply.
 
@@ -30,7 +30,7 @@ If a change makes a behaviorally meaningful modification to harness-governance f
 ```mermaid
 flowchart TD
     A([Intent / task]) --> B1[1 · Read AGENTS.md<br/>read order + repo map]
-    B1 --> B2[2 · Read relevant docs<br/>architecture · API · local-dev]
+    B1 --> B2[2 · Read relevant docs<br/>architecture · local-dev · testing]
     B2 --> B3[3 · Read relevant command docs<br/>command truth]
     B3 --> D{Match intent to skill<br/>consult skills-routing.md}
 
@@ -60,7 +60,7 @@ flowchart TD
 ```mermaid
 flowchart TD
     A([Intent / task]) --> B1[1 · Read AGENTS.md<br/>read order + repo map]
-    B1 --> B2[2 · Read relevant docs<br/>architecture · API · local-dev · security]
+    B1 --> B2[2 · Read relevant docs<br/>architecture · local-dev · testing]
     B2 --> B3[3 · Read relevant command docs<br/>command truth for touched area]
     B3 --> D{Match intent to skill<br/>consult skills-routing.md}
 
@@ -96,7 +96,7 @@ flowchart TD
         MS[migration-change<br/>safety + rollback checks]
     end
 
-    N -. contract/API/BFF change .-> CS
+    N -. contract/API/proxy change .-> CS
     N -. UI/UX flow change .-> US
     N -. schema/migration .-> MS
     CS -. informs execution .-> N

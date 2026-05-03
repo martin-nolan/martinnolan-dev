@@ -1,6 +1,6 @@
 # Feature Requirement Files
 
-Use `docs/requirements/<feature>.md` for non-trivial feature work. UI-heavy work should fill every UX section; backend-only or infrastructure-heavy work should still keep the file explicit about change type, scope, success criteria, and documentation impact.
+Use `docs/requirements/<feature>.md` for non-trivial feature work. UI-heavy work should fill every UX section; service-only or infrastructure-heavy work should still keep the file explicit about change type, scope, success criteria, and documentation impact.
 
 ## Required Sections
 
@@ -110,6 +110,6 @@ Small changes do not require a full requirement file update. These include:
 - small spacing/alignment fixes within an existing pattern,
 - icon swaps,
 - small visual bug fixes that do not change workflow or hierarchy,
-- localized backend fixes with no contract, configuration, or workflow impact.
+- localized service fixes with no contract, configuration, or workflow impact.
 
 For those changes, include a short PR note instead.

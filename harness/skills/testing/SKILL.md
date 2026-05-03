@@ -23,13 +23,13 @@ Define the minimum test additions required before running anything.
 
 ### Repo testing structure
 
-- frontend route and component tests: use the frontend module’s colocated test layout
+- UI route and component tests: use the UI module’s colocated test layout
 - Python service tests: use the module’s existing `tests/` layout
-- repo-guidance validation: `python3 scripts/validate_docs.py`
+- repo-guidance validation: use the target repo's documented docs validation command when one exists
 
 ### Conventions
 
-- Frontend: colocate route and component behavior under the nearest owning feature; mock network/auth boundaries explicitly and assert contract mapping behavior directly.
+- UI: colocate route and component behavior under the nearest owning feature; mock network/auth boundaries explicitly and assert contract mapping behavior directly.
 - Python services: use the repo’s existing async, monkeypatch, and collaborator-fake patterns; assert status, contract, and error behavior directly.
 
 ### Decision rubric
@@ -51,7 +51,7 @@ Define the minimum test additions required before running anything.
 
 ### Baseline checks (run for every touched module)
 
-- Docs/guidance changes: `python3 scripts/validate_docs.py`
+- Docs/guidance changes: run the target repo's documented docs validation command when one exists
 - UI changes: run the target repo's documented UI lint, test, and build checks when they exist
   - include a build check when routing, runtime, or bundle behavior changed
 - Python modules: run the module’s documented lint, type-check, and test commands

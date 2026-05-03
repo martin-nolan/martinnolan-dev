@@ -1,6 +1,6 @@
 ---
 name: ui-ux
-description: Apply repo-specific UI/UX standards for visual consistency, motion, interaction states, and user-flow quality in frontend modules.
+description: Apply repo-specific UI/UX standards for visual consistency, motion, interaction states, and user-flow quality in UI modules.
 ---
 
 # ui-ux
@@ -11,13 +11,13 @@ Keep UI changes modern, consistent, and predictable within the product’s exist
 
 ## Use this skill when
 
-- editing frontend routes, screens, components, or shared UI primitives
+- editing UI routes, screens, components, or shared UI primitives
 - introducing new screens, cards, forms, dialogs, toolbars, or filters
 - changing user flows (navigation, onboarding/help paths, multi-step interactions)
 
 ## Repo-specific UI foundations
 
-- Start from the frontend module’s existing design tokens, global styles, and shared UI primitives.
+- Start from the UI module’s existing design tokens, global styles, and shared UI primitives.
 - Prefer the existing app shell, navigation, and state patterns over one-off feature styling.
 - Use the nearest feature layout or state-handling pattern as the first reference point.
 
@@ -48,7 +48,7 @@ Keep UI changes modern, consistent, and predictable within the product’s exist
 ## Verification expectations for UI changes
 
 - run the target repo's documented UI lint and test commands
-- run the frontend module’s build command when layout, routing, or runtime behavior changed
+- run the UI module’s build command when layout, routing, or runtime behavior changed
 - provide concise UX evidence summary:
   - changed flow(s)
   - state coverage (loading/empty/error/success)

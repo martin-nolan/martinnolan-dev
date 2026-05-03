@@ -34,7 +34,7 @@ verification:
 ## Generated Repo Checks
 
 - the target repo's documented release-readiness checks
-- Module-local verification for touched backend, frontend, or infra code
+- Module-local verification for touched service, UI, or infra code
 
 ## Checklist
 

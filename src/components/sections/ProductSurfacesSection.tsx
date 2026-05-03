@@ -17,7 +17,7 @@ export default function ProductSurfacesSection({ items }: ProductSurfacesSection
         <Reveal>
           <div className="mb-10 max-w-3xl">
             <p className="section-kicker">Product Interfaces</p>
-            <h2 id="surfaces-title" className="section-title">
+            <h2 id="interfaces-title" className="section-title">
               Synthetic interface patterns from the real apps.
             </h2>
           </div>

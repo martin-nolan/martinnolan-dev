@@ -3,7 +3,6 @@ const isDev = process.env.NODE_ENV !== 'production';
 
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: false,
 
   // Production optimizations
   compiler: {
