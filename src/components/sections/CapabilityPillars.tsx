@@ -12,7 +12,7 @@ export default function CapabilityPillars({ items }: CapabilityPillarsProps) {
         <div className="mb-10">
           <p className="section-kicker">Focus areas</p>
           <h2 id="capabilities" className="section-title max-w-5xl">
-            The model does the processing. The workflow is what makes it usable.
+            Useful AI engineering means owning the model call, the orchestration, and the product experience.
           </h2>
         </div>
       </Reveal>

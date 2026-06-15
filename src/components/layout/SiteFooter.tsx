@@ -9,8 +9,8 @@ export default function SiteFooter() {
             Martin Nolan
           </p>
           <p className="max-w-xl text-sm leading-6 text-[color:var(--ink-muted)]">
-            Product-minded GenAI engineering, public-safe workflow demos, and a delivery model
-            built around reviewable, engineer-owned AI work.
+            Product-minded AI engineering, public-safe demos, and repo habits that keep the work
+            reviewable.
           </p>
         </div>
 

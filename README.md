@@ -1,14 +1,14 @@
 # Martin Nolan Portfolio
 
-Static proof-of-work portfolio for Martin Nolan, focused on product-minded GenAI engineering and public-safe examples of shipped workflow systems.
+Static proof-of-work portfolio for Martin Nolan, focused on product-minded AI engineering, model orchestration, and public-safe examples of shipped workflow systems.
 
 The site is intentionally small. It should read like a builder showing credible work, not a CV archive or an AI demo catalogue.
 
 ## Current Direction
 
-- **Positioning:** AI systems that fit real workflows.
+- **Positioning:** product and orchestration layers for AI systems.
 - **Format:** single-page portfolio.
-- **Evidence:** two primary case studies, two synthetic product surfaces, a compact harness section, and short working principles.
+- **Evidence:** four case studies, two synthetic product surfaces, a compact harness section, and short working principles.
 - **Supporting proof:** one compact real-world assistant systems card for customer-support AI work.
 - **Links:** LinkedIn, GitHub, and email are secondary actions.
 
@@ -67,6 +67,8 @@ The current v1 should stay focused on:
 
 - Synthetic testing / orchestration system for conversational AI as the voice-agent testing case study.
 - AI research platform for conversational workflows and insights as the research and video-testing case study.
+- Safe decommissioning of a GenAI system as a service-retirement case study.
+- Digital-twin research panels as a persona-orchestration case study.
 - Two synthetic product surfaces that show the interaction model without exposing internal material.
 - A compact harness section that explains engineer-owned agent-assisted delivery.
 

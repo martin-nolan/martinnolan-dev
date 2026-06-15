@@ -16,11 +16,11 @@ export default function CaseStudyPreview({ items }: CaseStudyPreviewProps) {
         <div className="mb-10">
           <p className="section-kicker">Case studies</p>
           <h2 id="case-studies-title" className="section-title max-w-5xl">
-            Two product builds. Different problem spaces, same underlying pattern.
+            Four product builds. Different problem spaces, same underlying pattern.
           </h2>
           <p className="mt-4 max-w-5xl text-base leading-8 text-[color:var(--ink-muted)]">
-            The model does the work — both are about making it repeatable and reviewable: setup,
-            state, evidence, and clear next actions.
+            These are the parts I can talk about publicly: setup, access, orchestration, evidence,
+            and the tradeoffs behind them.
           </p>
         </div>
       </Reveal>
@@ -40,9 +40,11 @@ export default function CaseStudyPreview({ items }: CaseStudyPreviewProps) {
                   <p className="mt-3 text-sm leading-7 text-[color:var(--ink-muted)]">
                     {item.summary}
                   </p>
-                  <p className="mt-5 text-base leading-7 text-[color:var(--ink-strong)]">
-                    {item.outcome}
-                  </p>
+                  {item.outcome ? (
+                    <p className="mt-5 text-base leading-7 text-[color:var(--ink-strong)]">
+                      {item.outcome}
+                    </p>
+                  ) : null}
                 </div>
 
                 <div>
