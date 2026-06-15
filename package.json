@@ -1,6 +1,6 @@
 {
   "name": "martin-nolan-portfolio",
-  "description": "Static proof-of-work portfolio for Martin Nolan focused on product-minded GenAI engineering, public-safe case studies, and workflow demos",
+  "description": "Static proof-of-work portfolio for Martin Nolan focused on product-minded AI engineering, model orchestration, public-safe case studies, and workflow demos",
   "version": "2.0.0",
   "private": true,
   "type": "module",

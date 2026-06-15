@@ -2,10 +2,10 @@ import type { Harness } from './types';
 
 export const harness: Harness = {
   plainEnglish:
-    'A practical way to use coding agents without handing over engineering ownership.',
+    'A practical way to use coding agents without pretending they own the work.',
   principle: 'Agent-assisted work is still engineer-owned work.',
   summary:
-    'The harness is not a framework for making agents look clever. It is a set of repo habits: clear context, small scopes, runnable checks, and review evidence. When checks fail or guidance drifts, the fix goes into the repo — so the same issue doesn\'t repeat.',
+    'The harness is just repo hygiene applied to agent work: enough context, small changes, runnable checks, and notes a reviewer can use. When a command breaks or guidance drifts, the fix goes back into the repo.',
   repoEvidence:
     'Reusable harness materials live in this repo as a public-safe template: guidance, skills, review checks, scratchpad patterns, and workflow prompts.',
   flow: ['Set context', 'Plan the change', 'Build and verify', 'Review evidence', 'Log what changed'],
@@ -23,9 +23,9 @@ export const harness: Harness = {
     'Generated changes that introduce drift',
   ],
   reviewReadiness: [
-    'Scope is explicit before implementation starts',
-    'The change has runnable verification evidence',
+    'Scope is clear before implementation starts',
+    'The change has commands a reviewer can rerun',
     'Docs match what the system actually does',
-    'Repeated friction becomes durable repo guidance',
+    'Repeated friction becomes repo guidance',
   ],
 };

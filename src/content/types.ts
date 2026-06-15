@@ -33,7 +33,7 @@ export type CaseStudy = {
   ownership: string;
   decisions: string[];
   tradeoffs: string[];
-  outcome: string;
+  outcome?: string;
   proofPoints: string[];
   featured?: boolean;
 };

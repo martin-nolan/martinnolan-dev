@@ -8,3 +8,4 @@ Disallow: /admin/
 
 # SEO optimizations
 Crawl-delay: 1
+Sitemap: https://martinnolan-dev.netlify.app/sitemap.xml

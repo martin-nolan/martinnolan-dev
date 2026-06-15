@@ -4,19 +4,19 @@ export const writing: WritingEntry[] = [
   {
     title: 'Make the workflow visible',
     summary:
-      'Good AI systems show setup, state, evidence, and recovery paths. The user should not have to guess what the system is doing.',
+      'People should be able to see what was set up, what ran, what happened, and where to recover when something looks wrong.',
     note: 'Principle',
   },
   {
     title: 'Treat evaluation as product work',
     summary:
-      'Scores, transcripts, metadata, and explanations need usable interfaces. Evaluation is not finished when the backend produces a number.',
+      'Evaluation is not finished when the backend produces a number. The transcript, context, and explanation still need a usable home.',
     note: 'Principle',
   },
   {
     title: 'Keep agent-assisted work reviewable',
     summary:
-      'Agents can speed up delivery, but scope, verification, risk, and final judgment still need to be owned by an engineer.',
+      'Agents can speed up delivery, but an engineer still owns the scope, checks, risk, and final judgment.',
     note: 'Principle',
   },
 ];

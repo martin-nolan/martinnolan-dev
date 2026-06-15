@@ -24,37 +24,37 @@ export default function Home() {
     name: 'Martin Nolan',
     url: 'https://martinnolan-dev.netlify.app',
     sameAs: [profile.links.github.href, profile.links.linkedin.href],
-    jobTitle: 'GenAI Software Engineer',
+    jobTitle: 'AI Engineer',
   };
 
   return (
     <>
       <Head>
-        <title>Martin Nolan | GenAI Software Engineer</title>
+        <title>Martin Nolan | AI Engineer</title>
         <meta
           name="description"
-          content="GenAI software engineer building AI systems that fit real workflows: product integrations, evaluation, run visibility, and reviewable delivery."
+          content="AI engineer building systems that fit real workflows: model orchestration, product integrations, evaluation, run visibility, and reviewable delivery."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href="https://martinnolan-dev.netlify.app" />
         <meta
           property="og:title"
-          content="Martin Nolan | GenAI Software Engineer"
+          content="Martin Nolan | AI Engineer"
         />
         <meta
           property="og:description"
-          content="Product work across AI systems, evaluation, run visibility, and agent-assisted engineering delivery."
+          content="Product and orchestration work across AI systems, evaluation, run visibility, and agent-assisted engineering delivery."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://martinnolan-dev.netlify.app" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="Martin Nolan | GenAI Software Engineer"
+          content="Martin Nolan | AI Engineer"
         />
         <meta
           name="twitter:description"
-          content="Product work across AI systems, evaluation, run visibility, and agent-assisted engineering delivery."
+          content="Product and orchestration work across AI systems, evaluation, run visibility, and agent-assisted engineering delivery."
         />
         <script
           type="application/ld+json"
