@@ -3,28 +3,12 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "20"
-  NEXT_PUBLIC_NETLIFY_CONTEXT = "$CONTEXT"
+  NODE_VERSION = "22"
 
-# Next.js specific configuration with enhanced settings
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Cache optimization
 [[headers]]
   for = "/_next/static/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-# Image optimization redirects
-[[redirects]]
-  from = "/_next/image"
-  to = "/.netlify/images?url=:url&w=:width&q=:quality"
-  status = 200
-  query = {q = ":quality", url = ":url", w = ":width"}
-
-[[redirects]]
-  from = "/_ipx/*"
-  to = "/.netlify/images?url=:url&w=:width&q=:quality"
-  status = 200
-  query = {q = ":quality", url = ":url", w = ":width"}
