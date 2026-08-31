@@ -1,35 +1,26 @@
-# Codex Guidance
+# Repository guidance
 
-Use this file as the repo-local starting point for automated or agent-assisted work.
+This is a deliberately small, static Next.js portfolio.
 
-## Project Shape
+## Product boundary
 
-- This is a static Next.js Pages Router portfolio.
-- Keep the site single-page unless there is a clear reason to split it.
-- Keep content in `src/content/*` and page structure in `src/components/sections/*`.
-- Do not reintroduce CMS, runtime chat, contact forms, resume proxying, or full CV timelines.
+- The site explains how Martin engineers AI products and agent-assisted delivery systems.
+- Keep it employer-neutral and safe for a public, long-lived website.
+- Do not add private project diagrams, internal screenshots, mock product interfaces, a CV copy, employment history, a blog, a CMS, runtime AI, analytics trackers, or a contact form.
+- Add a new section only when it introduces a distinct and durable idea.
 
-## Content Standards
+## Engineering boundary
 
-- Write in a direct, grounded voice.
-- Prefer “AI systems” over “AI tools” unless the sentence specifically means a tool.
-- Keep public project detail safe: use synthetic surfaces and neutral product names where needed.
-- Add new work only when it adds a distinct proof point. Do not add projects just to be comprehensive.
-- Treat customer-support assistant work as supporting proof unless it replaces an existing case study.
-
-## Harness
-
-- The harness in this repo should stay lightweight and real: guidance, validation commands, and review evidence.
-- `harness/` stores the generic public-safe harness source kit: docs, skills, scratchpad, automation prompts, GitHub pointers, and validation helpers. It is not active runtime code for the site.
-- Do not add fake active root-level `skills/` or process scaffolding unless it is actually used to maintain this repo.
-- If repeated agent work creates friction, update this file or the README instead of adding process theatre.
+- Keep the Pages Router and one-page structure unless a real product need justifies changing them.
+- Prefer direct React and semantic HTML over shared primitives or configuration-driven rendering.
+- Use plain CSS in `src/index.css`; do not add a component library or styling framework for this page.
+- Keep copy in `src/content/site.ts` and meaningful visual boundaries in components.
+- Accessibility, responsive behaviour, security headers and metadata are part of the implementation.
 
 ## Verification
 
-Run these before handing off meaningful changes:
+Run:
 
 ```bash
-npm run typecheck
-npm run lint:check
-npm run build
+npm run check
 ```
