@@ -1,8 +1,8 @@
 {
-  "name": "martin-nolan-portfolio",
-  "version": "3.0.0",
+  "name": "martinnolan-dev",
+  "version": "4.0.0",
   "private": true,
-  "description": "Martin Nolan's portfolio - full-stack AI products, agent-assisted engineering systems, evaluation and reliable software boundaries.",
+  "description": "Martin Nolan's personal site.",
   "author": {
     "name": "Martin Nolan",
     "url": "https://martinnolan-dev.netlify.app"
@@ -13,35 +13,31 @@
   },
   "homepage": "https://martinnolan-dev.netlify.app",
   "engines": {
-    "node": "22.x"
+    "node": ">=22"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . --max-warnings=0",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run build"
   },
   "dependencies": {
-    "next": "^14.2.32",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "next": "^16.4.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.9.0",
-    "@next/eslint-plugin-next": "^15.4.5",
-    "@types/node": "^22.5.5",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "eslint": "^9.32.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.5",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "globals": "^15.9.0",
-    "prettier": "^3.6.2",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^8.0.1"
+    "prettier": "^3.9.10",
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
   }
 }

@@ -1,46 +1,14 @@
-import js from '@eslint/js';
-import next from '@next/eslint-plugin-next';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
-import reactHooks from 'eslint-plugin-react-hooks';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
 
-export default [
+export default defineConfig([
+  ...nextVitals,
+  ...nextTs,
   {
-    ignores: ['.next/**', 'node_modules/**', 'out/**'],
+    files: ['**/*.tsx'],
+    rules: jsxA11y.flatConfigs.strict.rules,
   },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-  {
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-    },
-    plugins: {
-      '@next/next': next,
-      'jsx-a11y': jsxA11y,
-      'react-hooks': reactHooks,
-    },
-    rules: {
-      ...next.configs.recommended.rules,
-      ...next.configs['core-web-vitals'].rules,
-      ...jsxA11y.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    },
-  },
-  {
-    files: ['*.{js,mjs}', 'next.config.mjs'],
-    languageOptions: {
-      globals: globals.node,
-    },
-  },
-];
+  globalIgnores(['.next/**', 'out/**', 'node_modules/**', 'next-env.d.ts']),
+]);

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fht fhd" style="--drawing-ratio: 1000 / 470; --drawing-compact-ratio: 240 / 700">
+<title id="fht">The harness around the agent, and who decides</title>
+<desc id="fhd">Inside the repository, one agent runs a loop of read, plan, change and check. Around it: AGENTS.md is the map, skills say how to do a job, SOPs hold the standards and why, and checks are rules a machine enforces. Changes then pass a gate. Who decides at the gate moves through three modes as trust is earned for a type of work: engineer-led, where a person approves each step (today); exception-supervised, where the agent stops for help when it is stuck; and policy-bounded, where approved work runs inside an agreed policy. If results slip, it steps back. Every change gets a review from a different model before a person merges.</desc>
+<svg class="drawing-wide" viewBox="0 0 1000 470">
+<defs><marker id="fh1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" class="fill-ink"/></marker><marker id="fh2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" class="fill-amber"/></marker></defs>
+<rect x="10" y="20" width="540" height="430" rx="12" class="box" stroke-dasharray="7 5"/>
+<text x="30" y="46" class="t-mono muted" font-size="12">the repository</text>
+<circle cx="280" cy="240" r="92" class="ln-accent draw" pathLength="1" stroke-width="2.5"/>
+<circle cx="280.0" cy="148.0" r="5" class="fill-accent"/>
+<text x="280.0" y="136.0" text-anchor="middle" class="t-mono accent" font-size="12">read</text>
+<circle cx="372.0" cy="240.0" r="5" class="fill-accent"/>
+<text x="383.0" y="244.0" class="t-mono accent" font-size="12">plan</text>
+<circle cx="280.0" cy="332.0" r="5" class="fill-accent"/>
+<text x="280.0" y="354.0" text-anchor="middle" class="t-mono accent" font-size="12">change</text>
+<circle cx="188.0" cy="240.0" r="5" class="fill-accent"/>
+<text x="177.0" y="244.0" text-anchor="end" class="t-mono accent" font-size="12">check</text>
+<rect x="226" y="221" width="108" height="38" rx="8" class="box-accent"/><text x="280" y="245" text-anchor="middle" class="t-mono ink" font-size="13">one agent</text>
+<g class="pop" style="--i:0"><rect x="40" y="78" width="94" height="30" rx="15" class="box-soft"/><text x="86.8" y="97.5" text-anchor="middle" class="t-mono ink" font-size="12">AGENTS.md</text><text x="44" y="128" class="t-mono muted" font-size="11">the map</text></g>
+<g class="pop" style="--i:1"><rect x="400" y="78" width="71" height="30" rx="15" class="box-soft"/><text x="435.5" y="97.5" text-anchor="middle" class="t-mono ink" font-size="12">skills</text><text x="404" y="128" class="t-mono muted" font-size="11">how to do a job</text></g>
+<g class="pop" style="--i:2"><rect x="40" y="372" width="56" height="30" rx="15" class="box-soft"/><text x="68.0" y="391.5" text-anchor="middle" class="t-mono ink" font-size="12">SOPs</text><text x="44" y="422" class="t-mono muted" font-size="11">standards and why</text></g>
+<g class="pop" style="--i:3"><rect x="400" y="372" width="71" height="30" rx="15" class="box-soft"/><text x="435.5" y="391.5" text-anchor="middle" class="t-mono ink" font-size="12">checks</text><text x="404" y="422" class="t-mono muted" font-size="11">enforced by a machine</text></g>
+<path d="M550 240 H600" class="ln" marker-end="url(#fh1)"/>
+<text x="575" y="228" text-anchor="middle" class="t-mono muted" font-size="11">gate</text>
+<g class="pop" style="--i:4"><rect x="610" y="60" width="300" height="74" rx="10" class="box-accent"/>
+<text x="628" y="91" class="t-serif ink" font-size="17" font-weight="600">engineer-led</text>
+<text x="628" y="114" class="t-mono muted" font-size="11.5">a person approves each step</text>
+<rect x="846" y="72" width="50" height="20" rx="10" class="fill-accent"/><text x="871" y="86" text-anchor="middle" class="t-mono paper" font-size="10.5">today</text>
+</g>
+<g class="pop" style="--i:5"><rect x="610" y="190" width="300" height="74" rx="10" class="box"/>
+<text x="628" y="221" class="t-serif ink" font-size="17" font-weight="600">exception-supervised</text>
+<text x="628" y="244" class="t-mono muted" font-size="11.5">stops for help when stuck</text>
+</g>
+<g class="pop" style="--i:6"><rect x="610" y="320" width="300" height="74" rx="10" class="box"/>
+<text x="628" y="351" class="t-serif ink" font-size="17" font-weight="600">policy-bounded</text>
+<text x="628" y="374" class="t-mono muted" font-size="11.5">runs inside an agreed policy</text>
+</g>
+<path d="M670 138 V184" class="ln-accent" marker-end="url(#fh1)"/>
+<text x="682" y="166.0" class="t-mono accent" font-size="11">earned with evidence</text>
+<path d="M670 268 V314" class="ln-accent" marker-end="url(#fh1)"/>
+<text x="682" y="296.0" class="t-mono accent" font-size="11">earned with evidence</text>
+<path d="M914 357.0 C 998 357.0, 998 97.0, 920 97.0" class="ln-amber" stroke-dasharray="4 4" marker-end="url(#fh2)"/>
+<text x="946" y="221.0" text-anchor="middle" class="t-mono amber" font-size="11">results</text><text x="946" y="237.0" text-anchor="middle" class="t-mono amber" font-size="11">slip</text>
+<text x="610" y="426" class="t-mono muted" font-size="11">every change: a second model reviews,</text><text x="610" y="442" class="t-mono muted" font-size="11">then a person merges</text>
+</svg>
+<svg class="drawing-compact" viewBox="0 0 240 700">
+<rect x="4" y="4" width="232" height="240" rx="12" class="box" stroke-dasharray="7 5"/>
+<text x="16" y="28" class="t-mono muted" font-size="14">the repository</text>
+<text x="16" y="58" class="t-mono ink" font-size="14">AGENTS.md: the map</text>
+<text x="16" y="82" class="t-mono ink" font-size="14">skills: how</text>
+<text x="16" y="106" class="t-mono ink" font-size="14">SOPs: standards + why</text>
+<text x="16" y="130" class="t-mono ink" font-size="14">checks: enforced rules</text>
+<rect x="16" y="150" width="208" height="78" rx="8" class="box-accent"/>
+<text x="120" y="176" text-anchor="middle" class="t-mono ink" font-size="16">one agent</text>
+<text x="120" y="198" text-anchor="middle" class="t-mono accent" font-size="14">read, plan,</text>
+<text x="120" y="218" text-anchor="middle" class="t-mono accent" font-size="14">change, check</text>
+<path d="M120 244 V278 M114 272 L120 278 L126 272" class="ln"/>
+<text x="136" y="268" class="t-mono muted" font-size="14">gate</text>
+<rect x="4" y="288" width="232" height="94" rx="10" class="box-accent"/>
+<text x="16" y="314" class="t-serif ink" font-size="19">Engineer-led - today</text>
+<text x="16" y="342" class="t-mono muted" font-size="14">a person approves</text>
+<text x="16" y="364" class="t-mono muted" font-size="14">each step</text>
+<path d="M120 386 V416 M114 410 L120 416 L126 410" class="ln-accent"/>
+<text x="4" y="440" class="t-mono accent" font-size="14">earned with evidence</text>
+<rect x="4" y="456" width="232" height="72" rx="10" class="box"/>
+<text x="16" y="482" class="t-serif ink" font-size="19">Exception-supervised</text>
+<text x="16" y="508" class="t-mono muted" font-size="14">asks for help if stuck</text>
+<path d="M120 532 V556 M114 550 L120 556 L126 550" class="ln-accent"/>
+<rect x="4" y="566" width="232" height="72" rx="10" class="box"/>
+<text x="16" y="592" class="t-serif ink" font-size="19">Policy-bounded</text>
+<text x="16" y="618" class="t-mono muted" font-size="14">inside agreed policy</text>
+<text x="4" y="660" class="t-mono amber" font-size="14">results slip: step back</text>
+<text x="4" y="684" class="t-mono muted" font-size="14">model review, human merge</text>
+</svg>
+</svg>

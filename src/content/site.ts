@@ -1,121 +1,51 @@
+// All copy for the site. ==text== marks a phrase for the highlighter.
+
 export const site = {
   name: 'Martin Nolan',
-  role: 'AI Engineer',
-  headline: 'Building AI products across the stack.',
-  introduction:
-    'Most of my work is in TypeScript/Next.js and Python/FastAPI, building interfaces, APIs and services around models. ' +
-    'I also experiment with coding-agent orchestration, evaluation and observability, and use what I learn to improve how I work.',
-  links: {
-    github: 'https://github.com/martin-nolan',
-    linkedin: 'https://www.linkedin.com/in/martinnolan0110',
-    email: 'mailto:martinnolan_1@hotmail.co.uk',
-  },
-} as const;
-
-export const agentRoles = [
-  {
-    name: 'Quick Code',
-    kind: 'Execution',
-    description: 'Small changes where the approach is already settled.',
-  },
-  {
-    name: 'Code',
-    kind: 'Execution',
-    description: 'Most implementation, debugging and routine design work.',
-  },
-  {
-    name: 'Deep Code',
-    kind: 'Execution',
-    description:
-      'Harder technical work that benefits from a fresh context and more room to investigate.',
-  },
-  {
-    name: 'Delivery Plan',
-    kind: 'Planning',
-    description:
-      'Read-only planning when sequencing, migration or cross-layer dependencies need working out first.',
-  },
-  {
-    name: 'Docs',
-    kind: 'Documentation',
-    description:
-      'Updates repository guidance when the implementation changes something other engineers need to rely on.',
-  },
-  {
-    name: 'Review',
-    kind: 'Review',
-    description:
-      'An independent final read of the changed code and the evidence used to verify it.',
-  },
-  {
-    name: 'Principal Engineer',
-    kind: 'Technical judgement',
-    description:
-      'A second opinion for an important technical choice that the implementation cannot settle from repository evidence.',
-  },
-] as const;
-
-export const systemDecisions = [
-  {
-    title: 'One orchestrator owns the task',
-    text:
-      'It keeps track of the outcome, current state and anything still unproven. ' +
-      'A specialist gets one part of the work and returns the result.',
-  },
-  {
-    title: 'Specialists have narrow jobs',
-    text: 'Quick Code handles small settled changes, Code does most implementation, and Deep Code gets the harder work that needs more investigation.',
-  },
-  {
-    title: 'Handoffs carry known state',
-    text:
-      'Decisions, useful repository context and checks that still hold move with the task. ' +
-      'A new context should not mean starting the investigation again.',
-  },
-  {
-    title: 'I measure where the harness gets stuck',
-    text:
-      'OpenTelemetry records model calls, tool use, latency and recovery. ' +
-      'I use the traces to find repeated loops and routes that cost more than the work warrants.',
-  },
-] as const;
-
-export const loopStages = [
-  'Understand',
-  'Plan',
-  'Implement',
-  'Check',
-  'Review',
-  'Observe',
-  'Adjust',
-] as const;
-
-export const ownership = {
-  model: [
-    'Read unfamiliar code and form a working hypothesis',
-    'Implement a scoped change',
-    'Review a candidate',
-    'Investigate failures where the cause is still unclear',
-  ],
-  software: [
-    'Access and permissions',
-    'Validation and workflow state',
-    'Tests and CI',
-    'Git and production controls',
+  kicker: 'AI engineer / Sky / Livingston',
+  intro:
+    'I build AI products end to end, and the ==foundations that help teams build reliably== with coding agents.',
+  url: 'https://martinnolan-dev.netlify.app',
+  links: [
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/martinnolan0110' },
+    { label: 'GitHub', href: 'https://github.com/martin-nolan' },
+    { label: 'Email', href: 'mailto:martinnolan_1@hotmail.co.uk' },
   ],
 } as const;
 
-export const highlights = [
-  {
-    title: 'Full-stack applications',
-    text: 'I work across Next.js and TypeScript frontends, Python/FastAPI services, authentication, API contracts, backend state and the loading and failure behaviour around them.',
-  },
-  {
-    title: 'Model-backed workflows',
-    text: 'I work on how context gets assembled, what the model is asked to return, what gets validated in code and how people inspect or act on the result.',
-  },
-  {
-    title: 'Engineering foundations',
-    text: 'I also work on logging and tracing, access control, repository standards, reusable project baselines and the coding-agent harness described above.',
-  },
-] as const;
+export const figures = {
+  rings:
+    'The model is the smallest part. The agent runs its loop inside the harness, and the people using the product sit around all of it.',
+  thread:
+    'Two threads through the work: useful products, and better foundations for building them.',
+  harness:
+    'The harness around the agent, and who decides at the gate. Autonomy is earned one type of work at a time, and taken back if results slip.',
+  measured:
+    'One matched task, before and after the reset. One run, so a signal rather than a benchmark.',
+  template: 'One command, a product repository with the foundations already in place.',
+} as const;
+
+export const product = {
+  pull: 'I care about the product as much as the code.',
+  text: 'Before I write much, I want to know who it’s for and ==what it should do when the model is wrong==. Those questions shape the interface, the checks and where a person needs to make the call. My work keeps coming back to the same two threads: product and developer experience.',
+  naming:
+    'I care about what we call things, too. I’ve named a few of the things we’ve built, and ==the names stuck==.',
+} as const;
+
+export const harness = {
+  pull: 'A coding agent is only as good as the repository it works in.',
+  text: 'When I reset ours, I cut the guidance right back and put ==checks behind what was left==, so the rules are enforced rather than just written down. Today a person approves each step. The aim is for an agent to earn more room one type of work at a time, with evidence, and lose it again if the results slip.',
+  trial:
+    'I didn’t start here. My first attempt was a team of specialist agents with an orchestrator handing work between them. Most runs were short and fine, but ==a few never settled==, and those few drove most of the cost. One agent in a stricter repository did the same task with far less.',
+  words: [
+    { term: 'Context engineering', text: 'What the model sees, and when.' },
+    { term: 'Loop engineering', text: 'The agent’s steps, budget, stopping point and recovery.' },
+    { term: 'Harness engineering', text: 'Everything in the repo around the loop.' },
+    { term: 'Evals', text: 'Knowing it still works after you change something.' },
+  ],
+} as const;
+
+export const template = {
+  pull: 'The best setup is the one you don’t have to do.',
+  text: 'The template generates a new product repository with sign-in, sessions, database roles, an API contract, an agent runtime with guardrails, deployment and the harness already in. Foundations that took weeks on the first product now ==generate and pass their checks in minutes==. When a product finds a better way of doing something, it goes back into the template.',
+} as const;
