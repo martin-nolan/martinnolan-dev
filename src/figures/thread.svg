@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f2t f2d" style="--drawing-ratio: 1000 / 280; --drawing-compact-ratio: 240 / 440">
+<title id="f2t">Two threads through the work</title>
+<desc id="f2d">Product work includes adviser tools, a testing platform and an analytics app. Developer experience work includes an AI engineering playbook, a project template and a coding-agent harness. These are two connected strands of the work, not an employment timeline.</desc>
+<svg class="drawing-wide" viewBox="0 0 1000 280">
+<path d="M30 110 C250 70 750 150 970 110" class="ln-amber draw" pathLength="1"/>
+<path d="M30 220 C250 260 750 180 970 220" class="ln-accent draw" pathLength="1"/>
+<text x="30" y="35" class="t-serif amber" font-size="22">Product</text>
+<text x="30" y="175" class="t-serif accent" font-size="22">Developer experience</text>
+<circle cx="180" cy="101" r="7" class="dot-amber"/>
+<circle cx="500" cy="110" r="7" class="dot-amber"/>
+<circle cx="820" cy="119" r="7" class="dot-amber"/>
+<text x="180" y="78" text-anchor="middle" class="t-mono ink" font-size="16">adviser tools</text>
+<text x="500" y="87" text-anchor="middle" class="t-mono ink" font-size="16">testing platform</text>
+<text x="820" y="96" text-anchor="middle" class="t-mono ink" font-size="16">analytics app</text>
+<circle cx="180" cy="229" r="7" class="dot-accent"/>
+<circle cx="500" cy="220" r="7" class="dot-accent"/>
+<circle cx="820" cy="211" r="7" class="dot-accent"/>
+<text x="180" y="263" text-anchor="middle" class="t-mono ink" font-size="16">engineering playbook</text>
+<text x="500" y="254" text-anchor="middle" class="t-mono ink" font-size="16">project template</text>
+<text x="820" y="245" text-anchor="middle" class="t-mono ink" font-size="16">coding-agent harness</text>
+</svg>
+<svg class="drawing-compact" viewBox="0 0 240 440">
+<text x="8" y="24" class="t-serif amber" font-size="20">Product</text>
+<path d="M20 52 C0 92 40 132 20 172" class="ln-amber"/>
+<circle cx="20" cy="60" r="5" class="dot-amber"/>
+<circle cx="20" cy="110" r="5" class="dot-amber"/>
+<circle cx="20" cy="160" r="5" class="dot-amber"/>
+<text x="38" y="65" class="t-mono ink" font-size="14">adviser tools</text>
+<text x="38" y="115" class="t-mono ink" font-size="14">testing platform</text>
+<text x="38" y="165" class="t-mono ink" font-size="14">analytics app</text>
+<path d="M8 204 H232" class="ln-rule"/>
+<text x="8" y="242" class="t-serif accent" font-size="20">Developer experience</text>
+<path d="M20 270 C0 310 40 350 20 390" class="ln-accent"/>
+<circle cx="20" cy="278" r="5" class="dot-accent"/>
+<circle cx="20" cy="328" r="5" class="dot-accent"/>
+<circle cx="20" cy="378" r="5" class="dot-accent"/>
+<text x="38" y="283" class="t-mono ink" font-size="14">engineering playbook</text>
+<text x="38" y="333" class="t-mono ink" font-size="14">project template</text>
+<text x="38" y="383" class="t-mono ink" font-size="14">coding-agent harness</text>
+</svg>
+</svg>

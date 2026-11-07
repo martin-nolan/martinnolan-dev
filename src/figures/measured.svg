@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f4t f4d" style="--drawing-ratio: 640 / 240; --drawing-compact-ratio: 240 / 340">
+<title id="f4t">One matched task, before and after the harness reset</title>
+<desc id="f4d">After the reset, the same task used 46% of the agent calls, 53% of the credits, 36% of the input tokens, 31% of the time to finish it used before. One task and one run.</desc>
+<svg class="drawing-wide" viewBox="0 0 640 240">
+<text x="130" y="20" class="t-mono muted" font-size="12">before = 100%</text>
+<text x="116" y="57" text-anchor="end" class="t-mono ink" font-size="13">agent calls</text>
+<rect x="130" y="38" width="400" height="28" rx="3" class="bar-before"/>
+<rect x="130" y="38" width="183.3" height="28" rx="3" class="bar-after"/>
+<text x="544" y="58" class="t-mono accent" font-size="17" font-weight="600">-54%</text>
+<text x="116" y="107" text-anchor="end" class="t-mono ink" font-size="13">credits</text>
+<rect x="130" y="88" width="400" height="28" rx="3" class="bar-before"/>
+<rect x="130" y="88" width="213.2" height="28" rx="3" class="bar-after"/>
+<text x="544" y="108" class="t-mono accent" font-size="17" font-weight="600">-47%</text>
+<text x="116" y="157" text-anchor="end" class="t-mono ink" font-size="13">input tokens</text>
+<rect x="130" y="138" width="400" height="28" rx="3" class="bar-before"/>
+<rect x="130" y="138" width="143.9" height="28" rx="3" class="bar-after"/>
+<text x="544" y="158" class="t-mono accent" font-size="17" font-weight="600">-64%</text>
+<text x="116" y="207" text-anchor="end" class="t-mono ink" font-size="13">time to finish</text>
+<rect x="130" y="188" width="400" height="28" rx="3" class="bar-before"/>
+<rect x="130" y="188" width="124.3" height="28" rx="3" class="bar-after"/>
+<text x="544" y="208" class="t-mono accent" font-size="17" font-weight="600">-69%</text>
+</svg>
+<svg class="drawing-compact" viewBox="0 0 240 340">
+<text x="4" y="20" class="t-mono muted" font-size="14">before = 100%</text>
+<text x="4" y="56" class="t-mono ink" font-size="14">agent calls</text>
+<text x="236" y="56" text-anchor="end" class="t-mono accent" font-size="16">-54%</text>
+<rect x="4" y="70" width="232" height="22" rx="3" class="bar-before"/>
+<rect x="4" y="70" width="106.3" height="22" rx="3" class="bar-after"/>
+<text x="4" y="130" class="t-mono ink" font-size="14">credits</text>
+<text x="236" y="130" text-anchor="end" class="t-mono accent" font-size="16">-47%</text>
+<rect x="4" y="144" width="232" height="22" rx="3" class="bar-before"/>
+<rect x="4" y="144" width="123.7" height="22" rx="3" class="bar-after"/>
+<text x="4" y="204" class="t-mono ink" font-size="14">input tokens</text>
+<text x="236" y="204" text-anchor="end" class="t-mono accent" font-size="16">-64%</text>
+<rect x="4" y="218" width="232" height="22" rx="3" class="bar-before"/>
+<rect x="4" y="218" width="83.5" height="22" rx="3" class="bar-after"/>
+<text x="4" y="278" class="t-mono ink" font-size="14">time to finish</text>
+<text x="236" y="278" text-anchor="end" class="t-mono accent" font-size="16">-69%</text>
+<rect x="4" y="292" width="232" height="22" rx="3" class="bar-before"/>
+<rect x="4" y="292" width="72.1" height="22" rx="3" class="bar-after"/>
+</svg>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="f1t f1d" style="--drawing-ratio: 1; --drawing-compact-ratio: 240 / 380">
+<title id="f1t">The model, its context, the agent loop, the harness, and the people and product around them</title>
+<desc id="f1d">Five nested rings. At the centre is the model. Around it is the context it is given. Around that is the agent loop: read, plan, change, check. Around the loop is the harness in the repository: AGENTS.md, skills, checks and gates. The outer ring is the people who use the product.</desc>
+<svg class="drawing-wide" viewBox="0 0 560 560">
+<circle cx="280" cy="280" r="262" class="ln-muted" stroke-dasharray="2 6"/>
+<circle cx="280" cy="280" r="205" class="ln draw" pathLength="1" style="--i:1"/>
+<circle cx="280" cy="280" r="150" class="ln-accent draw" pathLength="1" style="--i:2"/>
+<circle cx="280" cy="280" r="100" class="ln-muted draw" pathLength="1" style="--i:3"/>
+<rect x="191" y="7" width="178" height="26" rx="13" class="pill"/>
+<text x="280" y="25" text-anchor="middle" class="t-mono ink" font-size="16">people + product</text>
+<rect x="236" y="62" width="88" height="26" rx="13" class="pill"/>
+<text x="280" y="80" text-anchor="middle" class="t-mono ink" font-size="16">harness</text>
+<text x="280" y="158" text-anchor="middle" class="t-mono accent" font-size="16">loop</text>
+<rect x="236" y="167" width="88" height="26" rx="13" class="pill"/>
+<text x="280" y="185" text-anchor="middle" class="t-mono ink" font-size="16">context</text>
+<circle cx="280" cy="280" r="50" class="box-amber"/>
+<text x="280" y="286" text-anchor="middle" class="t-mono amber" font-size="18">model</text>
+<circle cx="139.0" cy="228.7" r="4" class="fill-accent"/>
+<text x="163.5" y="241.6" text-anchor="middle" class="t-mono accent" font-size="16">read</text>
+<circle cx="421.0" cy="228.7" r="4" class="fill-accent"/>
+<text x="396.5" y="241.6" text-anchor="middle" class="t-mono accent" font-size="16">plan</text>
+<circle cx="421.0" cy="331.3" r="4" class="fill-accent"/>
+<text x="396.5" y="326.4" text-anchor="middle" class="t-mono accent" font-size="16">change</text>
+<circle cx="139.0" cy="331.3" r="4" class="fill-accent"/>
+<text x="163.5" y="326.4" text-anchor="middle" class="t-mono accent" font-size="16">check</text>
+<rect x="57.1" y="148.4" width="110" height="28" rx="14" class="box-soft"/>
+<text x="112.1" y="168.4" text-anchor="middle" class="t-mono ink" font-size="16">AGENTS.md</text>
+<rect x="406.9" y="148.4" width="82" height="28" rx="14" class="box-soft"/>
+<text x="447.9" y="168.4" text-anchor="middle" class="t-mono ink" font-size="16">skills</text>
+<rect x="406.9" y="383.6" width="82" height="28" rx="14" class="box-soft"/>
+<text x="447.9" y="403.6" text-anchor="middle" class="t-mono ink" font-size="16">checks</text>
+<rect x="76.1" y="383.6" width="72" height="28" rx="14" class="box-soft"/>
+<text x="112.1" y="403.6" text-anchor="middle" class="t-mono ink" font-size="16">gates</text>
+<circle cx="246" cy="533" r="5" class="box"/><path d="M237 550 q9 -12 18 0" class="ln"/>
+<circle cx="280" cy="533" r="5" class="box"/><path d="M271 550 q9 -12 18 0" class="ln"/>
+<circle cx="314" cy="533" r="5" class="box"/><path d="M305 550 q9 -12 18 0" class="ln"/>
+<g class="spin"><circle cx="280" cy="130" r="9" class="halo"/><circle cx="280" cy="130" r="5.5" class="fill-accent"/></g>
+<circle cx="26" cy="540" r="5.5" class="fill-accent"/><text x="40" y="546" class="t-mono muted" font-size="16">the agent</text>
+</svg>
+<svg class="drawing-compact" viewBox="0 0 240 380">
+<rect x="4" y="4" width="232" height="372" rx="16" class="box"/>
+<text x="120" y="30" text-anchor="middle" class="t-mono ink" font-size="14">people + product</text>
+<rect x="16" y="48" width="208" height="316" rx="14" class="box"/>
+<text x="120" y="76" text-anchor="middle" class="t-mono ink" font-size="14">harness</text>
+<text x="120" y="100" text-anchor="middle" class="t-mono muted" font-size="14">map, skills, checks</text>
+<rect x="28" y="120" width="184" height="232" rx="12" class="box-accent"/>
+<text x="120" y="148" text-anchor="middle" class="t-mono accent" font-size="14">agent loop</text>
+<text x="120" y="172" text-anchor="middle" class="t-mono ink" font-size="14">read, plan,</text>
+<text x="120" y="194" text-anchor="middle" class="t-mono ink" font-size="14">change, check</text>
+<rect x="40" y="212" width="160" height="128" rx="10" class="box"/>
+<text x="120" y="240" text-anchor="middle" class="t-mono ink" font-size="14">context</text>
+<rect x="64" y="260" width="112" height="56" rx="8" class="box-amber"/>
+<text x="120" y="294" text-anchor="middle" class="t-mono amber" font-size="16">model</text>
+</svg>
+</svg>
